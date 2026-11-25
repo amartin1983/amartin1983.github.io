@@ -6,53 +6,220 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Game Night">
-<meta name="theme-color" content="#0f1115">
+<meta name="theme-color" content="#0c3b2a">
+<meta name="description" content="Game Night at Angel's table: Werewolf Moderator, Codenames Grids and Pass the Popcorn. Pull up a chair.">
 <title>Game Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1115;--card:#181b22;--line:#2a2f3a;--fg:#f2efe8;--muted:#a3a7b3;--gold:#e8b94a}
+:root{
+  --felt:#0f4a34;--felt2:#0a3627;--wood:#6b3f1f;--wood2:#8a5530;--cream:#fff6e4;--ink:#1d1a16;
+  --gold:#f4c24a;--muted:#cfe3d6;
+  --display:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",sans-serif;
+  --body:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#262a36,var(--bg) 60%);color:var(--fg);
-  font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  padding:calc(28px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom))}
-main{max-width:560px;margin:0 auto}
-h1{font:700 34px/1.1 Georgia,"Times New Roman",serif;margin:0 0 6px;letter-spacing:.01em}
-p.sub{margin:0 0 26px;color:var(--muted)}
-a.game{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
-  border-radius:16px;padding:18px;margin:0 0 14px;transition:transform .12s,border-color .12s}
+html{background:var(--felt2)}
+body{
+  margin:0;min-height:100vh;color:var(--cream);font:16px/1.5 var(--body);
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.10),transparent 55%),
+    radial-gradient(circle at 20% 80%,rgba(0,0,0,.25),transparent 45%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 2px,transparent 2px 5px),
+    linear-gradient(180deg,var(--felt),var(--felt2));
+  background-attachment:fixed;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+/* wooden table rail */
+body{position:relative}
+body::before,body::after{content:"";position:absolute;left:0;right:0;height:10px;z-index:5;pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--wood) 0 38px,var(--wood2) 38px 44px,var(--wood) 44px 90px);
+  box-shadow:0 2px 8px rgba(0,0,0,.4)}
+body::before{top:0}
+body::after{bottom:0}
+main{max-width:620px;margin:0 auto;padding:34px 18px 40px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;text-align:center;padding:26px 0 18px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.15);
+  padding:6px 14px;border-radius:999px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.badge i{width:8px;height:8px;border-radius:50%;background:#58e08a;box-shadow:0 0 0 0 rgba(88,224,138,.7);animation:ping 1.8s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(88,224,138,0)}100%{box-shadow:0 0 0 0 rgba(88,224,138,0)}}
+h1{font:400 clamp(58px,17vw,96px)/.92 var(--display);margin:16px 0 10px;letter-spacing:.01em;
+  color:var(--cream);text-shadow:0 4px 0 #6b3f1f,0 8px 18px rgba(0,0,0,.45)}
+h1 span{color:var(--gold)}
+.tag{font-size:18px;color:var(--muted);margin:0 auto;max-width:400px}
+.tag b{color:var(--cream)}
+
+/* floating pieces */
+.pieces{position:relative;height:96px;margin:6px auto 0;max-width:420px}
+.piece{position:absolute;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));animation:bob 4.5s ease-in-out infinite}
+.piece svg{display:block}
+.p1{left:4%;top:18px;transform:rotate(-14deg);animation-delay:-.6s}
+.p2{left:30%;top:4px;animation-delay:-2s}
+.p3{right:28%;top:22px;animation-delay:-3.1s}
+.p4{right:3%;top:6px;animation-delay:-1.3s}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+
+/* ---------- SECTION TITLE ---------- */
+.section{display:flex;align-items:center;gap:12px;margin:26px 2px 14px;font:400 22px/1 var(--display);letter-spacing:.02em;color:var(--gold)}
+.section::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,rgba(244,194,74,.6),transparent)}
+
+/* ---------- GAME CARDS ---------- */
+a.game{position:relative;display:block;text-decoration:none;color:var(--cream);border-radius:22px;overflow:hidden;margin:0 0 18px;
+  border:3px solid rgba(255,255,255,.12);box-shadow:0 14px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .18s ease,box-shadow .18s ease}
+a.game:hover{transform:translateY(-3px) rotate(-.4deg);box-shadow:0 20px 36px rgba(0,0,0,.5)}
 a.game:active{transform:scale(.98)}
-a.game:hover{border-color:var(--accent)}
-.icon{flex:0 0 56px;height:56px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
-.icon svg{width:34px;height:34px}
-.txt b{display:block;font-size:19px;margin-bottom:2px}
-.txt span{color:var(--muted);font-size:14px}
-.arrow{margin-left:auto;color:var(--muted);font-size:22px}
-footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+.scene{position:relative;height:150px;overflow:hidden}
+.info{position:relative;padding:16px 18px 18px;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
+.info h2{margin:0 0 4px;font:400 28px/1.05 var(--display);letter-spacing:.01em}
+.info p{margin:0 0 12px;color:rgba(255,246,228,.85);font-weight:500}
+.row{display:flex;align-items:center;gap:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
+.play{flex:none}
+.chip{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:999px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}
+.play{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font:400 18px/1 var(--display);letter-spacing:.03em;
+  padding:11px 18px;border-radius:14px;color:var(--ink);background:var(--accent);box-shadow:0 4px 0 var(--accent-dk)}
+a.game:hover .play{filter:brightness(1.07)}
+
+/* Werewolf: moonlit forest */
+.wolf{--accent:#f4c24a;--accent-dk:#a77a12;background:linear-gradient(180deg,#1b1440,#2b1d5c)}
+.wolf .scene{background:radial-gradient(circle at 75% 35%,#3c2f80 0,transparent 55%),linear-gradient(180deg,#0e0b26,#2b1d5c)}
+.moon{position:absolute;right:16%;top:18px;width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fffbe6,#f3dc8c 70%);box-shadow:0 0 40px 10px rgba(255,236,160,.35)}
+.moon::after{content:"";position:absolute;left:18px;top:30px;width:12px;height:12px;border-radius:50%;background:rgba(200,170,90,.35);box-shadow:20px -14px 0 -2px rgba(200,170,90,.3)}
+.stars{position:absolute;inset:0;background-image:
+  radial-gradient(1.5px 1.5px at 10% 20%,#fff,transparent),radial-gradient(1px 1px at 25% 50%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 40% 15%,#fff,transparent),radial-gradient(1px 1px at 55% 40%,#fff,transparent),
+  radial-gradient(1.2px 1.2px at 62% 12%,#fff,transparent),radial-gradient(1px 1px at 90% 55%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 5% 60%,#fff,transparent),radial-gradient(1px 1px at 33% 30%,#fff,transparent);
+  animation:twinkle 3s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.55}to{opacity:1}}
+.trees{position:absolute;left:0;right:0;bottom:0;height:82px}
+.eyes{position:absolute;left:22%;bottom:22px;display:flex;gap:7px;animation:blink 5s infinite}
+.eyes i{width:7px;height:4px;border-radius:50%;background:#ffd34d;box-shadow:0 0 8px #ffcf3a}
+@keyframes blink{0%,92%,100%{opacity:1}95%{opacity:0}}
+
+/* Codenames: tile grid */
+.code{--accent:#ff6b5e;--accent-dk:#b5342a;background:linear-gradient(180deg,#5a1f22,#3a1416)}
+.code .scene{background:linear-gradient(135deg,#7a2a2c,#2a3d7a);display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:repeat(5,34px);gap:5px;transform:rotate(-6deg) skewX(-4deg);
+  padding:9px;background:rgba(0,0,0,.25);border-radius:10px;box-shadow:0 10px 20px rgba(0,0,0,.35)}
+.grid i{height:22px;border-radius:4px;background:#efe2c4;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);animation:flip 7s infinite}
+.grid i.r{background:#e5534b}.grid i.b{background:#3d7be0}.grid i.k{background:#1f1f22}
+@keyframes flip{0%,80%,100%{transform:rotateX(0)}88%{transform:rotateX(180deg)}}
+
+/* Popcorn: cinema marquee */
+.corn{--accent:#ffd23f;--accent-dk:#b48a00;background:linear-gradient(180deg,#5c0d17,#3d0810)}
+.corn .scene{background:
+  repeating-linear-gradient(90deg,#8c1424 0 14px,#6a0e1b 14px 28px);}
+.corn .scene::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(255,210,63,.35),transparent 60%)}
+.marquee{position:absolute;left:50%;top:22px;translate:-50% 0;width:230px;padding:14px 10px;text-align:center;border-radius:10px;
+  background:#1d0a0d;border:3px solid #ffd23f;font:400 22px/1.05 var(--display);color:#fff3c4;letter-spacing:.06em;
+  box-shadow:0 0 22px rgba(255,210,63,.35);outline:5px dotted #fff6b0;outline-offset:5px;animation:glow 1.2s ease-in-out infinite alternate}
+@keyframes glow{from{outline-color:#fff6b0}to{outline-color:#ffd23f}}
+.marquee small{display:block;font:800 11px/1.6 var(--body);letter-spacing:.2em;color:#ffd23f}
+.bulbs{position:absolute;inset:-9px;border-radius:14px;pointer-events:none;
+  background:
+   radial-gradient(circle,#fff6b0 2.5px,transparent 3.2px) 0 0/16px 16px;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);
+  padding:6px;animation:chase 1s steps(2) infinite}
+@keyframes chase{50%{background-position:8px 8px}}
+.kernels{position:absolute;bottom:-6px;left:0;right:0;height:34px;
+  background:radial-gradient(circle at 8% 70%,#fff8df 9px,transparent 10px),radial-gradient(circle at 18% 50%,#ffefb8 8px,transparent 9px),
+  radial-gradient(circle at 82% 60%,#fff8df 10px,transparent 11px),radial-gradient(circle at 92% 45%,#ffefb8 8px,transparent 9px),
+  radial-gradient(circle at 72% 80%,#ffe58a 7px,transparent 8px),radial-gradient(circle at 28% 85%,#ffe58a 7px,transparent 8px)}
+
+/* ---------- HOW IT WORKS ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.step{background:var(--cream);color:var(--ink);border-radius:16px;padding:14px 10px 12px;text-align:center;
+  box-shadow:0 6px 0 #d8c7a2,0 12px 20px rgba(0,0,0,.3);transform:rotate(var(--r,0deg))}
+.step .n{width:34px;height:34px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font:400 18px/1 var(--display);color:#fff;background:var(--c)}
+.step b{display:block;font-size:14px;font-weight:800;line-height:1.2}
+.step span{display:block;font-size:12px;color:#5b5348;margin-top:3px;line-height:1.3}
+
+footer{margin-top:34px;text-align:center;color:var(--muted);font-size:13px}
+footer .dice{font-size:22px;letter-spacing:6px;display:block;margin-bottom:6px;color:var(--gold)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (max-width:380px){.steps{grid-template-columns:1fr}.step{transform:none}}
 </style>
 </head>
 <body>
 <main>
-  <h1>Game Night</h1>
-  <p class="sub">Angel's table companions. Add any of these to your home screen.</p>
+  <header class="hero">
+    <div class="badge"><i></i>The table is open</div>
+    <h1>Game<br><span>Night</span></h1>
+    <p class="tag">Pull up a chair. Grab a snack. <b>Angel's table is set</b> with three games your crew will be talking about all week.</p>
 
-  <a class="game" href="werewolf/" style="--accent:#e8b94a">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 13.5A9 9 0 1 1 10.5 3a7 7 0 0 0 10.5 10.5Z"/></svg></div>
-    <div class="txt"><b>Werewolf Moderator</b><span>Runs the night, the votes and the stories. Four editions.</span></div>
-    <div class="arrow">›</div>
+    <div class="pieces" aria-hidden="true">
+      <!-- die -->
+      <div class="piece p1"><svg width="54" height="54" viewBox="0 0 54 54"><rect x="3" y="3" width="48" height="48" rx="11" fill="#fff6e4" stroke="#d8c7a2" stroke-width="3"/><g fill="#c0392b"><circle cx="16" cy="16" r="4.5"/><circle cx="27" cy="27" r="4.5"/><circle cx="38" cy="38" r="4.5"/></g></svg></div>
+      <!-- card -->
+      <div class="piece p2"><svg width="48" height="66" viewBox="0 0 48 66" style="transform:rotate(10deg)"><rect x="2" y="2" width="44" height="62" rx="7" fill="#fff" stroke="#d8c7a2" stroke-width="3"/><path d="M24 20c-6-8-16-2-10 7l10 11 10-11c6-9-4-15-10-7Z" fill="#e5534b"/><text x="8" y="16" font-family="Arial" font-weight="700" font-size="11" fill="#e5534b">A</text></svg></div>
+      <!-- meeple -->
+      <div class="piece p3"><svg width="50" height="52" viewBox="0 0 50 52"><path d="M25 3a8 8 0 0 1 8 8c0 2.5-1 4.3-2.5 5.6 6 1.4 14.5 4 16.5 8.4 1 2.2-1 3.6-3.6 3.3l-8.4-1 6 18.7c.6 2-.8 3-2.6 3H32l-7-11-7 11h-6.4c-1.8 0-3.2-1-2.6-3l6-18.7-8.4 1C3.9 29.6 2 28.2 3 26 5 21.6 13.5 19 19.5 17.6 18 16.3 17 14.5 17 11a8 8 0 0 1 8-8Z" fill="#3d7be0" stroke="#1f4e9c" stroke-width="2"/></svg></div>
+      <!-- chip -->
+      <div class="piece p4"><svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="23" fill="#f4c24a" stroke="#a77a12" stroke-width="3"/><circle cx="26" cy="26" r="14" fill="none" stroke="#fff6e4" stroke-width="3" stroke-dasharray="6 5"/><path d="M26 18l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.7 5.4-.6Z" fill="#fff6e4"/></svg></div>
+    </div>
+  </header>
+
+  <div class="section">Choose your game</div>
+
+  <a class="game wolf" href="werewolf/">
+    <div class="scene" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="moon"></div>
+      <svg class="trees" viewBox="0 0 600 82" preserveAspectRatio="none"><path fill="#0b0820" d="M0 82V52l18-30 16 28 14-38 18 34 14-22 20 30 16-40 18 38 14-26 18 32 20-44 18 40 14-24 16 28 20-36 18 34 14-20 18 30 16-42 18 40 16-28 18 32 20-38 16 36 14-22 18 30 16-34 18 32 16-24 18 30 20-40 16 38 14-20 18 28 16-32 V82Z"/></svg>
+      <div class="eyes"><i></i><i></i></div>
+    </div>
+    <div class="info">
+      <h2>Werewolf Moderator</h2>
+      <p>Close your eyes. The app runs the night, the votes and the stories, so everyone gets to play.</p>
+      <div class="row"><span class="chips"><span class="chip">Hidden roles</span><span class="chip">4 editions</span></span><span class="play">Play ›</span></div>
+    </div>
   </a>
 
-  <a class="game" href="codenames/" style="--accent:#e5534b">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5" opacity=".55"/><rect x="3" y="13" width="8" height="8" rx="1.5" opacity=".55"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></div>
-    <div class="txt"><b>Codenames Grids</b><span>Fresh word grids for Codenames and Duet, with full themes.</span></div>
-    <div class="arrow">›</div>
+  <a class="game code" href="codenames/">
+    <div class="scene" aria-hidden="true">
+      <div class="grid">
+        <i class="r"></i><i></i><i class="b"></i><i></i><i class="r" style="animation-delay:-1s"></i>
+        <i></i><i class="b" style="animation-delay:-2.2s"></i><i></i><i class="r"></i><i></i>
+        <i class="b"></i><i></i><i class="k" style="animation-delay:-3.4s"></i><i class="b"></i><i></i>
+        <i></i><i class="r" style="animation-delay:-4.6s"></i><i></i><i></i><i class="b"></i>
+        <i class="r"></i><i></i><i class="b" style="animation-delay:-5.8s"></i><i></i><i class="r"></i>
+      </div>
+    </div>
+    <div class="info">
+      <h2>Codenames Grids</h2>
+      <p>Brand-new word grids every round, plus full themes. Never see the same board twice.</p>
+      <div class="row"><span class="chips"><span class="chip">Teams</span><span class="chip">Duet ready</span></span><span class="play">Play ›</span></div>
+    </div>
   </a>
 
-  <a class="game" href="popcorn/" style="--accent:#f0c23b">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 9h12l-1.6 12.2a1 1 0 0 1-1 .8H8.6a1 1 0 0 1-1-.8Z"/><circle cx="8" cy="7" r="2.6"/><circle cx="12" cy="5.6" r="2.9"/><circle cx="16" cy="7" r="2.6"/></svg></div>
-    <div class="txt"><b>Pass the Popcorn</b><span>The movie guessing game, 2000 to now. Group or solo.</span></div>
-    <div class="arrow">›</div>
+  <a class="game corn" href="popcorn/">
+    <div class="scene" aria-hidden="true">
+      <div class="marquee"><small>NOW SHOWING</small>Pass the<br>Popcorn</div>
+      <div class="kernels"></div>
+    </div>
+    <div class="info">
+      <h2>Pass the Popcorn</h2>
+      <p>Name that movie! Hits from 2000 to now. Play with the whole room or go solo.</p>
+      <div class="row"><span class="chips"><span class="chip">Movies</span><span class="chip">Group or solo</span></span><span class="play">Play ›</span></div>
+    </div>
   </a>
 
-  <footer>Made with Claude</footer>
+  <div class="section">How it works</div>
+  <div class="steps">
+    <div class="step" style="--c:#e5534b;--r:-1.5deg"><div class="n">1</div><b>Pick a game</b><span>Tap any card above</span></div>
+    <div class="step" style="--c:#3d7be0;--r:1deg"><div class="n">2</div><b>Gather the crew</b><span>One phone runs the table</span></div>
+    <div class="step" style="--c:#e0a21b;--r:-.5deg"><div class="n">3</div><b>Save it</b><span>Add to Home Screen for next time</span></div>
+  </div>
+
+  <footer><span class="dice">⚀ ⚂ ⚄</span>Hosted by Angel · Made with Claude</footer>
 </main>
 </body>
 </html>
