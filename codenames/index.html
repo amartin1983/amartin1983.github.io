@@ -3,7 +3,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Special+Elite&family=Oswald:wght@500;600;700&family=Libre+Franklin:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Special+Elite&family=Oswald:wght@500;600;700&family=Libre+Franklin:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Alfa+Slab+One&family=Bitter:wght@400;600;700&family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&family=VT323&family=Bungee&family=Teko:wght@500;600;700&family=Graduate&display=swap">
 <style>
 /* Layout: one narrow column you thumb through at the table; sticky agency header, 5x5 board as the hero, tab bar pinned to the bottom.
    Two deliberate single-world looks: "Spy HQ" (dark briefing room) and "Classified" (manila file). Each sets every color itself. */
@@ -282,6 +282,130 @@ details.faq b{color:var(--fg)}
 .vol svg{width:20px;height:20px;flex:none;color:var(--muted)}
 .plate-ct{white-space:nowrap}
 .score.duet .plate-name{font-size:15px}
+
+/* ===== Full themes. Each is a deliberate single-world look and sets every color itself. ===== */
+.cn-num{display:none}
+html.ed-loteria,html.ed-northpole,html.ed-arcade,html.ed-dino,html.ed-stadium{--shadow:rgba(0,0,0,.45)}
+
+/* Loteria Night: papel picado, Loteria card frames */
+html.ed-loteria{
+  --bg:#24081b; --bg2:#300b24; --panel:#3b0f2d; --panel2:#481437; --line:#6a2550;
+  --fg:#fff3df; --muted:#e3b9cf; --faint:#a9718f;
+  --brass:#ffb000; --brass-ink:#2a1300; --brass-soft:rgba(255,176,0,.15); --glow:rgba(255,176,0,.4);
+  --red:#e8343a; --blue:#1d7fe0; --green:#28b463; --tan:#e8c88a; --ink:#0c0c0c;
+  --card:#fdf3dc; --card2:#f6e4bd; --card-ink:#151515; --card-line:#151515; --label:#ffffff; --cut:#fdf3dc;
+  --f-stencil:"Alfa Slab One",Georgia,serif; --f-type:"Bitter",Georgia,serif; --f-word:"Alfa Slab One",Georgia,serif;
+  color-scheme:dark;
+}
+html.ed-loteria body{background-image:radial-gradient(circle at 15% 10%,rgba(228,0,124,.25),transparent 40%),radial-gradient(circle at 85% 30%,rgba(0,161,154,.18),transparent 45%)}
+.ed-loteria .top{border-bottom:0}
+.ed-loteria .top::after{content:"";position:absolute;left:0;right:0;top:100%;height:14px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#e4007c 0 70px,#ff8c00 70px 140px,#00a19a 140px 210px,#7b2cbf 210px 280px,#ffd400 280px 350px);
+  -webkit-mask:conic-gradient(from 135deg at top,#000 90deg,#0000 0) 0 0/16px 100%;mask:conic-gradient(from 135deg at top,#000 90deg,#0000 0) 0 0/16px 100%}
+.ed-loteria main{padding-top:26px}
+.ed-loteria .cn{border-radius:4px;box-shadow:0 3px 0 rgba(0,0,0,.5),inset 0 0 0 2px var(--card),inset 0 0 0 4px #151515,inset 0 0 0 6px var(--card),inset 0 0 0 7px #151515}
+.ed-loteria .cn-num{display:block;position:absolute;top:6px;left:7px;font:400 10px/1 var(--f-word);color:#151515}
+.ed-loteria .cn-top .cn-ico{visibility:hidden}
+.ed-loteria .cn.cov .cn-ico{visibility:visible}
+.ed-loteria .cn-label{border-radius:2px;box-shadow:inset 0 0 0 1.5px #151515}
+.ed-loteria .cn-w{font-weight:400;letter-spacing:.02em}
+.ed-loteria h2,.ed-loteria .brand{letter-spacing:.02em}
+.ed-loteria .plate-name{letter-spacing:.03em}
+
+/* North Pole Christmas: snowy pine night, candy-cane cards */
+html.ed-northpole{
+  --bg:#0d2419; --bg2:#102d1f; --panel:#143726; --panel2:#19422e; --line:#2a5c42;
+  --fg:#fffaf0; --muted:#bcd8c6; --faint:#7fa38c;
+  --brass:#f2c14e; --brass-ink:#2b1d00; --brass-soft:rgba(242,193,78,.16); --glow:rgba(242,193,78,.4);
+  --red:#d1263b; --blue:#2fa35f; --green:#4cc47a; --tan:#c99a66; --ink:#1a1a1a;
+  --card:#fffdf8; --card2:#f4efe4; --card-ink:#22301f; --card-line:#d1263b; --label:#ffffff; --cut:#fffdf8;
+  --f-stencil:"Mountains of Christmas",Georgia,serif; --f-type:"Nunito",system-ui,sans-serif; --f-word:"Nunito",system-ui,sans-serif; --f-body:"Nunito",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html.ed-northpole body{background-image:radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.6px),radial-gradient(circle,rgba(255,255,255,.3) 1px,transparent 1.6px);background-size:34px 34px,21px 21px;background-position:0 0,9px 13px}
+.ed-northpole .cn{border:4px solid transparent;background:linear-gradient(175deg,var(--card),var(--card2)) padding-box,repeating-linear-gradient(45deg,#d1263b 0 5px,#fff 5px 10px) border-box;box-shadow:0 3px 8px -3px rgba(0,0,0,.6);padding:2px 3px 3px}
+.ed-northpole .cn.cov{border-color:transparent;background:linear-gradient(160deg,color-mix(in srgb,var(--cc) 80%,#fff 20%),var(--cc)) padding-box,repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0 5px,transparent 5px 10px) border-box}
+.ed-northpole .cn-w{font-weight:800}
+.ed-northpole h2,.ed-northpole .brand,.ed-northpole .plate-name{font-weight:700;letter-spacing:.01em;text-transform:none}
+.ed-northpole h2{font-size:30px}.ed-northpole .brand{font-size:26px}
+.ed-northpole .eyebrow{letter-spacing:.06em;text-transform:uppercase;font-weight:700;font-size:11px}
+
+/* Retro Arcade: CRT glow, scanlines, pixel type */
+html.ed-arcade{
+  --bg:#07040f; --bg2:#0d0820; --panel:#120c2c; --panel2:#1a1240; --line:#352a6e;
+  --fg:#eaf6ff; --muted:#9db3d6; --faint:#6574a0;
+  --brass:#ffe14d; --brass-ink:#1a1400; --brass-soft:rgba(255,225,77,.13); --glow:rgba(255,225,77,.45);
+  --red:#ff2bd6; --blue:#1fd8ff; --green:#39ff88; --tan:#7b819a; --ink:#000000;
+  --card:#141034; --card2:#0e0a26; --card-ink:#eaf6ff; --card-line:#3d3380; --label:#05030c; --cut:#07040f;
+  --f-stencil:"Press Start 2P",ui-monospace,monospace; --f-type:"VT323",ui-monospace,monospace; --f-word:"VT323",ui-monospace,monospace;
+  color-scheme:dark;
+}
+html.ed-arcade body{background-image:radial-gradient(ellipse at 50% 0%,rgba(255,43,214,.16),transparent 55%),radial-gradient(ellipse at 50% 100%,rgba(31,216,255,.14),transparent 55%)}
+html.ed-arcade body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;background:repeating-linear-gradient(rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.ed-arcade .brand{font-size:15px;line-height:1.3}
+.ed-arcade .brand small{font-size:15px}
+.ed-arcade h2{font-size:15px;line-height:1.5}
+.ed-arcade .plate-name{font-size:11px;letter-spacing:.02em}
+.ed-arcade .eyebrow{font-size:16px;letter-spacing:.04em}
+.ed-arcade .cn{border-radius:2px;box-shadow:0 0 0 1px var(--card-line),0 0 12px -4px var(--blue),inset 0 0 0 2px var(--card)}
+.ed-arcade .cn-label{background:var(--label);box-shadow:inset 0 0 0 1px var(--card-line);border-radius:0}
+.ed-arcade .cn-w{font-weight:400;letter-spacing:.04em;color:#eaf6ff;text-shadow:0 0 6px rgba(31,216,255,.7)}
+.ed-arcade .cn-up{color:#eaf6ff}
+.ed-arcade .cn-ico{color:var(--brass)}
+.ed-arcade .cn.cov{box-shadow:0 0 16px -2px var(--cc),inset 0 0 0 2px rgba(0,0,0,.4)}
+.ed-arcade .cn.cov .cn-w{color:#000;text-shadow:none}
+.ed-arcade .btn,.ed-arcade .seg button,.ed-arcade .plate,.ed-arcade .card,.ed-arcade .clue{border-radius:3px}
+.ed-arcade .plate.turn{box-shadow:0 0 0 1px var(--tc) inset,0 0 22px -2px var(--tc)}
+
+/* Dinosaur Park: jungle expedition, field-guide cards */
+html.ed-dino{
+  --bg:#101b0d; --bg2:#142211; --panel:#1a2b16; --panel2:#22371d; --line:#3a5530;
+  --fg:#f2ead2; --muted:#c1c7a3; --faint:#8a9572;
+  --brass:#f4a261; --brass-ink:#2a1300; --brass-soft:rgba(244,162,97,.15); --glow:rgba(244,162,97,.4);
+  --red:#e76f24; --blue:#2a9d8f; --green:#8ac926; --tan:#cfae7a; --ink:#16110b;
+  --card:#efe3c2; --card2:#e2d1a4; --card-ink:#2b2214; --card-line:#8c6d3f; --label:#fbf5e3; --cut:#efe3c2;
+  --f-stencil:"Bungee",Impact,sans-serif; --f-type:"Bitter",Georgia,serif; --f-body:"Bitter",Georgia,serif;
+  color-scheme:dark;
+}
+html.ed-dino body{background-image:radial-gradient(ellipse at 10% 0%,rgba(138,201,38,.14),transparent 45%),radial-gradient(ellipse at 90% 20%,rgba(42,157,143,.14),transparent 45%),repeating-radial-gradient(circle at 30% 120%,rgba(0,0,0,.12) 0 2px,transparent 2px 22px)}
+.ed-dino .cn{box-shadow:0 3px 0 rgba(0,0,0,.45),inset 0 0 0 3px var(--card),inset 0 0 0 4px var(--card-line),inset 0 0 0 6px var(--card),inset 0 0 0 7px rgba(140,109,63,.4)}
+.ed-dino .cn-label{border-radius:2px;background:var(--label);box-shadow:inset 0 0 0 1px var(--card-line)}
+.ed-dino .cn-ico{color:#8c6d3f}
+.ed-dino h2,.ed-dino .brand{letter-spacing:.03em}
+.ed-dino .plate-name{letter-spacing:.04em}
+
+/* Stadium Sports: night game under the lights, jersey cards */
+html.ed-stadium{
+  --bg:#0a1a10; --bg2:#0e2115; --panel:#11281a; --panel2:#163221; --line:#2b5236;
+  --fg:#f5f7f2; --muted:#b5c7b8; --faint:#7d9483;
+  --brass:#ffd60a; --brass-ink:#1c1600; --brass-soft:rgba(255,214,10,.13); --glow:rgba(255,214,10,.45);
+  --red:#d62828; --blue:#2463eb; --green:#38b000; --tan:#c9c5b9; --ink:#111111;
+  --card:#ffffff; --card2:#eef0ee; --card-ink:#14181a; --card-line:#c8cdc8; --label:#ffffff; --cut:#ffffff;
+  --f-stencil:"Graduate",Georgia,serif; --f-type:"Teko",system-ui,sans-serif; --f-word:"Teko",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html.ed-stadium body{background-image:radial-gradient(ellipse at 15% -5%,rgba(255,255,255,.18),transparent 35%),radial-gradient(ellipse at 85% -5%,rgba(255,255,255,.18),transparent 35%),repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 60px,transparent 60px 120px)}
+.ed-stadium .cn{background:linear-gradient(180deg,var(--card) 0 18%,#d0d4d0 18% 22%,var(--card) 22% 26%,#d0d4d0 26% 30%,var(--card) 30%);box-shadow:0 3px 0 rgba(0,0,0,.45),inset 0 0 0 1px var(--card-line)}
+.ed-stadium .cn-label{box-shadow:none;background:transparent}
+.ed-stadium .cn-w{font-weight:600;letter-spacing:.04em}
+.ed-stadium .cn-ico{color:#9aa39c}
+.ed-stadium .eyebrow{font-size:16px;letter-spacing:.08em;text-transform:uppercase}
+.ed-stadium .plate-ct,.ed-stadium .clue-n{font-family:"Teko",system-ui,sans-serif;font-size:30px;line-height:.9;color:var(--brass);text-shadow:0 0 10px var(--glow)}
+.ed-stadium .plate-ct small{font-family:var(--f-body);color:var(--muted);text-shadow:none;font-size:12px}
+.ed-stadium .clue-word{font-family:"Teko",system-ui,sans-serif;font-size:30px}
+
+/* edition picker */
+.edopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.edopt[aria-pressed="true"]{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
+.edopt .edico{width:38px;height:38px;flex:none;border-radius:10px;display:grid;place-items:center}
+.edopt .edico svg{width:26px;height:26px}
+.edopt b{display:block;font-size:15px}
+.edlist{display:flex;flex-direction:column;gap:6px}
+.soon{font-size:12.5px;color:var(--faint)}
+.ed-stadium .cn.cov,.ed-dino .cn.cov,.ed-loteria .cn.cov{background:linear-gradient(160deg,color-mix(in srgb,var(--cc) 82%,#fff 18%),var(--cc))}
+.ed-stadium .cn.cov .cn-ico,.ed-dino .cn.cov .cn-ico,.ed-arcade .cn.cov .cn-ico,.ed-loteria .cn.cov .cn-ico{color:currentColor}
+.ed-stadium .cn.cov.c-tan,.ed-dino .cn.cov.c-tan,.ed-loteria .cn.cov.c-tan{color:var(--card-ink)}
+.ed-arcade .brand small{font-size:13px}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-agent" viewBox="0 0 48 48"><path d="M8 46c1-10 7-16 16-16s15 6 16 16z"/><path class="cut" d="M20.5 30.5L24 39l3.5-8.5z"/><circle cx="24" cy="21" r="7"/><path d="M14.5 15.5c.8-6.5 3.6-10 9.5-10s8.7 3.5 9.5 10z"/><ellipse cx="24" cy="16" rx="14" ry="3.2"/></symbol>
@@ -303,6 +427,35 @@ details.faq b{color:var(--fg)}
   <symbol id="i-sound" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></g></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></g></symbol>
 </svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Loteria -->
+  <symbol id="i-lot-frijol" viewBox="0 0 48 48"><path d="M12 27c-1-9 6-17 15-16 7 .8 10 6 7.5 10.5-1.6 2.8-5 3.4-6 7-1.4 5.6-5.6 9-10.2 8.4C13.8 36.4 12.4 32 12 27z"/><path class="cut" d="M19 20c2-3 5-4 7.5-3.4-2.6.9-4.6 2.6-5.6 5z"/></symbol>
+  <symbol id="i-lot-maiz" viewBox="0 0 48 48"><path d="M24 5c5.5 0 8.5 7 8.5 17S29.5 40 24 40s-8.5-8-8.5-18S18.5 5 24 5z"/><g class="cut"><circle cx="21" cy="13" r="1.6"/><circle cx="27" cy="13" r="1.6"/><circle cx="21" cy="19" r="1.6"/><circle cx="27" cy="19" r="1.6"/><circle cx="21" cy="25" r="1.6"/><circle cx="27" cy="25" r="1.6"/><circle cx="24" cy="31" r="1.6"/></g><path d="M24 44c-6-1-11-6-12-15 4 3 8 7 12 15zM24 44c6-1 11-6 12-15-4 3-8 7-12 15z"/></symbol>
+  <symbol id="i-lot-muerte" viewBox="0 0 48 48"><path d="M24 4C14 4 8 11 8 20c0 6 3 10 6 12v6c0 2 1.5 3.5 3.5 3.5h13c2 0 3.5-1.5 3.5-3.5v-6c3-2 6-6 6-12C40 11 34 4 24 4z"/><g class="cut"><path d="M13.5 20.5c0-3 2.4-5 5.2-5 2.8 0 4.3 2.3 4.3 4.6 0 2.6-2.2 4.4-4.8 4.4-2.8 0-4.7-1.6-4.7-4z"/><path d="M34.5 20.5c0-3-2.4-5-5.2-5-2.8 0-4.3 2.3-4.3 4.6 0 2.6 2.2 4.4 4.8 4.4 2.8 0 4.7-1.6 4.7-4z"/><path d="M24 26l-2.6 4.6h5.2z"/><rect x="18" y="34" width="2.2" height="5" rx="1"/><rect x="22.9" y="34" width="2.2" height="5" rx="1"/><rect x="27.8" y="34" width="2.2" height="5" rx="1"/></g></symbol>
+  <symbol id="i-lot-logo" viewBox="0 0 48 48"><rect x="9" y="3" width="30" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><rect x="13" y="7" width="22" height="34" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M24 15c-2.6-3.4-8-2-8 2.6 0 4.6 8 9.4 8 9.4s8-4.8 8-9.4C32 13 26.6 11.6 24 15z"/><rect x="15" y="33" width="18" height="4" rx="1"/></symbol>
+  <!-- North Pole -->
+  <symbol id="i-np-reindeer" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 16C13 13 10 8 11 3M13 10l-6-2M15 14l-6 1"/><path d="M31 16c4-3 7-8 6-13M35 10l6-2M33 14l6 1"/></g><path d="M24 14c-7 0-11 5-11 11 0 4 2 6 4 8l2 7c.6 2.4 2.6 4 5 4s4.4-1.6 5-4l2-7c2-2 4-4 4-8 0-6-4-11-11-11z"/><g class="cut"><circle cx="19.5" cy="24" r="1.8"/><circle cx="28.5" cy="24" r="1.8"/></g><circle cx="24" cy="38" r="3.6" fill="#ff4d4d"/></symbol>
+  <symbol id="i-np-elf" viewBox="0 0 48 48"><path d="M9 30C12 16 22 6 34 5c-4 6-5 13-4 20z"/><circle cx="36" cy="5" r="3.6"/><rect x="6" y="28" width="30" height="7" rx="3.5"/><path d="M12 35h20c0 6-4.5 10-10 10s-10-4-10-10z"/><g class="cut"><circle cx="18" cy="39" r="1.5"/><circle cx="26" cy="39" r="1.5"/></g></symbol>
+  <symbol id="i-np-ginger" viewBox="0 0 48 48"><circle cx="24" cy="10" r="7"/><path d="M15 19h18l9 6-3 4-6-3v6l5 12-5 2-5-10h-4l-5 10-5-2 5-12v-6l-6 3-3-4z"/><g class="cut"><circle cx="21.5" cy="9" r="1.2"/><circle cx="26.5" cy="9" r="1.2"/><circle cx="24" cy="23" r="1.4"/><circle cx="24" cy="28.5" r="1.4"/><path d="M21 12.5c1.6 1.6 4.4 1.6 6 0" fill="none" stroke-width="1.2"/></g></symbol>
+  <symbol id="i-np-coal" viewBox="0 0 48 48"><path d="M10 30l3-11 9-7 11 2 7 9 1 10-6 8-12 2-10-4z"/><g class="cut" opacity=".55"><path d="M17 20l6-4 3 5-5 4z"/><path d="M29 18l5 4-2 4-4-3z"/><path d="M15 32l5-1 2 4-5 1z"/></g></symbol>
+  <symbol id="i-np-logo" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M24 3v42M5.8 13.5l36.4 21M5.8 34.5l36.4-21"/><path d="M19 7l5 5 5-5M19 41l5-5 5 5M7 19.5l6.8-.6-2.6-6.4M41 28.5l-6.8.6 2.6 6.4M7 28.5l6.8.6-2.6 6.4M41 19.5l-6.8-.6 2.6-6.4"/></g></symbol>
+  <!-- Retro Arcade (pixel art on an 8x8 grid scaled x6) -->
+  <symbol id="i-ar-hero" viewBox="0 0 48 48"><path d="M18 0h12v6h6v12h-6v6h6v6h6v6h-6v-6h-6v12h6v6H30V36h-12v12H12v-6h6V30h-6v6H6v-6h6v-6h6v-6h-6V6h6z"/><path class="cut" d="M18 12h3v6h-3zM27 12h3v6h-3z"/></symbol>
+  <symbol id="i-ar-coin" viewBox="0 0 48 48"><path d="M18 3h12v3h6v6h3v24h-3v6h-6v3H18v-3h-6v-6H9V12h3V6h6z"/><path class="cut" d="M21 12h6v3h3v18h-3v3h-6v-3h3V15h-3z"/></symbol>
+  <symbol id="i-ar-skull" viewBox="0 0 48 48"><path d="M12 3h24v6h6v18h-6v6h-3v9H15v-9h-3v-6H6V9h6z"/><path class="cut" d="M12 15h9v9h-9zM27 15h9v9h-9zM21 27h6v3h-6zM18 36h3v6h-3zM27 36h3v6h-3z"/></symbol>
+  <symbol id="i-ar-logo" viewBox="0 0 48 48"><rect x="8" y="30" width="32" height="12" rx="3"/><rect x="22" y="14" width="4" height="17"/><circle cx="24" cy="11" r="7"/><g class="cut"><rect x="12" y="34" width="5" height="4" rx="1"/><rect x="31" y="34" width="5" height="4" rx="1"/></g></symbol>
+  <!-- Dinosaur Park -->
+  <symbol id="i-dn-raptor" viewBox="0 0 48 48"><path d="M24 44c-5 0-8-3-8-7 0-5 4-9 8-9s8 4 8 9c0 4-3 7-8 7z"/><path d="M17 27L7 8l3-1 12 17zM24 25V3h3v22zM31 27l10-19-3-1-12 17z"/></symbol>
+  <symbol id="i-dn-trike" viewBox="0 0 48 48"><path d="M4 26C4 14 13 6 24 6s20 8 20 20c-3-3-6-4-10-4H14c-4 0-7 1-10 4z"/><path d="M14 24h20c3 0 5 2 5 5v4c0 6-6 11-15 11S9 39 9 33v-4c0-3 2-5 5-5z"/><path d="M15 25L7 13l9 9zM33 25l8-12-9 9zM24 30l-2 7h4z" /><g class="cut"><circle cx="18" cy="31" r="1.8"/><circle cx="30" cy="31" r="1.8"/></g></symbol>
+  <symbol id="i-dn-egg" viewBox="0 0 48 48"><path d="M24 3c8 0 15 12 15 24 0 10-6.7 18-15 18S9 37 9 27C9 15 16 3 24 3z"/><g class="cut" opacity=".6"><circle cx="19" cy="18" r="3"/><circle cx="29" cy="27" r="4"/><circle cx="18" cy="34" r="2.4"/></g></symbol>
+  <symbol id="i-dn-trex" viewBox="0 0 48 48"><path d="M5 18c0-7 6-12 15-12h12c6 0 11 4 11 10v5c0 2-1.6 3.6-3.6 3.6H30l3 3H22c-3 0-5 2-5 5v9H9V30c-2.6-3-4-7-4-12z"/><g class="cut"><circle cx="31" cy="13" r="2.2"/><path d="M22 24.6h3l-1.5 3.6zM27 24.6h3l-1.5 3.6zM32 24.6h3l-1.5 3.6z"/></g></symbol>
+  <!-- Stadium -->
+  <symbol id="i-st-jersey" viewBox="0 0 48 48"><path d="M16 4l8 4 8-4 12 7-5 9-4-2v26H13V18l-4 2-5-9z"/><path class="cut" d="M20 6l4 6 4-6zM18 22h12v3H18zM20 28h8v10h-8z" opacity=".55"/></symbol>
+  <symbol id="i-st-fan" viewBox="0 0 48 48"><path d="M18 3h7v18h3V12h6v12h2v-6h5v16c0 7-5 12-12 12h-4c-7 0-12-5-12-12V25h5z"/><path class="cut" d="M16 34h16v2H16z" opacity=".5"/></symbol>
+  <symbol id="i-st-card" viewBox="0 0 48 48"><rect x="12" y="5" width="24" height="36" rx="3" transform="rotate(12 24 23)"/><path class="cut" d="M18 13h12v2H18z" transform="rotate(12 24 23)" opacity=".4"/></symbol>
+  <symbol id="i-st-logo" viewBox="0 0 48 48"><path d="M13 4h22v8c0 8-4.5 14-11 15C17.5 26 13 20 13 12z"/><path d="M13 7H5c0 7 3.6 11 9 11M35 7h8c0 7-3.6 11-9 11" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M21 27h6v7h-6zM14 36h20v8H14z"/></symbol>
+</svg>
+
 <div id="app"></div>
 <script>
 const WORDS = ["AARDVARK", "ABACUS", "ABBEY", "ACACIA", "ACCOUNTANT", "ACORN", "ACROBAT", "ACTOR", "ADMIRAL", "AIRPORT", "AIRSHIP", "ALABAMA", "ALBATROSS", "ALBUM", "ALIBI", "ALLIGATOR", "ALMANAC", "ALOE", "ALPACA", "AMPHITHEATER", "AMPLIFIER", "AMULET", "ANCHOVY", "ANKLE", "ANKLET", "ANNIVERSARY", "ANTEATER", "ANTELOPE", "ANTENNA", "ANVIL", "APARTMENT", "AQUARIUM", "ARCADE", "ARCH", "ARCHER", "ARCHIPELAGO", "ARCHITECT", "ARCTIC", "ARENA", "ARIZONA", "ARMADILLO", "ARMCHAIR", "ARMORY", "ARMPIT", "ARROW", "ARTIST", "ASPEN", "ASTEROID", "ASTRONOMER", "ATHENS", "ATHLETE", "ATLAS", "ATOM", "AUCTION", "AUCTIONEER", "AURORA", "AWL", "AXIS", "BABOON", "BACKPACK", "BADGE", "BADGER", "BAGPIPE", "BAGUETTE", "BAKER", "BAKERY", "BALACLAVA", "BALCONY", "BALLAD", "BALLERINA", "BALLET", "BALLOT", "BALLROOM", "BAMBOO", "BANDANA", "BANDIT", "BANGKOK", "BANISTER", "BANJO", "BANKER", "BANNER", "BANSHEE", "BARBER", "BARCELONA", "BARCODE", "BARGE", "BARN", "BARRACKS", "BARRACUDA", "BARREL", "BARRICADE", "BARSTOOL", "BASEMENT", "BASIL", "BASILISK", "BASIN", "BASKET", "BASSOON", "BATHROBE", "BATHTUB", "BATON", "BATTER", "BAZAAR", "BEACH BALL", "BEACON", "BEAGLE", "BEAKER", "BEANBAG", "BEANIE", "BEDPOST", "BEDROCK", "BEEHIVE", "BEEKEEPER", "BEETHOVEN", "BELFRY", "BELLOWS", "BELLY", "BERET", "BIB", "BILLBOARD", "BINDER", "BINGO", "BINOCULARS", "BIRCH", "BIRDHOUSE", "BIRTHDAY", "BIRTHMARK", "BISON", "BLACKOUT", "BLANKET", "BLAZER", "BLENDER", "BLIMP", "BLINDFOLD", "BLOODHOUND", "BLOODLINE", "BLOSSOM", "BLOUSE", "BLOWFISH", "BLUEBIRD", "BLUEPRINT", "BLUFF", "BOAR", "BOARDWALK", "BOATHOUSE", "BOBBER", "BOBCAT", "BOBSLED", "BOG", "BONFIRE", "BONNET", "BOOKCASE", "BOOKMARK", "BOOKSHELF", "BOOKWORM", "BOOMERANG", "BOSTON", "BOTTLECAP", "BOULDER", "BOUNCER", "BOUQUET", "BOUTIQUE", "BOW TIE", "BOWLING", "BOXCAR", "BRACELET", "BRAID", "BRAINSTORM", "BRAKE", "BRAMBLE", "BRANCH", "BREADCRUMB", "BREEZE", "BRICKLAYER", "BRIEFCASE", "BRISTLE", "BRONZE", "BROOCH", "BROOK", "BROWSER", "BUBBLEGUM", "BUCKLE", "BUFF", "BULLDOG", "BULLDOZER", "BULLETIN", "BULLFROG", "BULLHORN", "BUMPER", "BUNGALOW", "BUNGEE", "BUNKER", "BUOY", "BURGLAR", "BUTCHER", "BUTLER", "BUTTERCUP", "BUZZARD", "CABBAGE", "CABINET", "CABOOSE", "CADET", "CAFETERIA", "CAGE", "CAIRO", "CALZONE", "CAMOUFLAGE", "CAMPER", "CAMPUS", "CANAL", "CANARY", "CANCUN", "CANDELABRA", "CANDLESTICK", "CANDY", "CANOE", "CANTEEN", "CANYON", "CAPSULE", "CARABINER", "CARAFE", "CARAVAN", "CARDBOARD", "CARDIGAN", "CARDINAL", "CARIBOU", "CARNATION", "CARNIVAL", "CAROUSEL", "CARP", "CARPOOL", "CARPORT", "CARRIAGE", "CARTOON", "CARTRIDGE", "CARTWHEEL", "CASHIER", "CASSEROLE", "CASSETTE", "CASTANETS", "CATALOG", "CATAMARAN", "CATAPULT", "CATERPILLAR", "CATFISH", "CATHEDRAL", "CAVERN", "CEDAR", "CEILING", "CELLAR", "CELLO", "CENTIPEDE", "CHAIN MAIL", "CHAINSAW", "CHALET", "CHALICE", "CHALKBOARD", "CHAMBER", "CHAMELEON", "CHANDELIER", "CHAPEL", "CHAPERONE", "CHARGER", "CHARIOT", "CHAUFFEUR", "CHECKBOOK", "CHECKERS", "CHECKMATE", "CHEETAH", "CHEF", "CHEMIST", "CHESSBOARD", "CHESTNUT", "CHICAGO", "CHIHUAHUA", "CHIME", "CHIMERA", "CHIMPANZEE", "CHIN", "CHINCHILLA", "CHIPMUNK", "CHISEL", "CHOIR", "CHOPPER", "CHOPSTICK", "CHORUS", "CICADA", "CINEMA", "CIPHER", "CIRCUIT", "CITADEL", "CLAMP", "CLARINET", "CLASP", "CLAW", "CLAY", "CLERK", "CLINIC", "CLIP", "CLIPBOARD", "CLIPPER", "CLOCKWORK", "CLOGS", "CLOSET", "CLOVER", "CLOWNFISH", "CLUBHOUSE", "COASTER", "COBRA", "COBWEB", "COCKATOO", "COCKPIT", "COCKROACH", "COCOON", "COD", "CODEBOOK", "COLANDER", "COLLAGE", "COLT", "COLUMN", "COMEDIAN", "COMPASS", "COMPOST", "CONCERTO", "CONDOR", "CONFETTI", "CONSTELLATION", "CONTEST", "CONVERTIBLE", "CORAL", "CORD", "CORGI", "CORK", "CORKBOARD", "CORKSCREW", "CORNER", "CORONATION", "CORSAGE", "CORSET", "COSMONAUT", "COT", "COUPE", "COUPON", "COURIER", "COURTHOUSE", "COURTYARD", "COVERALLS", "COWGIRL", "CRADLE", "CRANK", "CRATE", "CRATER", "CRAVAT", "CRAWL", "CREEK", "CREST", "CREVASSE", "CRIB", "CROCODILE", "CROP", "CROQUET", "CROSSBOW", "CROSSWORD", "CROUTON", "CROWBAR", "CRUISE", "CRUISER", "CRUMPET", "CRUST", "CRUTCH", "CRYPT", "CUB", "CUBA", "CUBICLE", "CUE", "CUFFLINK", "CUPBOARD", "CUPID", "CURFEW", "CURRENT", "CURSOR", "CURTAIN", "CUSHION", "CUSTARD", "CUTLERY", "CYCLOPS", "CYMBAL", "CYPRESS", "DACHSHUND", "DAFFODIL", "DAGGER", "DAIRY", "DALMATIAN", "DANCER", "DANDELION", "DAREDEVIL", "DAYDREAM", "DEADLINE", "DEBATE", "DEBUT", "DECANTER", "DECOY", "DEER", "DENVER", "DEPOT", "DEPUTY", "DERBY", "DESKTOP", "DETECTIVE", "DETROIT", "DEW", "DIAL", "DIMPLE", "DINER", "DINGHY", "DINGO", "DIPLOMA", "DIPLOMAT", "DISCO", "DISGUISE", "DISH", "DIVER", "DOCK", "DODGEBALL", "DOG TAG", "DOLPHIN", "DOODLE", "DOORBELL", "DOORKNOB", "DOORMAT", "DOORSTOP", "DOORWAY", "DORM", "DOSE", "DOSSIER", "DRAGONFLY", "DRAPES", "DRAWBRIDGE", "DRAWER", "DREAMCATCHER", "DRIFTWOOD", "DRIZZLE", "DRUID", "DRUMMER", "DRUMROLL", "DRUMSTICK", "DUBAI", "DUBLIN", "DUCKLING", "DUET", "DUMBBELL", "DUNE", "DUSTER", "DUSTPAN", "DUVET", "EARBUD", "EARMUFFS", "EARPLUG", "EARRING", "EARTHWORM", "EASEL", "ECHO", "ECLIPSE", "EDGE", "EDISON", "EDITOR", "EEL", "EGGPLANT", "ELBOW", "ELECTION", "ELECTRICIAN", "ELECTRON", "ELEVATOR", "ELM", "EMBER", "EMBLEM", "EMPIRE", "EMU", "ENCORE", "ENGINEER", "ENVELOPE", "ERASER", "ESCALATOR", "ESPRESSO", "ESTUARY", "EVEREST", "EXHAUST", "EXHIBIT", "EYEBROW", "EYELASH", "EYEPATCH", "FABLE", "FACTORY", "FAIRWAY", "FALCON", "FARMER", "FARMHOUSE", "FAUCET", "FAWN", "FAX", "FEDORA", "FERN", "FERRET", "FERRY", "FESTIVAL", "FIDGET", "FIGURINE", "FIJI", "FILTER", "FINCH", "FINGERPRINT", "FIREBALL", "FIRECRACKER", "FIREFIGHTER", "FIREFLY", "FIREHOUSE", "FIREWOOD", "FIREWORK", "FISHERMAN", "FJORD", "FLAGPOLE", "FLAME", "FLAMINGO", "FLANNEL", "FLAPJACK", "FLARE", "FLASHBACK", "FLASHCARD", "FLASHLIGHT", "FLASK", "FLEA", "FLEET", "FLIGHT", "FLIP-FLOP", "FLIPPER", "FLOAT", "FLOPPY", "FLORENCE", "FLORIST", "FLOUNDER", "FLYSWATTER", "FOAL", "FOGHORN", "FOLD", "FOLDER", "FONDUE", "FOOTBALL", "FOOTPRINT", "FOOTSTOOL", "FOREHEAD", "FORGE", "FORKLIFT", "FORTRESS", "FORTUNE", "FOUNDRY", "FOUNTAIN", "FOX", "FOXHOLE", "FRECKLE", "FREEZER", "FREIGHT", "FREIGHTER", "FRISBEE", "FRONT", "FUNERAL", "FUNNEL", "FURNACE", "FUSE", "GADGET", "GALA", "GALE", "GALILEO", "GALLERY", "GALOSHES", "GARAGE", "GARBAGE", "GARDENER", "GARDENIA", "GARLAND", "GARNISH", "GATEKEEPER", "GAUGE", "GAUNTLET", "GAVEL", "GAZEBO", "GAZELLE", "GECKO", "GENE", "GENEVA", "GEOLOGIST", "GERANIUM", "GEYSER", "GIRAFFE", "GLADE", "GLADIATOR", "GLIDER", "GLITCH", "GLITTER", "GLOBE", "GLOW", "GLUE", "GO-KART", "GOBI", "GOBLET", "GOGGLES", "GOLDFISH", "GOLDMINE", "GOLEM", "GOLFER", "GONDOLA", "GONG", "GOPHER", "GORGE", "GOSPEL", "GOWN", "GRADUATE", "GRADUATION", "GRAFFITI", "GRANARY", "GRAPEFRUIT", "GRAPEVINE", "GRASSHOPPER", "GRASSLAND", "GRATER", "GRAVE", "GRAVEL", "GRAVESTONE", "GRAVITY", "GRAVY", "GRENADE", "GREYHOUND", "GRID", "GRIDDLE", "GRIDLOCK", "GRIFFIN", "GRILL", "GRIP", "GROOVE", "GROTTO", "GROUNDHOG", "GROVE", "GUADALAJARA", "GUARD", "GULL", "GULLY", "GUMBALL", "GUMDROP", "GUPPY", "GUTTER", "GYM", "GYMNASIUM", "HACKSAW", "HAIRBRUSH", "HAIRCUT", "HAIRDRESSER", "HAIRNET", "HAIRPIN", "HALIBUT", "HALL", "HALO", "HAMLET", "HAMMERHEAD", "HAMMOCK", "HAMPER", "HANDBAG", "HANDCUFF", "HANDLE", "HANDLEBAR", "HANDPRINT", "HANDSAW", "HANDSHAKE", "HANDSTAND", "HANGAR", "HANGER", "HARBOR", "HARE", "HARMONICA", "HARNESS", "HARPOON", "HARPSICHORD", "HARVEST", "HATBOX", "HATCH", "HATCHET", "HAVANA", "HAYSTACK", "HAZE", "HAZEL", "HEADBAND", "HEADBOARD", "HEADLAMP", "HEADLINE", "HEADPHONES", "HEADSET", "HEADSTONE", "HEARSE", "HEARTBEAT", "HEATER", "HEATWAVE", "HEDGEHOG", "HEEL", "HEIR", "HEIRLOOM", "HELIUM", "HEMLOCK", "HEN", "HERD", "HERMIT", "HERON", "HERRING", "HICCUP", "HIDEOUT", "HIGHLIGHT", "HIGHLIGHTER", "HIGHWAY", "HILLTOP", "HINGE", "HIPPO", "HOLIDAY", "HOLLAND", "HOLLY", "HOLOGRAM", "HOLSTER", "HONEYCOMB", "HONEYMOON", "HOODIE", "HOOP", "HOPSCOTCH", "HORIZON", "HORNET", "HORSEPOWER", "HOSTEL", "HOTDOG", "HOTSPOT", "HOUDINI", "HOUND", "HOURGLASS", "HOUSTON", "HOVERCRAFT", "HUB", "HUDDLE", "HULA", "HUMMINGBIRD", "HURDLE", "HURRICANE", "HUSKY", "HYACINTH", "HYDRA", "HYDROGEN", "HYENA", "HYMN", "IBEX", "ICEBERG", "ICEBOX", "IGUANA", "IMAGE", "IMPALA", "INCUBATOR", "INFERNO", "INKPAD", "INKWELL", "INN", "INVENTOR", "INVOICE", "IRELAND", "IRIS", "ISOTOPE", "ITALY", "JACKAL", "JACKET", "JACKHAMMER", "JACKPOT", "JACKRABBIT", "JAGUAR", "JALAPENO", "JAMAICA", "JAMBOREE", "JANITOR", "JAPAN", "JAR", "JAW", "JELLY BEAN", "JESTER", "JETPACK", "JIGSAW", "JOURNAL", "JOURNALIST", "JOYSTICK", "JUG", "JUGGLER", "JUKEBOX", "JUMP ROPE", "JUMPSUIT", "JUNIPER", "JUNKYARD", "KALEIDOSCOPE", "KANSAS", "KARAOKE", "KAYAK", "KAZOO", "KEEL", "KELP", "KENNEL", "KENYA", "KERNEL", "KETTLE", "KEYBOARD", "KEYCARD", "KEYCHAIN", "KEYHOLE", "KEYPAD", "KEYSTONE", "KICKSTAND", "KIDNEY", "KILN", "KIMONO", "KINGFISHER", "KINGPIN", "KIOSK", "KITTEN", "KNAPSACK", "KOALA", "KOI", "KRAKEN", "LABEL", "LABYRINTH", "LADLE", "LADYBUG", "LAGOON", "LAMB", "LAMPSHADE", "LANDLORD", "LANDMARK", "LANDSCAPE", "LANDSLIDE", "LANTERN", "LANYARD", "LAPTOP", "LARK", "LASSO", "LATCH", "LATTE", "LAUNCH", "LAUNCHPAD", "LAUNDROMAT", "LAUREL", "LAVA", "LAVENDER", "LEASH", "LEDGE", "LEDGER", "LEFTOVER", "LEGGINGS", "LEMMING", "LEMUR", "LENS", "LEOPARD", "LEOTARD", "LEVER", "LIBRARIAN", "LIFEBOAT", "LIFEGUARD", "LIFEJACKET", "LIGHTBULB", "LIGHTHOUSE", "LILAC", "LILY", "LIMB", "LIMBO", "LIMELIGHT", "LIMERICK", "LIMESTONE", "LIMO", "LINCOLN", "LINEN", "LIPSTICK", "LISBON", "LIVER", "LLAMA", "LOCKBOX", "LOCKDOWN", "LOCKER", "LOCKET", "LOCKSMITH", "LOCOMOTIVE", "LODGE", "LOGBOOK", "LOLLIPOP", "LOOKOUT", "LOOM", "LOON", "LOOP", "LOOPHOLE", "LOTTERY", "LOTUS", "LOUNGE", "LOVESEAT", "LUAU", "LUGGAGE", "LULLABY", "LUNG", "LYNX", "LYRE", "MACARONI", "MACAW", "MADRID", "MAGISTRATE", "MAGMA", "MAGNET", "MAGNIFIER", "MAGNOLIA", "MAGPIE", "MAILBAG", "MAILBOX", "MAINFRAME", "MAKEOVER", "MALL", "MALLARD", "MALLET", "MANATEE", "MANDOLIN", "MANHOLE", "MANILA", "MANNEQUIN", "MANSION", "MANTEL", "MANTIS", "MARIGOLD", "MARINA", "MARIONETTE", "MARKER", "MARLIN", "MARSH", "MARSHAL", "MARSHMALLOW", "MASCARA", "MASK", "MASQUERADE", "MASTERMIND", "MATADOR", "MATCHBOX", "MATCHSTICK", "MATE", "MAUSOLEUM", "MEADOW", "MECHANIC", "MEDAL", "MEDALLION", "MEDIUM", "MEDUSA", "MEERKAT", "MELODY", "MEMPHIS", "METEORITE", "METRONOME", "MIAMI", "MICROCHIP", "MICROFILM", "MICROPHONE", "MIDNIGHT", "MIDWIFE", "MILESTONE", "MINER", "MINERAL", "MINIVAN", "MINK", "MINNOW", "MIRAGE", "MIST", "MISTLETOE", "MITT", "MITTEN", "MOAT", "MOBILE", "MOCCASIN", "MOCKINGBIRD", "MODEM", "MOLECULE", "MOLLUSK", "MONACO", "MONASTERY", "MONEY", "MONGOOSE", "MONITOR", "MONK", "MONOCLE", "MONOLITH", "MONORAIL", "MONSOON", "MONTANA", "MOONSHINE", "MOONWALK", "MOP", "MOSAIC", "MOSS", "MOTH", "MOTOR", "MOTORCYCLE", "MOUNTAIN", "MOUSEPAD", "MOZART", "MUDSLIDE", "MUFFIN", "MULE", "MURAL", "MUSCLE", "MUSEUM", "MUSSEL", "MUZZLE", "NAIROBI", "NAME TAG", "NANNY", "NAPKIN", "NARWHAL", "NAVIGATOR", "NECKLACE", "NECKTIE", "NECTAR", "NEON", "NEPAL", "NEPTUNE", "NEUTRON", "NEVADA", "NEWSFLASH", "NEWSPAPER", "NEWT", "NICKNAME", "NIGHTCAP", "NIGHTINGALE", "NIGHTSTAND", "NILE", "NOMAD", "NORWAY", "NOSTRIL", "NOTCH", "NOTEBOOK", "NOTEPAD", "NOVA", "NUN", "NURSERY", "NUTSHELL", "NYMPH", "OAK", "OAR", "OAXACA", "OBELISK", "OBOE", "OBSERVATORY", "OCARINA", "OCELOT", "ODOMETER", "ODYSSEY", "OFFICE", "OGRE", "OHIO", "OLYMPICS", "OMELET", "OPOSSUM", "ORACLE", "ORANGUTAN", "ORBIT", "ORCA", "ORCHARD", "ORCHESTRA", "ORCHID", "ORE", "OREGON", "ORIGAMI", "ORNAMENT", "OSLO", "OSTRICH", "OTTER", "OTTOMAN", "OUTFIELD", "OUTLAW", "OUTLET", "OUTPOST", "OVEN", "OVERALLS", "OVERCOAT", "OVERPASS", "OWL", "OX", "OXYGEN", "PACIFIER", "PACK", "PADDLEBOAT", "PADLOCK", "PAGEANT", "PAGER", "PAGODA", "PAINTBALL", "PAINTBRUSH", "PAINTER", "PAJAMAS", "PALETTE", "PAMPHLET", "PANAMA", "PANDA", "PANEL", "PANSY", "PANTHER", "PANTRY", "PAPERBACK", "PAPERCLIP", "PAPERWEIGHT", "PAPRIKA", "PARADOX", "PARAKEET", "PARAMEDIC", "PARASOL", "PARCEL", "PARIS", "PARKA", "PARLOR", "PARTRIDGE", "PASSAGE", "PASSPORT", "PASSWORD", "PASTA", "PASTRY", "PATCHWORK", "PATROL", "PAVEMENT", "PAVILION", "PAYCHECK", "PEACOAT", "PEACOCK", "PEAK", "PEASANT", "PEBBLE", "PEDESTAL", "PEEL", "PEG", "PEGASUS", "PELICAN", "PENCIL", "PENDULUM", "PENINSULA", "PENKNIFE", "PENTHOUSE", "PEPPERCORN", "PEPPERMINT", "PERCH", "PERFUME", "PERISCOPE", "PERMIT", "PERSIA", "PERU", "PETAL", "PETUNIA", "PHANTOM", "PHARAOH", "PHARMACIST", "PHARMACY", "PHEASANT", "PHONEBOOK", "PHOTOGRAPHER", "PHYSICIST", "PIANIST", "PICASSO", "PICCOLO", "PICK", "PICKUP", "PICNIC", "PIECE", "PIGEON", "PIGGYBACK", "PIGLET", "PIKE", "PILE", "PILGRIM", "PILLAR", "PINATA", "PINBALL", "PINCUSHION", "PINECONE", "PINPOINT", "PINWHEEL", "PIPELINE", "PIRANHA", "PISTACHIO", "PISTON", "PIT STOP", "PITCHFORK", "PIXEL", "PIXIE", "PLACARD", "PLACEMAT", "PLANET", "PLANETARIUM", "PLAQUE", "PLATEAU", "PLATO", "PLATTER", "PLAYBOOK", "PLAYLIST", "PLAZA", "PLIERS", "PLUG", "PLUNGER", "PODCAST", "POET", "POLAND", "POLLEN", "POLTERGEIST", "PONCHO", "POND", "PONY", "POODLE", "PORCH", "PORCUPINE", "PORPOISE", "PORTFOLIO", "POSTAGE", "POSTCARD", "POSTER", "POSTMAN", "POSTMARK", "POTHOLDER", "POTHOLE", "POTLUCK", "POTTERY", "POUCH", "PRAGUE", "PRAIRIE", "PRAWN", "PRECINCT", "PRICE TAG", "PRINT", "PRINTER", "PRISM", "PROFESSOR", "PROJECTOR", "PROM", "PROP", "PROPELLER", "PROTON", "PROTRACTOR", "PUDDLE", "PUFFIN", "PUG", "PULLEY", "PULLOVER", "PULSAR", "PULSE", "PUMA", "PUNCH", "PUPPY", "PUSHPIN", "PYTHON", "QUARRY", "QUARTET", "QUARTZ", "QUASAR", "QUAY", "QUEBEC", "QUEST", "QUICKSAND", "QUICKSILVER", "QUIZ", "RACCOON", "RADAR", "RADIATOR", "RAFFLE", "RAFT", "RAIN CHECK", "RAINCOAT", "RAINDROP", "RAINFOREST", "RAINSTORM", "RANGER", "RANSOM", "RAPIDS", "RATTLE", "RATTLESNAKE", "RAVEN", "RAVINE", "RECEIPT", "RECEPTIONIST", "RECESS", "RECIPE", "RECLINER", "REEL", "REFEREE", "REHEARSAL", "RELAY", "REPTILE", "RESORT", "RESTAURANT", "REUNION", "RHINO", "RICKSHAW", "RIDDLE", "RIDGE", "RIM", "RINGLEADER", "RINGTONE", "RIO", "RIPPLE", "RIVET", "ROADBLOCK", "ROADMAP", "ROADRUNNER", "ROAST", "ROBE", "ROLLER COASTER", "ROOFTOP", "ROOSTER", "ROUTER", "ROVER", "ROWBOAT", "RUBY", "RUCKSACK", "RUG", "RUNE", "RUNNER", "RUNWAY", "RUSH", "SAFARI", "SAFEHOUSE", "SAGA", "SAGE", "SAILBOAT", "SAILOR", "SALAMANDER", "SALESMAN", "SALMON", "SALON", "SAMURAI", "SANCTUARY", "SANDAL", "SANDBAG", "SANDBAR", "SANDCASTLE", "SANDPAPER", "SANDSTORM", "SAP", "SAPPHIRE", "SARDINE", "SARONG", "SASH", "SATCHEL", "SAUCEPAN", "SAUCER", "SAVANNA", "SAWDUST", "SAWMILL", "SAXOPHONE", "SCAFFOLD", "SCALLOP", "SCALPEL", "SCANNER", "SCARF", "SCEPTER", "SCHOOLHOUSE", "SCISSORS", "SCONCE", "SCOOP", "SCOOTER", "SCORE", "SCOREBOARD", "SCOTLAND", "SCOUT", "SCRAP", "SCRAPBOOK", "SCREENSHOT", "SCREW", "SCREWDRIVER", "SCRIPT", "SCULPTOR", "SEAGULL", "SEAHORSE", "SEASHELL", "SEASON", "SEAT", "SEATBELT", "SEAWEED", "SECRET", "SECRETARY", "SEDAN", "SEEDLING", "SEESAW", "SELFIE", "SENATOR", "SENSOR", "SEOUL", "SEQUIN", "SERENADE", "SERGEANT", "SHACK", "SHAFT", "SHARPENER", "SHAWL", "SHEEPDOG", "SHELF", "SHELTER", "SHERIFF", "SHIELD", "SHIFT", "SHIPWRECK", "SHIPYARD", "SHOEBOX", "SHOEHORN", "SHOELACE", "SHORE", "SHOULDER", "SHOVEL", "SHOWDOWN", "SHREW", "SHRIMP", "SHUTTER", "SHUTTLE", "SIBERIA", "SICILY", "SICKLE", "SIDEKICK", "SIDEWALK", "SIEVE", "SIGNAL", "SIGNPOST", "SILO", "SINGER", "SIREN", "SITAR", "SKATEPARK", "SKELETON", "SKETCH", "SKETCHBOOK", "SKEWER", "SKID", "SKIFF", "SKILLET", "SKIN", "SKIRT", "SKUNK", "SKYDIVER", "SKYLIGHT", "SKYLINE", "SLACKS", "SLAPSTICK", "SLATE", "SLEDGEHAMMER", "SLEEPOVER", "SLEEVE", "SLEIGH", "SLIDE", "SLINGSHOT", "SLOGAN", "SLOPE", "SNAIL", "SNAPPER", "SNARE", "SNEAKER", "SNORKEL", "SNOW GLOBE", "SNOWBALL", "SNOWDRIFT", "SNOWFALL", "SNOWFLAKE", "SNOWMOBILE", "SNOWPLOW", "SNOWSTORM", "SOAPBOX", "SOCKET", "SOFA", "SOIL", "SOLDER", "SOLE", "SOLO", "SONAR", "SONATA", "SORCERER", "SOUVENIR", "SPA", "SPACESHIP", "SPACESUIT", "SPACEWALK", "SPAIN", "SPANIEL", "SPARK", "SPARROW", "SPATULA", "SPEAKER", "SPEAR", "SPECIMEN", "SPECTER", "SPEED BUMP", "SPEEDBOAT", "SPIGOT", "SPIRE", "SPOOL", "SPOTLIGHT", "SPRINKLE", "SPRINKLER", "SPRITE", "SPROUT", "SPRUCE", "SPYGLASS", "SQUID", "STAGE", "STAGECOACH", "STAIRCASE", "STALACTITE", "STALK", "STALL", "STALLION", "STAND", "STAPLE", "STAPLER", "STARFISH", "STARLIGHT", "STARLING", "STATIC", "STATION", "STATUE", "STEAMBOAT", "STEAMROLLER", "STEEPLE", "STENCIL", "STILETTO", "STILTS", "STINGRAY", "STOCKING", "STOCKPILE", "STOMACH", "STOOL", "STOPPER", "STORK", "STRAINER", "STRAND", "STRAP", "STREAMER", "STRETCHER", "STRIPE", "STROKE", "STROLLER", "STRONGBOX", "STUD", "STUDIO", "STURGEON", "SUBMARINE", "SUBURB", "SUBWAY", "SUITCASE", "SUMMIT", "SUNBEAM", "SUNBURN", "SUNDIAL", "SUNGLASSES", "SUNRISE", "SUNROOF", "SUPERMARKET", "SUPERNOVA", "SURGEON", "SURVEYOR", "SUSPENDERS", "SWALLOW", "SWAN", "SWEATER", "SWEATSHIRT", "SWEDEN", "SWEETHEART", "SWITCHBOARD", "SWORDFISH", "SYDNEY", "SYMPHONY", "TAB", "TABLECLOTH", "TABLESPOON", "TACK", "TADPOLE", "TAHITI", "TAILOR", "TALISMAN", "TAMBOURINE", "TANDEM", "TANGERINE", "TANKER", "TAPE", "TAPESTRY", "TAPIR", "TARANTULA", "TARGET", "TARP", "TASSEL", "TAVERN", "TAXI", "TEACUP", "TEAKETTLE", "TEAPOT", "TEARDROP", "TEDDY", "TELEGRAM", "TELEGRAPH", "TENT", "TERMINAL", "TERMITE", "TERRIER", "THERMOMETER", "THERMOS", "THERMOSTAT", "THICKET", "THIMBLE", "THISTLE", "THORN", "THREAD", "THROAT", "THRONE", "THUMBTACK", "THUNDERBOLT", "TIARA", "TIBET", "TIDE", "TIEBREAKER", "TIGHTROPE", "TILE", "TIMBER", "TIME BOMB", "TINSEL", "TITAN", "TOAD", "TOADSTOOL", "TOASTER", "TOBOGGAN", "TOE", "TOFFEE", "TOGA", "TOILET", "TOKEN", "TOLLBOOTH", "TOMAHAWK", "TOMBSTONE", "TONGS", "TONGUE", "TOOLBELT", "TOOLBOX", "TOOTHACHE", "TOOTHBRUSH", "TOOTHPASTE", "TOOTHPICK", "TOP HAT", "TOPSOIL", "TORONTO", "TORPEDO", "TORTOISE", "TOUCAN", "TOUCHSCREEN", "TOURIST", "TOURNAMENT", "TOWEL", "TOWNHOUSE", "TRACTOR", "TRAIL", "TRAINER", "TRAM", "TRAMPOLINE", "TRANSISTOR", "TRAP", "TRAPDOOR", "TRAPEZE", "TRAY", "TREADMILL", "TREASURE", "TREEHOUSE", "TREETOP", "TRELLIS", "TRENCHCOAT", "TRIBE", "TRICYCLE", "TRIDENT", "TRIPOD", "TRIPWIRE", "TRIVET", "TROLLEY", "TROMBONE", "TROPHY", "TROUT", "TROWEL", "TROY", "TRUMPET", "TSUNAMI", "TUBA", "TUGBOAT", "TULIP", "TUNA", "TUNDRA", "TUNE", "TUNIC", "TURBINE", "TURN", "TURNSTILE", "TURTLENECK", "TUSCANY", "TUSK", "TUTOR", "TWEEZERS", "TWIG", "TWIN", "TWINE", "TWISTER", "TYPEWRITER", "UKULELE", "UMBRELLA", "UMPIRE", "UNDERPASS", "UNICYCLE", "UNIFORM", "UPSTAIRS", "URCHIN", "URN", "USHER", "UTAH", "VACATION", "VALET", "VALLEY", "VALVE", "VASE", "VAULT", "VEGAS", "VEIL", "VELVET", "VENDOR", "VENICE", "VENOM", "VENT", "VERDICT", "VESSEL", "VEST", "VETERAN", "VIAL", "VIENNA", "VILLA", "VINE", "VINEGAR", "VINYL", "VIOLA", "VIOLIN", "VIPER", "VISE", "VISOR", "VOICEMAIL", "VULTURE", "WAFER", "WAIST", "WAISTCOAT", "WAITER", "WALES", "WALLABY", "WALLET", "WALLPAPER", "WARDEN", "WARDROBE", "WAREHOUSE", "WARLOCK", "WARRANT", "WARTHOG", "WASABI", "WASHCLOTH", "WASP", "WATCHDOG", "WATERBED", "WATERFALL", "WATERMARK", "WATERMELON", "WEASEL", "WEATHERVANE", "WEAVER", "WEBCAM", "WEDGE", "WEEKEND", "WELDER", "WETLAND", "WETSUIT", "WHARF", "WHEELBARROW", "WHEELIE", "WHIRLPOOL", "WHIRLWIND", "WHISK", "WHISPER", "WHITEBOARD", "WICK", "WIDGET", "WIG", "WIGWAM", "WILD CARD", "WILLOW", "WINCH", "WIND CHIME", "WINDBREAKER", "WINDFALL", "WINDMILL", "WINDOWSILL", "WINDSHIELD", "WINDSOCK", "WIRE", "WIRETAP", "WISHBONE", "WISTERIA", "WITNESS", "WOK", "WOLF", "WOLVERINE", "WOMBAT", "WOODPECKER", "WOODWORK", "WORKBENCH", "WORKOUT", "WORKSHOP", "WORMHOLE", "WRAITH", "WRAPPER", "WREATH", "WRENCH", "WRIST", "WRISTBAND", "WRISTWATCH", "XYLOPHONE", "YACHT", "YAK", "YARDSTICK", "YARN", "YETI", "YEW", "YO-YO", "YODEL", "YUKON", "ZEBRA", "ZEPPELIN", "ZIPLINE", "ZODIAC", "ZOO", "ZOOKEEPER", "ZURICH"];
@@ -313,9 +466,46 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls = { get(k,d){ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
 const ico = (id,cls="") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
-const ROLE_ICO = {red:"i-agent",blue:"i-agent",green:"i-agent",tan:"i-bystander",black:"i-assassin"};
-const ROLE_NAME = {red:"Red agent",blue:"Blue agent",green:"Agent",tan:"Bystander",black:"Assassin"};
-const TEAM = {red:"Red",blue:"Blue"};
+const ED_WORDS = {"loteria": ["GALLO", "DIABLITO", "DAMA", "CATRÍN", "PARAGUAS", "SIRENA", "ESCALERA", "BOTELLA", "BARRIL", "ÁRBOL", "MELÓN", "VALIENTE", "GORRITO", "PERA", "BANDERA", "BANDOLÓN", "VIOLONCELLO", "GARZA", "PÁJARO", "MANO", "BOTA", "LUNA", "COTORRO", "BORRACHO", "CORAZÓN", "SANDÍA", "TAMBOR", "CAMARÓN", "JARAS", "MÚSICO", "ARAÑA", "SOLDADO", "ESTRELLA", "CAZO", "MUNDO", "NOPAL", "ALACRÁN", "ROSA", "CALAVERA", "CAMPANA", "CANTARITO", "VENADO", "SOL", "CORONA", "CHALUPA", "PINO", "PESCADO", "PALMA", "MACETA", "ARPA", "RANA", "TACO", "TAMAL", "POZOLE", "MENUDO", "BIRRIA", "ELOTE", "ESQUITE", "TOSTADA", "SOPE", "GORDITA", "TLAYUDA", "TORTA", "QUESADILLA", "ENCHILADA", "CHILAQUILES", "GUACAMOLE", "FRIJOLES", "ARROZ", "TORTILLA", "COMAL", "MOLCAJETE", "METATE", "OLLA", "JARRITO", "CAFÉ DE OLLA", "CHAMPURRADO", "ATOLE", "HORCHATA", "JAMAICA", "TAMARINDO", "PALETA", "RASPADO", "CHURRO", "CONCHA", "PAN DULCE", "BUÑUELO", "FLAN", "CAJETA", "ROSCA", "PIÑATA", "DULCE", "CHICLE", "MAZAPÁN", "CHAMOY", "TAJÍN", "LIMÓN", "AGUACATE", "CHILE", "JALAPEÑO", "NOPALITO", "CALABAZA", "MAÍZ", "CACAO", "VAINILLA", "MARIACHI", "SOMBRERO", "SARAPE", "REBOZO", "HUARACHE", "GUAYABERA", "CHARRO", "ESCARAMUZA", "JINETE", "LAZO", "CABALLO", "TORO", "BURRO", "GALLINA", "GUAJOLOTE", "CHIVO", "BORREGO", "PERRO", "GATO", "CHAPULÍN", "MARIPOSA", "COLIBRÍ", "ÁGUILA", "SERPIENTE", "IGUANA", "JAGUAR", "AJOLOTE", "TORTUGA", "DELFÍN", "BALLENA", "TIBURÓN", "PULPO", "GUITARRA", "GUITARRÓN", "VIHUELA", "TROMPETA", "VIOLÍN", "ACORDEÓN", "MARIMBA", "CORRIDO", "RANCHERA", "CUMBIA", "BANDA", "NORTEÑO", "BOLERO", "HUAPANGO", "SERENATA", "GRITO", "FIESTA", "POSADA", "QUINCEAÑERA", "BODA", "BAUTIZO", "KERMÉS", "TIANGUIS", "MERCADO", "PLAZA", "KIOSCO", "IGLESIA", "PIRÁMIDE", "HACIENDA", "RANCHO", "PUEBLO", "CANTINA", "TAQUERÍA", "PANADERÍA", "TORTILLERÍA", "PALETERÍA", "ABARROTES", "LUCHA LIBRE", "LUCHADOR", "MÁSCARA", "FÚTBOL", "PORTERO", "GOL", "ÁRBITRO", "BALÓN", "TROMPO", "BALERO", "YOYO", "CANICAS", "PAPALOTE", "MATATENA", "ALEBRIJE", "CATRINA", "OFRENDA", "CEMPASÚCHIL", "VELADORA", "COPAL", "PAPEL PICADO", "PAN DE MUERTO", "VIRGEN", "DIABLO", "NAHUAL", "LLORONA", "CHUPACABRAS", "CUCUY", "DUENDE", "ABUELA", "ABUELO", "TÍA", "TÍO", "PRIMO", "COMPADRE", "COMADRE", "PADRINO", "MADRINA", "NOVIO", "NOVIA", "MIJO", "MIJA", "CHAMACO", "VECINO", "PATRÓN", "MAESTRO", "CURANDERO", "PANADERO", "VAQUERO", "PESCADOR", "CAMPESINO", "CHANCLA", "ESCOBA", "CUBETA", "MOLINO", "CARRETA", "CAMIÓN", "BICICLETA", "LLAVE", "PUERTA", "VENTANA", "ESPEJO", "RELOJ", "VELA", "CANASTA", "SILLA", "MESA", "HAMACA", "COBIJA", "ALMOHADA", "PAÑUELO", "LISTÓN", "MOÑO", "ARETE", "ANILLO", "ROSARIO", "MONEDA", "PESO", "BILLETE", "CARTA", "SOBRE", "TEPIC", "NAYARIT", "JALISCO", "GUADALAJARA", "OAXACA", "PUEBLA", "VERACRUZ", "YUCATÁN", "CANCÚN", "TIJUANA", "MONTERREY", "ACAPULCO", "MAZATLÁN", "ZACATECAS", "MICHOACÁN", "SINALOA", "SONORA", "CHIAPAS", "TULUM", "XOCHIMILCO", "TEOTIHUACÁN", "CHAPULTEPEC", "POPOCATÉPETL", "SAYULITA", "VOLCÁN", "DESIERTO", "SELVA", "CENOTE", "PLAYA", "LAGUNA", "RÍO", "MONTAÑA", "CIELO", "NUBE", "LLUVIA", "VIENTO", "TRUENO", "RAYO", "ARCOÍRIS", "FUEGO", "AGUA", "TIERRA", "PIEDRA", "NIEVE"], "northpole": ["SLEIGH", "STOCKING", "MISTLETOE", "WREATH", "GARLAND", "TINSEL", "ORNAMENT", "EGGNOG", "CANDY CANE", "SUGARPLUM", "SNOWFLAKE", "SNOWBALL", "SNOWDRIFT", "FROSTBITE", "MITTEN", "EARMUFFS", "SCARF", "SWEATER", "PAJAMAS", "HEARTH", "YULE LOG", "CHESTNUT", "COCOA", "MARSHMALLOW", "PEPPERMINT", "CINNAMON", "COOKIE", "SPRINKLES", "FROSTING", "TAMALE", "BUÑUELO", "PONCHE", "ROSCA", "PIÑATA", "POSADA", "POINSETTIA", "HOLLY", "PINECONE", "EVERGREEN", "SPRUCE", "FIR", "TREE TOPPER", "MANGER", "BETHLEHEM", "WISE MAN", "FRANKINCENSE", "MYRRH", "HALO", "CHOIR", "JINGLE", "SLEIGH BELL", "HANDBELL", "HYMN", "CANDLELIGHT", "LANTERN", "EXTENSION CORD", "INFLATABLE", "ROOFTOP", "DRIVEWAY", "SHOVEL", "SNOWPLOW", "SNOWMOBILE", "SKI LODGE", "TOBOGGAN", "ICE SKATE", "RINK", "SNOW ANGEL", "POLAR BEAR", "ARCTIC FOX", "SNOWY OWL", "CARIBOU", "HUSKY", "SLED DOG", "NORTH STAR", "AURORA", "TUNDRA", "NORTH POLE", "WORKSHOP", "TOY SHOP", "ELF HAT", "BELT BUCKLE", "NAUGHTY LIST", "NICE LIST", "WISH LIST", "CHECKLIST", "MAILBOX", "POSTMAN", "GIFT", "WRAPPING", "TAPE", "GIFT CARD", "RECEIPT", "RETURN", "STOCKING STUFFER", "TEDDY BEAR", "TRAIN SET", "ROCKING HORSE", "DOLLHOUSE", "YO-YO", "TRUMPET", "BALLERINA", "BOARD GAME", "VIDEO GAME", "BIKE", "SCOOTER", "SKATEBOARD", "BATTERIES", "REMOTE CONTROL", "RACE CAR", "SPINNING TOP", "JACK-IN-THE-BOX", "SNOW GLOBE", "MUSIC BOX", "ADVENT", "COUNTDOWN", "MIDNIGHT", "NEW YEAR", "CONFETTI", "FIREWORKS", "RESOLUTION", "PARTY HAT", "NOISEMAKER", "CIDER", "TURKEY DINNER", "STUFFING", "GRAVY", "CRANBERRY", "YAMS", "LEFTOVERS", "TABLECLOTH", "CENTERPIECE", "CANDLESTICK", "COUSIN", "GRANDPA", "IN-LAWS", "GUEST", "SLEEPOVER", "SELFIE", "UGLY SWEATER", "MATCHING PAJAMAS", "SANTA HAT", "FLANNEL", "FIREWOOD", "CHALET", "SNOWSHOE", "HOT TUB", "HOLIDAY", "VACATION", "AIRPORT", "ROAD TRIP", "TRAFFIC", "MALL", "CASHIER", "SALE", "BLACK FRIDAY", "COUPON", "STOCKROOM", "ELVES", "REINDEER GAMES", "HOOF", "ANTLER", "RED NOSE", "CHIMNEY SWEEP", "SOOT", "STARLIGHT", "SILENT NIGHT", "WINTER", "SOLSTICE", "SLEET", "SNOWMAN KIT", "TOP HAT", "BUTTON NOSE", "BROOMSTICK", "NUTCRACKER SUITE", "SUGAR COOKIE", "GUMDROP", "LICORICE", "LOLLIPOP", "FUDGE", "TOFFEE", "BRITTLE", "CHESTNUTS", "SNOW DAY", "SNOW FORT", "HOT CHOCOLATE", "CANDY STORE", "TOY SOLDIER", "SLEIGH RIDE", "LIGHT SHOW", "NATIVITY", "LAS POSADAS", "NOCHEBUENA", "TAMALADA", "AGUINALDO", "VILLANCICO", "ROMPOPE", "FAROLITO", "LUMINARIA", "DREIDEL", "LATKE", "KWANZAA", "YULETIDE", "WASSAIL", "FIGGY PUDDING", "PANETTONE", "STOLLEN", "WINTER COAT", "PARKA", "BEANIE", "LONG JOHNS", "THERMOS", "SNOW BOOTS", "SNOW CHAINS", "ICE SCRAPER", "SNOWBLOWER", "TREE STAND", "TREE SKIRT", "TREE FARM", "BOUGH", "POPCORN STRING", "SECRET SANTA", "WHITE ELEPHANT", "GIFT EXCHANGE", "OFFICE PARTY", "KARAOKE", "FIRST SNOW", "SKATING POND", "BELL RINGER", "TOY DRIVE", "FOOD DRIVE", "VOLUNTEER", "MANTEL", "STOCKING HOLDER", "GIFT TAG", "BOW TIE", "VELVET", "PLAID", "FLANNEL SHEETS", "QUILT RACK", "ROCKING CHAIR", "STORYBOOK", "BEDTIME", "SNORE", "COOKIE TIN", "MILK AND COOKIES", "REINDEER FOOD", "SPRUCE TIP", "SNOW SHOVEL", "HAILSTORM", "WINDCHILL", "SNOWCAP", "ICE PALACE", "SNOW QUEEN", "TOYMAKER", "ASSEMBLY LINE", "CONVEYOR BELT", "PAINTBRUSH", "GLUE GUN", "SCISSORS", "BOW MAKER"], "arcade": ["JOYSTICK", "COIN SLOT", "TOKEN", "HIGH SCORE", "INITIALS", "LEADERBOARD", "PLAYER ONE", "PLAYER TWO", "CONTINUE", "INSERT COIN", "GAME OVER", "EXTRA LIFE", "ONE-UP", "POWER-UP", "CHEAT CODE", "EASTER EGG", "GLITCH", "LAG", "PIXEL", "SPRITE", "CHIPTUNE", "BLEEP", "SCANLINE", "CRT", "CABINET", "MARQUEE", "BEZEL", "TRACKBALL", "LIGHT GUN", "STEERING WHEEL", "PEDAL", "DANCE PAD", "PINBALL", "FLIPPER", "BUMPER", "PLUNGER", "TILT", "SKEE-BALL", "CLAW MACHINE", "PRIZE COUNTER", "PLUSHIE", "CAPSULE TOY", "AIR HOCKEY", "WHACK-A-MOLE", "PHOTO BOOTH", "CHANGE MACHINE", "ARCADE", "BOWLING ALLEY", "PIZZA PARLOR", "BIRTHDAY PARTY", "MALL", "FOOD COURT", "CONSOLE", "CARTRIDGE", "CONTROLLER", "GAMEPAD", "D-PAD", "TRIGGER", "RUMBLE", "HANDHELD", "MEMORY CARD", "SAVE POINT", "CHECKPOINT", "LEVEL UP", "BOSS FIGHT", "MINIBOSS", "FINAL BOSS", "SIDE QUEST", "OVERWORLD", "WARP ZONE", "SECRET LEVEL", "SPEEDRUN", "COMBO", "KNOCKOUT", "HEALTH BAR", "MANA", "EXPERIENCE", "LOOT", "INVENTORY", "FIREBALL", "SHIELD", "TELEPORTER", "SPAWN", "RESPAWN", "LIVES", "TIMER", "BONUS ROUND", "HIDDEN ROOM", "BARREL", "ELEVATOR", "CONVEYOR", "LAVA", "ICE LEVEL", "WATER LEVEL", "SKY LEVEL", "SPACESHIP", "ASTEROID", "INVADER", "UFO", "SKELETON", "HERO", "VILLAIN", "SIDEKICK", "NPC", "AVATAR", "CHARACTER SELECT", "PAUSE", "START", "SELECT", "RESET", "POWER BUTTON", "CORD", "ADAPTER", "TV", "ANTENNA", "STATIC", "VHS", "CASSETTE", "WALKMAN", "BOOMBOX", "MIXTAPE", "BEEPER", "FLOPPY DISK", "DIAL-UP", "MODEM", "DESKTOP", "KEYBOARD", "SCREEN SAVER", "NEON", "GRID", "SYNTH", "SUNGLASSES", "HIGH-TOPS", "ROLLER SKATES", "SKATEBOARD", "BMX", "SLAP BRACELET", "SCRUNCHIE", "LUNCHBOX", "CEREAL", "SATURDAY MORNING", "CARTOON", "COMIC BOOK", "TRADING CARD", "BUBBLE GUM", "SODA", "SLUSHIE", "NACHOS", "PONG", "TETRIS", "PAC-MAN", "GALAGA", "FROGGER", "CENTIPEDE", "DIG DUG", "DONKEY KONG", "QBERT", "DEFENDER", "TEMPEST", "ASTEROIDS", "SPACE INVADERS", "STREET FIGHTER", "MORTAL KOMBAT", "TEKKEN", "MARIO", "LUIGI", "ZELDA", "SONIC", "KIRBY", "PIKACHU", "YOSHI", "MEGA MAN", "PAC-MAN FEVER", "DUCK HUNT", "OUTRUN", "DANCE DANCE", "GUITAR HERO", "RHYTHM", "MINECRAFT", "FORTNITE", "ROBLOX", "POKÉMON", "SMASH", "KART", "WII", "JOY-CON", "ARCADE STICK", "TURBO", "SHMUP", "BULLET HELL", "PLATFORMER", "PUZZLER", "RACER", "BRAWLER", "SHOOTER", "SIMULATOR", "MULTIPLAYER", "CO-OP", "SPLIT SCREEN", "TOURNAMENT", "STREAMER", "HEADSET", "MICROPHONE", "CHAT", "PRO", "RAGE QUIT", "BUTTON MASH", "PRESS START", "LEVEL SELECT", "HARD MODE", "EASY MODE", "TUTORIAL", "LOADING SCREEN", "CUTSCENE", "CREDITS", "SOUND TEST", "KONAMI CODE", "PIXEL ART", "8-BIT", "16-BIT", "SIDE-SCROLLER", "HITBOX", "FRAME RATE", "MUTE", "HEADPHONES", "TOKEN CUP", "GUMBALL MACHINE", "POWER PELLET", "GHOST HOUSE", "GAMER", "RIVAL", "NEMESIS", "BRACKET", "TROPHY", "RANKING", "LIFE BAR", "STAMINA", "SPECIAL MOVE", "LIGHT CYCLE", "NEON SIGN", "BLACKLIGHT", "GLOW STICK", "LASER TAG", "GO-KART", "BUMPER CARS", "MINI GOLF", "BATTING CAGE", "FUNHOUSE", "ATARI", "GAME BOY", "NINTENDO", "SEGA", "JOYPAD", "TOP TEN", "WORLD RECORD", "COUNTDOWN", "DIFFICULTY", "SKIN", "EMOTE", "LOBBY", "UPDATE", "DLC"], "dino": ["T. REX", "RAPTOR", "VELOCIRAPTOR", "TRICERATOPS", "STEGOSAURUS", "BRONTOSAURUS", "BRACHIOSAURUS", "DIPLODOCUS", "ANKYLOSAURUS", "PTERODACTYL", "PTERANODON", "SPINOSAURUS", "ALLOSAURUS", "IGUANODON", "PARASAUROLOPHUS", "DILOPHOSAURUS", "CARNOTAURUS", "GIGANOTOSAURUS", "MOSASAURUS", "PLESIOSAUR", "ICHTHYOSAUR", "DIMETRODON", "ARCHAEOPTERYX", "COMPY", "GALLIMIMUS", "PACHY", "DUCKBILL", "HADROSAUR", "SAUROPOD", "THEROPOD", "MASTODON", "SABER-TOOTH", "DIRE WOLF", "CAVE BEAR", "GIANT SLOTH", "WOOLLY RHINO", "TRILOBITE", "AMMONITE", "DRAGONFLY", "COCKROACH", "CROCODILE", "ALLIGATOR", "KOMODO", "GECKO", "TORTOISE", "PYTHON", "OSTRICH", "EMU", "CASSOWARY", "CONDOR", "TOUCAN", "LEMUR", "HIPPO", "RHINO", "PANTHER", "JAGUAR", "ANTEATER", "ARMADILLO", "PORCUPINE", "TARANTULA", "CENTIPEDE", "FIREFLY", "SALAMANDER", "SNAIL", "CLAW", "TALON", "FRILL", "TAIL CLUB", "CREST", "BEAK", "FOOTPRINT", "HATCHLING", "EGGSHELL", "INCUBATOR", "EMBRYO", "DNA", "AMBER", "SKELETON", "JAW", "RIBCAGE", "VERTEBRA", "FEMUR", "COPROLITE", "GASTROLITH", "IMPRINT", "EXCAVATION", "DIG SITE", "QUARRY", "BADLANDS", "CANYON", "TAR PIT", "BOG", "MARSH", "LAGOON", "WATERFALL", "LAVA", "GEYSER", "HOT SPRING", "RAINFOREST", "CANOPY", "VINE", "FERN", "CYCAD", "CONIFER", "HORSETAIL", "MOSS", "SAP", "STUMP", "CLAY", "BOULDER", "LAYER", "SEDIMENT", "SANDSTONE", "LIMESTONE", "SHALE", "GRANITE", "ASTEROID", "IMPACT", "CRATER", "EXTINCTION", "CONTINENT", "PANGAEA", "PALEONTOLOGIST", "GEOLOGIST", "RANGER", "TOURIST", "WARDEN", "EXPLORER", "PHOTOGRAPHER", "CAMPER", "HIKER", "SURVIVOR", "SAFARI HAT", "KHAKI", "BINOCULARS", "COMPASS", "FIELD GUIDE", "NOTEBOOK", "SKETCH", "MAGNIFYING GLASS", "CHISEL", "TROWEL", "PICKAXE", "SHOVEL", "SIEVE", "HARNESS", "HEADLAMP", "FLASHLIGHT", "FLARE", "WALKIE-TALKIE", "SATELLITE PHONE", "GPS", "TRAIL CAM", "NIGHT VISION", "TRANQUILIZER", "CAGE", "PADDOCK", "ENCLOSURE", "ELECTRIC FENCE", "BUNKER", "HATCHERY", "CONTROL ROOM", "VISITOR CENTER", "GIFT SHOP", "MONORAIL", "GYROSPHERE", "BOAT", "RAFT", "TRAIL", "TENT", "SLEEPING BAG", "CANTEEN", "RATIONS", "BACKPACK", "MACHETE", "SIREN", "LOCKDOWN", "EVACUATION", "STAMPEDE", "ROAR", "STOMP", "HUNT", "HERD", "PACK", "PREDATOR", "PREY", "CARNIVORE", "HERBIVORE", "OMNIVORE", "SCAVENGER", "MUSEUM", "EXHIBIT", "DIORAMA", "REPLICA", "OVIRAPTOR", "MICRORAPTOR", "TROODON", "MAIASAURA", "PROTOCERATOPS", "STYRACOSAURUS", "MEGALODON", "DUNKLEOSTEUS", "SMILODON", "GLYPTODON", "AUROCHS", "CAVEMAN", "SPEAR", "FLINT", "CAVE PAINTING", "PREHISTORIC", "JURASSIC", "CRETACEOUS", "TRIASSIC", "MESOZOIC", "EPOCH", "TSUNAMI", "LAVA FLOW", "MAGMA", "OBSIDIAN", "BASALT", "QUARTZ", "SEA TURTLE", "HORSESHOE CRAB", "SHARK TOOTH", "CLAW MARK", "BITE MARK", "GENOME", "CLONE", "MUTATION", "HYBRID", "LAB COAT", "PETRI DISH", "TEST TUBE", "SYRINGE", "FREEZER", "CONTAINMENT", "BREACH", "POWER OUTAGE", "GENERATOR", "RAINSTORM", "MONSOON", "MIST", "HUMIDITY", "BUG SPRAY", "SUNSCREEN", "FIRST AID", "STRETCHER", "TRAIL MAP", "SIGNPOST", "LOOKOUT", "OBSERVATION DECK", "VIEWING WINDOW", "FEEDING TIME", "CATTLE PROD", "TIDE POOL", "ESTUARY", "MANGROVE", "BAMBOO", "ORCHID", "PITCHER PLANT", "VENUS FLYTRAP", "TERMITE MOUND", "ANTHILL", "BURROW", "DEN", "WATERING HOLE", "SALT LICK"], "stadium": ["TOUCHDOWN", "QUARTERBACK", "LINEBACKER", "RECEIVER", "KICKER", "PUNTER", "HUDDLE", "FUMBLE", "INTERCEPTION", "BLITZ", "END ZONE", "FIELD GOAL", "GOALPOST", "FIRST DOWN", "HAIL MARY", "FACEMASK", "SHOULDER PADS", "CLEATS", "CHIN STRAP", "EYE BLACK", "SUPER BOWL", "HOME RUN", "GRAND SLAM", "STRIKEOUT", "WALK", "BUNT", "STEAL", "DOUBLE PLAY", "SHORTSTOP", "CATCHER", "OUTFIELD", "INFIELD", "DUGOUT", "BULLPEN", "MOUND", "HOME PLATE", "FOUL POLE", "BLEACHERS", "SEVENTH INNING", "CURVEBALL", "FASTBALL", "KNUCKLEBALL", "CHANGEUP", "SLIDER", "MITT", "BATTING HELMET", "ON DECK", "WORLD SERIES", "SLAM DUNK", "LAYUP", "THREE-POINTER", "FREE THROW", "REBOUND", "ASSIST", "CROSSOVER", "ALLEY-OOP", "BUZZER BEATER", "BACKBOARD", "RIM", "BASELINE", "FAST BREAK", "TRAVELING", "DOUBLE DRIBBLE", "SHOT CLOCK", "TIP-OFF", "MARCH MADNESS", "GOALKEEPER", "STRIKER", "MIDFIELDER", "DEFENDER", "PENALTY KICK", "CORNER KICK", "HEADER", "BICYCLE KICK", "OFFSIDE", "YELLOW CARD", "HAT TRICK", "GOLAZO", "SHIN GUARDS", "WORLD CUP", "STOPPAGE TIME", "EXTRA TIME", "SHOOTOUT", "PUCK", "SLAPSHOT", "FACEOFF", "POWER PLAY", "PENALTY BOX", "BLUE LINE", "GOALIE MASK", "STANLEY CUP", "UPPERCUT", "JAB", "KNOCKOUT", "CORNERMAN", "MOUTHGUARD", "TITLE BELT", "TAKEDOWN", "SINGLET", "HEADGEAR", "HEADLOCK", "MAT", "ESCAPE", "REVERSAL", "WEIGH-IN", "TEE", "FAIRWAY", "BUNKER", "PUTTER", "CADDIE", "BIRDIE", "BOGEY", "HOLE IN ONE", "CLUBHOUSE", "SERVE", "DEUCE", "VOLLEY", "MATCH POINT", "TIEBREAK", "WIMBLEDON", "SPRINT", "RELAY", "BATON", "HURDLE", "LONG JUMP", "HIGH JUMP", "POLE VAULT", "JAVELIN", "DISCUS", "SHOT PUT", "STARTING BLOCKS", "FINISH LINE", "STOPWATCH", "PHOTO FINISH", "PODIUM", "GOLD MEDAL", "SILVER", "BRONZE", "OLYMPICS", "SURFBOARD", "SNOWBOARD", "SKI JUMP", "HALF-PIPE", "SKATE PARK", "BMX", "MOTOCROSS", "NASCAR", "PIT STOP", "CHECKERED FLAG", "POLE POSITION", "SOFTBALL", "KICKBALL", "DODGEBALL", "VOLLEYBALL", "BADMINTON", "PING-PONG", "BOWLING", "SPARE", "GUTTER", "ARENA", "JUMBOTRON", "SCOREBOARD", "PRESS BOX", "LOCKER ROOM", "SIDELINE", "TAILGATE", "CONCESSION", "HOT DOG", "NACHOS", "FOAM FINGER", "CHANT", "MASCOT", "CHEERLEADER", "POMPOM", "MARCHING BAND", "DRUMLINE", "HALFTIME", "COIN TOSS", "KICKOFF", "OVERTIME", "TIMEOUT", "REPLAY", "CHALLENGE FLAG", "REFEREE", "UMPIRE", "ROOKIE", "VETERAN", "ALL-STAR", "MVP", "DRAFT PICK", "FREE AGENT", "TRADE", "TRAINER", "ICE BATH", "PLAYBOOK", "WHITEBOARD", "FILM ROOM", "PRACTICE", "SCRIMMAGE", "PLAYOFFS", "BRACKET", "UNDERDOG", "DYNASTY", "RIVALRY", "TROPHY", "CHAMPIONSHIP", "SEASON TICKET", "FANTASY LEAGUE", "COMMENTATOR", "HIGHLIGHT", "SPORTS BAR", "JERSEY", "SWEATBAND", "WATER BOTTLE", "HEISMAN", "HALL OF FAME", "ROSTER", "BENCHWARMER", "WATER BOY", "BALL BOY", "BAT BOY", "RAIN DELAY", "DOUBLEHEADER", "OPENING DAY", "SPRING TRAINING", "TRAINING CAMP", "COMBINE", "HAMSTRING", "CRUTCHES", "KNEE BRACE", "ENERGY DRINK", "PROTEIN SHAKE", "WEIGHT ROOM", "BENCH PRESS", "SQUAT RACK", "TREADMILL", "JUMP ROPE", "AGILITY LADDER", "WIND SPRINTS", "PEP RALLY", "HOMECOMING", "VARSITY", "LETTERMAN", "SCHOLARSHIP", "RECRUIT", "WALK-ON", "FIGHT SONG", "SPIRIT WEEK", "BIG GAME", "TROPHY CASE", "RIVER CATS", "WARRIORS", "RAIDERS", "DODGERS", "FORTY-NINERS", "SOFTBALL BAT", "SHIN SPLINTS"]};
+const EDS = {
+  classic:{name:"Classic", sub:"Spy HQ or Classified looks, theme packs", title:"Codenames", logo:"i-logo", sound:"spy",
+    teams:{red:"Red",blue:"Blue"}, roles:{red:"Red agent",blue:"Blue agent",green:"Agent",tan:"Bystander",black:"Assassin"},
+    icons:{red:"i-agent",blue:"i-agent",green:"i-agent",tan:"i-bystander",black:"i-assassin"},
+    win:t=>`${t} team wins`, duetWin:"Mission complete", lose:"Mission failed",
+    why:{assassin:t=>`${t} team found the assassin.`, all:t=>`Every ${t.toLowerCase()} agent has been contacted.`, duetWin:"All 15 agents found. Mission complete.", duetLose:"You contacted the assassin. Mission failed."}},
+  loteria:{name:"Lotería Night", sub:"Papel picado, Lotería cards, ¡a jugar!", title:"Lotería", logo:"i-lot-logo", sound:"marimba",
+    teams:{red:"Rojo",blue:"Azul"}, roles:{red:"Frijol rojo",blue:"Frijol azul",green:"Frijol",tan:"Maíz",black:"La Muerte"},
+    icons:{red:"i-lot-frijol",blue:"i-lot-frijol",green:"i-lot-frijol",tan:"i-lot-maiz",black:"i-lot-muerte"},
+    win:t=>`¡Lotería! Gana ${t}`, duetWin:"¡Lotería!", lose:"La Muerte",
+    why:{assassin:t=>`Equipo ${t} se topó con La Muerte.`, all:t=>`Equipo ${t} llenó su tabla.`, duetWin:"Los 15 frijoles en su lugar. ¡Ganaron!", duetLose:"Se toparon con La Muerte."}},
+  northpole:{name:"North Pole Christmas", sub:"Candy canes, snow and a lump of coal", title:"North Pole", logo:"i-np-logo", sound:"bells",
+    teams:{red:"Reindeer",blue:"Elves"}, roles:{red:"Reindeer",blue:"Elf",green:"Helper",tan:"Gingerbread",black:"Lump of coal"},
+    icons:{red:"i-np-reindeer",blue:"i-np-elf",green:"i-np-elf",tan:"i-np-ginger",black:"i-np-coal"},
+    win:t=>`The ${t} win`, duetWin:"Christmas is saved", lose:"Coal in your stocking",
+    why:{assassin:t=>`The ${t} found the lump of coal.`, all:t=>`All the ${t} are home for Christmas.`, duetWin:"All 15 helpers found. Christmas is saved.", duetLose:"You found the lump of coal."}},
+  arcade:{name:"Retro Arcade", sub:"8-bit pixels, neon and chiptunes", title:"Arcade", logo:"i-ar-logo", sound:"chip",
+    teams:{red:"Player 1",blue:"Player 2"}, roles:{red:"P1 hero",blue:"P2 hero",green:"Hero",tan:"Coin",black:"Game Over"},
+    icons:{red:"i-ar-hero",blue:"i-ar-hero",green:"i-ar-hero",tan:"i-ar-coin",black:"i-ar-skull"},
+    win:t=>`${t} wins`, duetWin:"High score!", lose:"Game over",
+    why:{assassin:t=>`${t} hit the Game Over skull.`, all:t=>`${t} cleared the level.`, duetWin:"All 15 heroes found. New high score.", duetLose:"You hit the Game Over skull."}},
+  dino:{name:"Dinosaur Park", sub:"Jungle expedition with a T. rex on the loose", title:"Dino Park", logo:"i-dn-raptor", sound:"jungle",
+    teams:{red:"Raptors",blue:"Trikes"}, roles:{red:"Raptor ranger",blue:"Trike ranger",green:"Ranger",tan:"Dino egg",black:"T. rex"},
+    icons:{red:"i-dn-raptor",blue:"i-dn-trike",green:"i-dn-raptor",tan:"i-dn-egg",black:"i-dn-trex"},
+    win:t=>`The ${t} win`, duetWin:"Expedition complete", lose:"The T. rex got you",
+    why:{assassin:t=>`The ${t} woke up the T. rex.`, all:t=>`Every ${t} ranger made it back to base.`, duetWin:"All 15 rangers found. Expedition complete.", duetLose:"You woke up the T. rex."}},
+  stadium:{name:"Stadium Sports", sub:"Under the lights: Home vs. Away", title:"Stadium", logo:"i-st-logo", sound:"stadium",
+    teams:{red:"Home",blue:"Away"}, roles:{red:"Home player",blue:"Away player",green:"Teammate",tan:"Fan",black:"Red card"},
+    icons:{red:"i-st-jersey",blue:"i-st-jersey",green:"i-st-jersey",tan:"i-st-fan",black:"i-st-card"},
+    win:t=>`${t} team wins`, duetWin:"Champions!", lose:"Red card",
+    why:{assassin:t=>`${t} team got the red card.`, all:t=>`${t} team found every player.`, duetWin:"All 15 teammates found. Champions!", duetLose:"You got the red card. You're out."}}
+};
+const EDSW = {classic:["#101722","#d6a64f"], loteria:["#e4007c","#ffd400"], northpole:["#143726","#f2c14e"], arcade:["#120c2c","#1fd8ff"], dino:["#22371d","#f4a261"], stadium:["#11281a","#ffd60a"]};
+const SOON = ["Kids Edition","Haunted Halloween","Pirate's Cove","Medieval Kingdom","Movie Night"];
+let edition = ls.get("cn-ed","classic"); if(!EDS[edition]) edition="classic";
+const ED = () => EDS[edition]||EDS.classic;
+const ROLE_ICO = new Proxy({}, {get:(_,k)=>ED().icons[k]});
+const ROLE_NAME = new Proxy({}, {get:(_,k)=>ED().roles[k]});
+const TEAM = new Proxy({}, {get:(_,k)=>ED().teams[k]});
 const other = t => t==="red"?"blue":"red";
 const strip = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase();
 
@@ -327,6 +517,7 @@ async function saveTracker(){ const body=JSON.parse(JSON.stringify(S)); if(dbRef
 const PACKWORDS = new Set(Object.values(PACKS).flatMap(p=>p.words));
 function allBase(){ return [...new Set([...WORDS, ...S.added.map(a=>a.word)])].sort(); }
 function allWords(){ return [...new Set([...allBase(), ...PACKWORDS])].sort(); }
+function bankWords(){ return edition==="classic" ? allWords() : [...ED_WORDS[edition]].sort(); }
 function live(list){ const r=new Set(S.retired); return list.filter(w=>!r.has(w)&&!banned.has(w)); }
 
 /* ---------- packs (per device) ---------- */
@@ -352,6 +543,13 @@ function makeKey(mode, code){
   const q=shuffle(p,r); return {first:"red", keyA:q.map(x=>x[0]), keyB:q.map(x=>x[1])};
 }
 function deal(mode, code){
+  if(edition!=="classic"){
+    const r = rng(hash(mode+":"+code+":ed:"+edition));
+    const pool = shuffle(live(ED_WORDS[edition]||[]), r);
+    const k = makeKey(mode, code);
+    return {mode, code, ed:edition, grid:pool.slice(0,25), order:pool.slice(25), nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
+      keyA:k.keyA, keyB:k.keyB, first:k.first, turn:k.first, giver:"A", rev:0, at:0};
+  }
   const packKeys=[...packsOn].sort();
   const r = rng(hash(mode+":"+code+":"+packKeys.join(",")+":"+packMix));
   const base = shuffle(live(allBase()).filter(w=>!PACKWORDS.has(w)), r);
@@ -360,7 +558,7 @@ function deal(mode, code){
   const chosen = [...pk.slice(0,nPack), ...base.slice(0,25-nPack)];
   const rest = packMix==="only" ? [...pk.slice(nPack), ...base.slice(25-nPack)] : shuffle([...pk.slice(nPack), ...base.slice(25-nPack)], r);
   const k = makeKey(mode, code);
-  return {mode, code, grid:shuffle(chosen,r), order:rest, nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
+  return {mode, code, ed:"classic", grid:shuffle(chosen,r), order:rest, nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
     keyA:k.keyA, keyB:k.keyB, first:k.first, turn:k.first, giver:"A", rev:0, at:0};
 }
 function fingerprint(g){ const h=hash(g.grid.join("|")+"#"+g.keyA.join("")+g.keyB.join("")); return ALPH[h%24]+ALPH[(h>>>5)%24]+ALPH[(h>>>10)%24]; }
@@ -371,7 +569,8 @@ function loadGame(){
   const mode = s.mode==="duet"?"duet":"classic";
   const k = makeKey(mode, s.code);
   const keyOk = a => Array.isArray(a) && a.length===25;
-  return {mode, code:s.code, grid:s.grid, order:Array.isArray(s.order)?s.order:deal(mode,s.code).order, nextIdx:s.nextIdx||0,
+  if(s.ed && EDS[s.ed]) edition=s.ed;
+  return {mode, code:s.code, ed:edition, grid:s.grid, order:Array.isArray(s.order)?s.order:deal(mode,s.code).order, nextIdx:s.nextIdx||0,
     covers:s.covers||{}, by:s.by||{}, clues:s.clues||[], over:s.over||null, turnsLeft:s.turnsLeft??9,
     keyA:keyOk(s.keyA)?s.keyA:k.keyA, keyB:mode==="duet"?(keyOk(s.keyB)?s.keyB:k.keyB):[], first:s.first||k.first,
     turn:s.turn||s.first||k.first, giver:s.giver==="B"?"B":"A", rev:s.rev||0, at:s.at||0};
@@ -386,32 +585,84 @@ let picking=false, selected=new Set(), flipIdx=new Set(), sheetFor=null, setting
 let toastTimer=null, dismissed=false;
 
 /* ---------- sound (synthesized, no files) ---------- */
-let AC=null;
-function ac(){ if(!soundOn) return null; try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended") AC.resume(); }catch(e){ AC=null; } return AC; }
+let AC=null, mediaEl=null;
+function silentWav(){ const n=800, b=new Uint8Array(44+n), v=new DataView(b.buffer); const w=(o,s)=>{for(let i=0;i<s.length;i++)b[o+i]=s.charCodeAt(i);};
+  w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);b.fill(128,44);
+  let str="";for(let i=0;i<b.length;i++)str+=String.fromCharCode(b[i]);return "data:audio/wav;base64,"+btoa(str); }
+function unlockAudio(){
+  // iPhones mute web sounds on silent; a "playback" session plus a silent looping track lets them through (same trick as the Werewolf app).
+  try{ if(navigator.audioSession && navigator.audioSession.type!=="playback") navigator.audioSession.type="playback"; }catch(e){}
+  try{ if(!mediaEl){ mediaEl=document.createElement("audio"); mediaEl.src=silentWav(); mediaEl.loop=true; mediaEl.setAttribute("playsinline",""); mediaEl.preload="auto"; }
+       if(mediaEl.paused){ const pr=mediaEl.play(); if(pr&&pr.catch) pr.catch(()=>{}); } }catch(e){}
+}
+function ac(){ if(!soundOn) return null; unlockAudio(); try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state!=="running") AC.resume(); }catch(e){ AC=null; } return AC; }
+document.addEventListener("pointerdown",()=>{ if(soundOn) ac(); },{capture:true});
 function tone(f, dur, type="sine", g=.5, at=0, to=null){
-  const a=ac(); if(!a) return; const t=a.currentTime+at, v=(volume/100)*.35*g;
+  const a=ac(); if(!a) return; const t=a.currentTime+.02+at, v=(volume/100)*.7*g;
   const o=a.createOscillator(), gn=a.createGain(); o.type=type; o.frequency.setValueAtTime(f,t); if(to) o.frequency.exponentialRampToValueAtTime(to,t+dur);
   gn.gain.setValueAtTime(0.0001,t); gn.gain.exponentialRampToValueAtTime(Math.max(v,0.0002),t+.012); gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
   o.connect(gn).connect(a.destination); o.start(t); o.stop(t+dur+.05);
 }
 function noise(dur, freq=1800, g=.5, at=0, q=1.2){
-  const a=ac(); if(!a) return; const t=a.currentTime+at, v=(volume/100)*.4*g;
+  const a=ac(); if(!a) return; const t=a.currentTime+.02+at, v=(volume/100)*.8*g;
   const len=Math.max(1,Math.floor(a.sampleRate*dur)), buf=a.createBuffer(1,len,a.sampleRate), d=buf.getChannelData(0);
   for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
   const s=a.createBufferSource(), f=a.createBiquadFilter(), gn=a.createGain(); s.buffer=buf; f.type="bandpass"; f.frequency.value=freq; f.Q.value=q;
   gn.gain.setValueAtTime(Math.max(v,0.0002),t); gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
   s.connect(f).connect(gn).connect(a.destination); s.start(t);
 }
-const SFX = {
-  flip(){ noise(.07,2400,.6); tone(900,.05,"triangle",.25,.02); },
-  agent(team){ const base={red:523.25,blue:587.33,green:659.25}[team]||523.25; tone(base,.16,"triangle",.5,.05); tone(base*1.5,.28,"triangle",.5,.15); },
-  bystander(){ tone(196,.22,"triangle",.6,.04,150); noise(.08,400,.4,.04); },
-  assassin(){ tone(220,.9,"sawtooth",.35,.05,55); tone(233,.9,"sawtooth",.3,.05,58); noise(.5,300,.5,.05,.7); },
-  win(){ [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,.35,"triangle",.5,i*.12)); },
-  turn(){ tone(440,.12,"sine",.35); tone(330,.18,"sine",.3,.1); },
-  clue(){ [0,.07,.14].forEach(d=>noise(.035,3200,.5,d,3)); tone(1200,.05,"square",.12,.22); },
-  swap(){ noise(.25,900,.4,0,.6); tone(300,.25,"sine",.2,0,600); }
+const seq=(notes,type,g,step,len)=>notes.forEach((f,i)=>tone(f,len||step*1.6,type,g,i*step));
+const PROFILES = {
+  spy:{ flip(){ noise(.07,2400,.6); tone(900,.05,"triangle",.25,.02); },
+    agent(t){ const b={red:523.25,blue:587.33,green:659.25}[t]||523.25; tone(b,.16,"triangle",.5,.05); tone(b*1.5,.28,"triangle",.5,.15); },
+    bystander(){ tone(196,.22,"triangle",.6,.04,150); noise(.08,400,.4,.04); },
+    assassin(){ tone(220,.9,"sawtooth",.35,.05,55); tone(233,.9,"sawtooth",.3,.05,58); noise(.5,300,.5,.05,.7); },
+    win(){ seq([523.25,659.25,783.99,1046.5],"triangle",.5,.12,.35); },
+    turn(){ tone(440,.12,"sine",.35); tone(330,.18,"sine",.3,.1); },
+    clue(){ [0,.07,.14].forEach(d=>noise(.035,3200,.5,d,3)); tone(1200,.05,"square",.12,.22); },
+    swap(){ noise(.25,900,.4,0,.6); tone(300,.25,"sine",.2,0,600); } },
+  marimba:{ flip(){ tone(1046,.08,"sine",.35); },
+    agent(t){ const b={red:392,blue:440,green:523.25}[t]||440; seq([b,b*1.25,b*1.5],"sine",.6,.09,.22); },
+    bystander(){ tone(262,.25,"sine",.5); tone(247,.3,"sine",.4,.12); },
+    assassin(){ [0,.35,.7].forEach(d=>{ tone(196,1.1,"sine",.55,d); tone(233,1.1,"sine",.3,d); }); },
+    win(){ seq([392,523.25,659.25,783.99,1046.5,783.99,1046.5],"sawtooth",.28,.11,.2); },
+    turn(){ seq([659.25,523.25],"sine",.45,.1,.2); },
+    clue(){ tone(1568,.12,"sine",.35); tone(2093,.15,"sine",.25,.08); },
+    swap(){ seq([523.25,659.25,523.25],"sine",.35,.06,.12); } },
+  bells:{ flip(){ noise(.05,7000,.35,0,4); },
+    agent(t){ [0,.06,.12,.18].forEach(d=>noise(.06,7500,.45,d,6)); tone(t==="red"?1318.5:1568,.5,"sine",.4,.05); tone(t==="red"?1975.5:2349,.4,"sine",.18,.05); },
+    bystander(){ tone(330,.25,"triangle",.5,0,262); },
+    assassin(){ tone(110,1.0,"sawtooth",.3,.0,55); noise(.6,250,.6,.0,.6); },
+    win(){ seq([659.25,659.25,659.25,659.25,659.25,659.25,659.25,783.99,523.25,587.33,659.25],"sine",.5,.13,.25); [0,.2,.4,.6,.8,1].forEach(d=>noise(.06,7500,.35,d,6)); },
+    turn(){ [0,.08,.16].forEach(d=>noise(.05,7000,.4,d,6)); },
+    clue(){ tone(1760,.3,"sine",.35); },
+    swap(){ noise(.3,5000,.4,0,1); } },
+  chip:{ flip(){ tone(880,.05,"square",.25); },
+    agent(t){ const b=t==="red"?523.25:t==="blue"?587.33:659.25; seq([b,b*1.26,b*1.5,b*2],"square",.3,.05,.08); },
+    bystander(){ seq([392,330],"square",.3,.07,.1); },
+    assassin(){ seq([392,370,349,330,311,294,277,262],"square",.35,.12,.14); tone(131,.6,"square",.3,1.0); },
+    win(){ seq([523.25,523.25,523.25,659.25,783.99,659.25,783.99,1046.5],"square",.3,.1,.12); },
+    turn(){ seq([784,523.25],"square",.25,.06,.08); },
+    clue(){ seq([1046.5,1318.5],"square",.2,.05,.06); },
+    swap(){ tone(200,.3,"square",.25,0,1600); } },
+  jungle:{ flip(){ tone(180,.08,"triangle",.5); noise(.05,900,.3); },
+    agent(t){ tone(t==="red"?330:262,.12,"triangle",.6); tone(t==="red"?440:349,.18,"triangle",.5,.1); noise(.08,1200,.25,.05); },
+    bystander(){ noise(.12,3000,.45,0,2); noise(.08,2200,.35,.09,2); },
+    assassin(){ noise(1.4,140,1,.0,.8); tone(90,1.3,"sawtooth",.45,.0,45); tone(97,1.3,"sawtooth",.3,.05,48); },
+    win(){ seq([262,330,392,523.25,392,523.25],"triangle",.5,.13,.25); [0,.25,.5].forEach(d=>tone(98,.15,"sine",.6,d)); },
+    turn(){ tone(196,.15,"triangle",.4); tone(147,.2,"triangle",.4,.12); },
+    clue(){ noise(.06,1800,.4); tone(659,.1,"triangle",.3,.04); },
+    swap(){ noise(.35,600,.5,0,.5); } },
+  stadium:{ flip(){ noise(.06,1800,.4); },
+    agent(t){ noise(.9,1400,.55,0,.4); tone(t==="red"?392:349,.25,"sawtooth",.18,.05); tone(t==="red"?523.25:466,.35,"sawtooth",.18,.25); },
+    bystander(){ [0,.09,.18].forEach(d=>tone(2900,.07,"sine",.4,d)); },
+    assassin(){ tone(110,1.1,"square",.35); tone(116,1.1,"square",.25); },
+    win(){ seq([392,523.25,659.25,783.99,659.25,783.99],"sawtooth",.22,.14,.22); noise(1.6,1300,.6,.2,.4); },
+    turn(){ tone(2900,.35,"sine",.35); },
+    clue(){ tone(988,.08,"square",.2); tone(988,.08,"square",.2,.12); },
+    swap(){ noise(.3,1000,.4,0,.5); } }
 };
+const SFX = new Proxy({}, {get:(_,k)=>(PROFILES[ED().sound]||PROFILES.spy)[k]});
 function sfx(name,arg){ try{ SFX[name]&&SFX[name](arg); }catch(e){} }
 
 function counts(){
@@ -426,9 +677,9 @@ function checkWin(){
   if(G.over) return;
   const c=counts(), t=totals();
   if(G.mode==="classic"){
-    if(c.red>=t.red){ G.over={kind:"red", why:"Every red agent has been contacted."}; }
-    else if(c.blue>=t.blue){ G.over={kind:"blue", why:"Every blue agent has been contacted."}; }
-  } else if(c.green>=15){ G.over={kind:"green", why:"All 15 agents found. Mission complete."}; }
+    if(c.red>=t.red){ G.over={kind:"red", why:ED().why.all(TEAM.red)}; }
+    else if(c.blue>=t.blue){ G.over={kind:"blue", why:ED().why.all(TEAM.blue)}; }
+  } else if(c.green>=15){ G.over={kind:"green", why:ED().why.duetWin}; }
 }
 function cover(i, choice){
   const prev=G.covers[i], wasOver=!!G.over;
@@ -442,11 +693,11 @@ function cover(i, choice){
   else {
     G.covers[i]=choice; flipIdx.add(i);
     const isNew = !prev;
-    if(choice==="black"){ sfx("assassin"); if(isNew && !G.over) G.over = G.mode==="classic" ? {kind:other(G.turn), why:`${TEAM[G.turn]} team found the assassin.`} : {kind:"black", why:"You contacted the assassin. Mission failed."}; }
-    else if(choice==="tan"){ sfx("bystander"); if(isNew && !G.over){ G.turn=other(G.turn); toast(`Bystander. ${TEAM[G.turn]} team's turn.`); } }
+    if(choice==="black"){ sfx("assassin"); if(isNew && !G.over) G.over = G.mode==="classic" ? {kind:other(G.turn), why:ED().why.assassin(TEAM[G.turn])} : {kind:"black", why:ED().why.duetLose}; }
+    else if(choice==="tan"){ sfx("bystander"); if(isNew && !G.over){ G.turn=other(G.turn); toast(`${ROLE_NAME.tan}. ${TEAM[G.turn]}'s turn.`); } }
     else {
       sfx("agent",choice);
-      if(G.mode==="classic" && isNew && !G.over && choice!==G.turn){ G.turn=other(G.turn); toast(`Wrong agent. ${TEAM[G.turn]} team's turn.`); }
+      if(G.mode==="classic" && isNew && !G.over && choice!==G.turn){ G.turn=other(G.turn); toast(`Wrong team. ${TEAM[G.turn]}'s turn.`); }
     }
   }
   checkWin();
@@ -455,10 +706,10 @@ function cover(i, choice){
 }
 function endTurn(auto){
   if(G.over) return;
-  if(G.mode==="classic"){ G.turn=other(G.turn); toast(`${TEAM[G.turn]} team's turn.`); }
+  if(G.mode==="classic"){ G.turn=other(G.turn); toast(`${TEAM[G.turn]}'s turn.`); }
   else {
     G.turnsLeft=Math.max(0,G.turnsLeft-1); G.giver = G.giver==="A"?"B":"A";
-    toast(G.turnsLeft? `${auto?"Bystander. ":""}Turn over. Side ${G.giver} gives the next clue. ${G.turnsLeft} left.` : `${auto?"Bystander. ":""}Out of turns. Sudden death.`);
+    toast(G.turnsLeft? `${auto?ROLE_NAME.tan+". ":""}Turn over. Side ${G.giver} gives the next clue. ${G.turnsLeft} left.` : `${auto?ROLE_NAME.tan+". ":""}Out of turns. Sudden death.`);
   }
   sfx("turn");
   changed();
@@ -486,8 +737,8 @@ function clueProblem(w){
 function header(){
   const n = syncPeers();
   return `<header class="top"><div class="top-in">
-    <svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg>
-    <div class="brand">Codenames<small>${G.mode==="classic"?"Classic":"Duet"} · ${G.code} · Match <span class="matchtag">${fingerprint(G)}</span></small></div>
+    <svg class="logo" aria-hidden="true"><use href="#${ED().logo}"/></svg>
+    <div class="brand">${esc(ED().title)}<small>${G.mode==="classic"?"Classic":"Duet"} · ${G.code} · Match <span class="matchtag">${fingerprint(G)}</span></small></div>
     <span class="sp"></span>
     ${room&&syncOn?`<span class="sync ${n?"on":""}" title="Live sync">${n?`<i></i>${n+1} linked`:`<i></i>Solo`}</span>`:""}
     <button class="iconbtn" data-act="settings" aria-label="Settings">${ico("i-gear")}</button>
@@ -511,7 +762,7 @@ function scoreboard(){
   }
   const out = G.turnsLeft<=0 && !G.over;
   return `<div class="score duet">
-    <div class="plate green turn"><div class="plate-h"><span class="plate-name">Agents</span><span class="plate-ct">${c.green}<small> / 15</small></span></div>
+    <div class="plate green turn"><div class="plate-h"><span class="plate-name">${edition==="classic"?"Agents":esc(ROLE_NAME.green)}</span><span class="plate-ct">${c.green}<small> / 15</small></span></div>
       <div class="pips">${Array.from({length:15},(_,k)=>`<svg class="pip ${k<c.green?"":"gone"}"><use href="#i-agent"/></svg>`).join("")}</div></div>
     <div class="plate" style="--tc:var(--brass)"><div class="plate-h"><span class="plate-name">Turns</span><span class="plate-ct">${G.turnsLeft}</span></div>
       <div class="tokens">${Array.from({length:9},(_,k)=>`<i class="tok ${k<9-G.turnsLeft?"used":""}"></i>`).join("")}</div></div>
@@ -539,11 +790,11 @@ function boardTab(){
   const kcol = {red:"var(--red)",blue:"var(--blue)",green:"var(--green)",tan:"var(--tan)",black:"var(--ink)"};
   const cards = G.grid.map((w,i)=>{
     const c=G.covers[i], b=G.by[i]||{}, partial=!c&&(b.A||b.B);
-    const cls=["cn", c?`cov c-${c}`:"", partial?"partial":"", PACKWORDS.has(w)?"packword":"", selected.has(i)?"sel":"", flipIdx.has(i)?"flip":""].join(" ");
-    const icon = c ? ROLE_ICO[c] : "i-agent";
+    const cls=["cn", c?`cov c-${c}`:"", partial?"partial":"", edition==="classic"&&PACKWORDS.has(w)?"packword":"", selected.has(i)?"sel":"", flipIdx.has(i)?"flip":""].join(" ");
+    const icon = c ? ROLE_ICO[c] : (edition==="classic"?"i-agent":ED().logo);
     const marks = partial ? `<span class="cn-by">${["A","B"].filter(s=>b[s]).map(s=>`<span title="Bystander for Side ${s}'s clues">${ico("i-bystander")}${s}</span>`).join("")}</span>` : "";
     return `<button class="${cls}" data-i="${i}" style="--kc:${kcol[keyArr[i]]}" aria-label="${esc(w)}${c?", covered by "+ROLE_NAME[c]:partial?", bystander for one side":""}">
-      <span class="cn-top">${ico(icon,"cn-ico")}<span class="cn-up">${esc(w)}</span></span>${marks}
+      <span class="cn-num">${edition==="loteria"?(ED_WORDS.loteria.indexOf(w)+1||""):""}</span><span class="cn-top">${ico(icon,"cn-ico")}<span class="cn-up">${esc(w)}</span></span>${marks}
       <span class="cn-label"><span class="cn-w">${esc(w)}</span></span></button>`;
   }).join("");
   const rb = !picking ? `${ico("i-swap")}Replace words` : selected.size ? `${ico("i-swap")}Replace ${selected.size} word${selected.size>1?"s":""}` : "Pick words to replace";
@@ -577,26 +828,26 @@ function keyTab(){
     <div><div class="eyebrow">For the spymaster only · Match ${fingerprint(G)}</div><h2>${duet?`Key card · Side ${side}`:"Spymaster key"}</h2></div>
     ${duet?`<div class="seg" role="group" aria-label="Key side"><button data-act="side" data-v="A" aria-pressed="${side==="A"}">Side A</button><button data-act="side" data-v="B" aria-pressed="${side==="B"}">Side B</button></div>
       <p class="hint">Each player holds their own side. Side ${side} shows 9 agents and 3 assassins.</p>`
-      :`<p class="small" style="margin:0"><b style="color:var(--${G.first})">${TEAM[G.first]} goes first</b> with 9 agents. The border shows the starting team, like the real key card.</p>`}
+      :`<p class="small" style="margin:0"><b style="color:var(--${G.first})">${esc(TEAM[G.first])} goes first</b> with 9. The border shows the starting team, like the real key card.</p>`}
     <div class="keycard ${duet?"duet":G.first} ${show?"":"hide"}" id="keycard"><div class="kgrid">${cells}</div></div>
     <button class="btn primary holdbtn" id="hold">${ico("i-eye")}${show&&!reveal?"Key is showing":"Press and hold to see the key"}</button>
     <div class="card">
       <button class="togrow" data-act="keep" aria-pressed="${keepShow}"><span class="sw"></span><span class="grow"><b>Keep the key showing</b><br><span class="small muted">For the phone that stays with the spymaster.</span></span></button>
       <button class="togrow" data-act="tint" aria-pressed="${tint}"><span class="sw"></span><span class="grow"><b>Color the board with the key</b><br><span class="small muted">Adds a colored edge to each card on this phone's Board tab.</span></span></button>
-      <div class="legend">${(duet?[["green","Agent"],["tan","Bystander"],["ink","Assassin"]]:[["red","Red agent"],["blue","Blue agent"],["tan","Bystander"],["ink","Assassin"]]).map(([c,l])=>`<span><i class="dot" style="background:var(--${c})"></i>${l}</span>`).join("")}</div>
+      <div class="legend">${(duet?[["green",ROLE_NAME.green],["tan",ROLE_NAME.tan],["ink",ROLE_NAME.black]]:[["red",ROLE_NAME.red],["blue",ROLE_NAME.blue],["tan",ROLE_NAME.tan],["ink",ROLE_NAME.black]]).map(([c,l])=>`<span><i class="dot" style="background:var(--${c})"></i>${l}</span>`).join("")}</div>
     </div>
   </div>`;
 }
 function wordsTab(){
-  const all=allWords(), ret=new Set(S.retired), add=new Set(S.added.map(a=>a.word));
+  const all=bankWords(), ret=new Set(S.retired), add=new Set(S.added.map(a=>a.word));
   const liveN = all.length - S.retired.filter(w=>all.includes(w)).length;
   const strikes = Object.entries(S.counts).filter(([w,n])=>n>0&&n<3&&!ret.has(w)).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
   const q = strip(poolQ.trim());
   const list = all.filter(w=>!q||strip(w).includes(q));
   return `<div class="sec">
-    <div class="row"><div class="grow"><div class="eyebrow">Word bank</div><h2>Fresh words</h2></div><span class="stamp">Not in either box</span></div>
+    <div class="row"><div class="grow"><div class="eyebrow">Word bank · ${esc(ED().name)}</div><h2>Fresh words</h2></div><span class="stamp">Not in either box</span></div>
     <div class="stats"><div class="stat"><b>${liveN.toLocaleString()}</b><span>words in play</span></div><div class="stat"><b>${S.retired.length}</b><span>retired</span></div><div class="stat"><b>${S.added.length}</b><span>added by Claude</span></div></div>
-    <div class="card">
+    ${edition==="classic"?`    <div class="card">
       <h3>Theme packs</h3>
       <p class="small muted">Turn on packs to mix themed words into your grids. Changes apply to the next grid you deal. Linked devices follow the device that deals.</p>
       <div>${Object.entries(PACKS).map(([k,p])=>`<button class="packrow" data-act="pack" data-v="${k}" aria-pressed="${packsOn.has(k)}"><span class="sw"></span><span class="grow"><b>${esc(p.name)}</b> <span class="cnt">${p.words.length}</span><span class="pk-sample">${p.words.slice(0,6).map(esc).join(" · ")}</span></span></button>`).join("")}</div>
@@ -604,6 +855,7 @@ function wordsTab(){
       <div class="seg wide" role="group" aria-label="Pack mix"><button data-act="mix" data-v="few" aria-pressed="${packMix==="few"}">A few (6)</button><button data-act="mix" data-v="lots" aria-pressed="${packMix==="lots"}">Lots (12)</button><button data-act="mix" data-v="only" aria-pressed="${packMix==="only"}">Packs only</button></div>
       <button class="btn primary" data-act="dealpacks">${ico("i-deal")}Deal a grid with these packs</button>
     </div>
+`:`<div class="card"><h3>${esc(ED().name)} words</h3><p class="small muted">This full theme has its own ${ED_WORDS[edition].length} words, none of them from either box. Theme packs mix into the Classic theme only. Switch themes in Settings.</p></div>`}
     <div class="card">
       <h3>Word tracker</h3>
       <p class="small muted">Each word you replace gets a strike. After 3 strikes in 3 different games it's retired, and Claude adds 2 new words. ${shared?"Counts are shared everywhere this page is open.":"Counts are saved on this device."}</p>
@@ -642,6 +894,11 @@ function rulesTab(){
       <li><b>Live sync</b> (in Settings) links every device on the same code: covers, clues, turns and replaced words show up everywhere in a second or two. The header shows how many devices are linked. Everyone needs to be signed in and have access to this page.</li>
       <li>A good setup: an iPad on the table on the Board tab, and each captain's phone on the Key tab with <b>Keep the key showing</b> on.</li>
     </ul></details>
+    <details class="faq"><summary>Full themes</summary><ul>
+      <li>Open <b>Settings</b> (gear, top right) and pick a theme: ${Object.values(EDS).map(e=>esc(e.name)).join(", ")}.</li>
+      <li>Each theme changes everything at once: its own words, colors, cards, team names, the assassin, sounds and the winning screen. The rules stay the same.</li>
+      <li>Picking a theme deals a new grid, and linked devices switch with you.</li>
+    </ul></details>
     <details class="faq"><summary>About the word bank</summary><ul>
       <li>Every word here is missing from the original Codenames box and from Codenames Duet, including plurals.</li>
       <li>Theme packs (Words tab) mix in Movies & TV, Sports, Food, California or Spanish words.</li>
@@ -654,9 +911,13 @@ function settingsModal(){
   const n=syncPeers();
   return `<div class="sheet-bg" data-act="closesettings"></div><div class="modal" role="dialog" aria-label="Settings">
     <h2>Settings</h2>
-    <div class="setrow"><div class="eyebrow">Look</div>
+    <div class="setrow"><div class="eyebrow">Theme</div>
+      <div class="edlist">${Object.entries(EDS).map(([k,e])=>`<button class="edopt" data-act="edition" data-v="${k}" aria-pressed="${edition===k}"><span class="edico" style="background:${EDSW[k][0]};color:${EDSW[k][1]}">${ico(e.logo)}</span><span class="grow"><b>${esc(e.name)}</b><span class="small muted">${esc(e.sub)}</span></span></button>`).join("")}</div>
+      <p class="soon">Coming next: ${SOON.join(", ")}.</p>
+      <p class="hint">Picking a theme deals a new grid. Linked devices switch too.</p></div>
+    ${edition!=="classic"?"":`<div class="setrow"><div class="eyebrow">Look</div>
       ${opt("hq","Spy HQ","Dark briefing room. Easy on the eyes at night.",["#101722","#d6a64f","#d9533f","#4c8ae0","#ece1c6","#58ad6d","#273448"])}
-      ${opt("file","Classified","Manila case file with red stamps. Best in a bright room.",["#e2d3ae","#a8281d","#b9382a","#2c5d9f","#fbf6e8","#3c7f4d","#c6b388"])}</div>
+      ${opt("file","Classified","Manila case file with red stamps. Best in a bright room.",["#e2d3ae","#a8281d","#b9382a","#2c5d9f","#fbf6e8","#3c7f4d","#c6b388"])}</div>`}
     <div class="setrow"><div class="eyebrow">Sound</div>
       <button class="togrow" data-act="sound" aria-pressed="${soundOn}"><span class="sw"></span><span class="grow"><b>Sound effects</b><br><span class="small muted">Card flips, agents, bystanders, the assassin and wins.</span></span></button>
       <div class="vol">${ico("i-sound")}<input type="range" id="vol" min="0" max="100" step="5" value="${volume}" aria-label="Volume" ${soundOn?"":"disabled"}><span class="num" id="volnum">${volume}</span></div>
@@ -681,9 +942,9 @@ function overlays(){
   if(settingsOpen) h+=settingsModal();
   if(G.over && !dismissed){
     const k=G.over.kind;
-    const title = k==="red"?"Red team wins":k==="blue"?"Blue team wins":k==="green"?"Mission complete":"Mission failed";
+    const title = k==="red"?ED().win(TEAM.red):k==="blue"?ED().win(TEAM.blue):k==="green"?ED().duetWin:ED().lose;
     h+=`<div class="gameover go-${k}" role="dialog" aria-label="${title}"><div class="go-rays"></div><div class="go-card">
-      <svg class="go-ico" aria-hidden="true"><use href="#${k==="black"?"i-assassin":"i-agent"}"/></svg>
+      <svg class="go-ico" aria-hidden="true"><use href="#${k==="black"?ROLE_ICO.black:k==="green"?ROLE_ICO.green:ROLE_ICO[k]}"/></svg>
       <h1 class="go-title">${title}</h1><p class="go-sub">${esc(G.over.why)}</p>
       <div class="go-btns"><button class="btn primary" data-act="deal">Deal new grid</button><button class="btn" data-act="dismiss">Back to the board</button></div>
     </div></div>`;
@@ -691,7 +952,9 @@ function overlays(){
   return h + `<div class="toast" id="toast" hidden></div>`;
 }
 function render(){
-  document.documentElement.classList.toggle("file", look==="file");
+  const hc=document.documentElement.classList;
+  hc.toggle("file", look==="file" && edition==="classic");
+  Object.keys(EDS).forEach(k=>hc.toggle("ed-"+k, k===edition && k!=="classic"));
   const body = tab==="board"?boardTab():tab==="key"?keyTab():tab==="words"?wordsTab():rulesTab();
   const t=$("#toast"), tt=t&&!t.hidden?t.textContent:null;
   const sy = window.scrollY;
@@ -782,7 +1045,7 @@ Reply with only a JSON array of uppercase strings, for example ["LANTERN","SPARK
 /* ---------- live sync (room presence; nothing stored) ---------- */
 let roomNs=null, room=null, roomName="", myPeer=null, mismatch=null, peerUnsub=null;
 function compact(){
-  return {v:2, m:G.mode, c:G.code, g:G.grid, ka:G.keyA.map(x=>x[0]).join(""), kb:G.keyB.map(x=>x[0]).join(""), f:G.first, t:G.turn,
+  return {v:2, ed:edition, m:G.mode, c:G.code, g:G.grid, ka:G.keyA.map(x=>x[0]).join(""), kb:G.keyB.map(x=>x[0]).join(""), f:G.first, t:G.turn,
     cv:G.grid.map((_,i)=>(G.covers[i]||"-")[0]).join(""), by:G.grid.map((_,i)=>{const b=G.by[i]||{}; return (b.A?1:0)+(b.B?2:0);}).join(""),
     gv:G.giver, tl:G.turnsLeft, o:G.over, cl:G.clues.slice(-6), ni:G.nextIdx, rev:G.rev, at:G.at};
 }
@@ -793,6 +1056,8 @@ function compactKeys(){ const c=compact(); c.ka=keyStr(G.keyA); c.kb=keyStr(G.ke
 function adopt(st){
   if(!st || st.v!==2 || !Array.isArray(st.g) || st.g.length!==25) return;
   const old=G.covers;
+  if(st.ed && EDS[st.ed] && st.ed!==edition){ edition=st.ed; ls.set("cn-ed",edition); }
+  G.ed=edition;
   G.grid=st.g.map(String).slice(0,25); G.keyA=keyFrom(st.ka); G.keyB=st.m==="duet"?keyFrom(st.kb):[]; G.first=st.f==="blue"?"blue":"red"; G.turn=st.t==="blue"?"blue":"red";
   G.covers={}; String(st.cv||"").split("").forEach((ch,i)=>{ if(LET[ch]) G.covers[i]=LET[ch]; });
   G.by={}; String(st.by||"").split("").forEach((ch,i)=>{ const n=+ch; if(n) G.by[i]={...(n&1?{A:1}:{}),...(n&2?{B:1}:{})}; });
@@ -833,7 +1098,8 @@ async function joinRoom(){
     const u2=r.on("next", msg=>{
       if(msg.isMe&&msg.sameTab) return; const d=msg.data||{};
       if(!/^[A-Z]{4}$/.test(String(d.c||""))||!["classic","duet"].includes(d.m)) return;
-      if(d.m===G.mode && d.c===G.code) return;
+      if(d.m===G.mode && d.c===G.code && (!d.ed||d.ed===edition)) return;
+      if(d.ed && EDS[d.ed]){ edition=d.ed; ls.set("cn-ed",edition); }
       newGame(d.m, d.c, {quiet:true}); toast("Following the new grid from another device.");
     }, ()=>{});
     peerUnsub=()=>{ u1(); u2(); };
@@ -848,7 +1114,7 @@ function newGame(mode, code, opts={}){
   G=deal(mode, code||newCode()); dismissed=false; picking=false; selected=new Set(); sheetFor=null; noticeText=""; side="A";
   G.rev = opts.quiet ? 0 : 1; G.at=Date.now(); saveGame(); render();
   (async()=>{
-    if(prevRoom && syncOn && !opts.quiet){ try{ await prevRoom.emit("next",{m:G.mode,c:G.code}); }catch(e){} }
+    if(prevRoom && syncOn && !opts.quiet){ try{ await prevRoom.emit("next",{m:G.mode,c:G.code,ed:edition}); }catch(e){} }
     await joinRoom(); pushSync();
   })();
 }
@@ -875,6 +1141,7 @@ document.addEventListener("click",e=>{
   else if(a==="pick"){ const i=sheetFor; sheetFor=null; cover(i, v==="none"?null:v); }
   else if(a==="settings"){ settingsOpen=true; render(); }
   else if(a==="closesettings"){ settingsOpen=false; render(); }
+  else if(a==="edition"){ if(edition!==v){ edition=v; ls.set("cn-ed",edition); settingsOpen=false; newGame(G.mode); sfx("win"); } }
   else if(a==="setlook"){ look=v; ls.set("cn-look",look); render(); }
   else if(a==="sound"){ soundOn=!soundOn; ls.set("cn-sound",soundOn); render(); if(soundOn) sfx("flip"); }
   else if(a==="testsound"){ sfx("agent","red"); setTimeout(()=>sfx("bystander"),450); }
@@ -930,5 +1197,4 @@ render();
   if(roomNs) joinRoom();
 })();
 </script>
-
 </body></html>
