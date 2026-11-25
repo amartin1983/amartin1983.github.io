@@ -1,0 +1,934 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Fresh Codenames Grids</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Special+Elite&family=Oswald:wght@500;600;700&family=Libre+Franklin:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one narrow column you thumb through at the table; sticky agency header, 5x5 board as the hero, tab bar pinned to the bottom.
+   Two deliberate single-world looks: "Spy HQ" (dark briefing room) and "Classified" (manila file). Each sets every color itself. */
+:root{
+  --bg:#0b1017; --bg2:#101722; --panel:#151e2b; --panel2:#1b2636; --line:#273448;
+  --fg:#ebe5d5; --muted:#9aa3b2; --faint:#647083;
+  --brass:#d6a64f; --brass-ink:#1b1305; --brass-soft:rgba(214,166,79,.16); --glow:rgba(214,166,79,.38);
+  --red:#d9533f; --blue:#4c8ae0; --green:#58ad6d; --tan:#cbb78d; --ink:#07080b;
+  --card:#ece1c6; --card2:#d8c8a2; --card-ink:#2a2216; --card-line:#b49f74; --label:#fbf6e9;
+  --cut:#101722; --shadow:rgba(0,0,0,.45);
+  --f-stencil:"Stardos Stencil","Stencil",Impact,sans-serif;
+  --f-type:"Special Elite","Courier New",ui-monospace,monospace;
+  --f-word:"Oswald","Arial Narrow",Impact,sans-serif;
+  --f-body:"Libre Franklin",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:12px;
+  color-scheme:dark;
+}
+html.file{
+  --bg:#e2d3ae; --bg2:#ece0c2; --panel:#f6efdb; --panel2:#eee3c8; --line:#c6b388;
+  --fg:#2b2418; --muted:#6b5d43; --faint:#94845f;
+  --brass:#a8281d; --brass-ink:#fff7ea; --brass-soft:rgba(168,40,29,.1); --glow:rgba(168,40,29,.25);
+  --red:#b9382a; --blue:#2c5d9f; --green:#3c7f4d; --tan:#bba476; --ink:#16130e;
+  --card:#fbf6e8; --card2:#eee2c4; --card-ink:#2a2216; --card-line:#c9b68a; --label:#ffffff;
+  --cut:#f6efdb; --shadow:rgba(80,60,20,.25);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent;
+  background-image:radial-gradient(ellipse at 50% -10%,rgba(214,166,79,.09),transparent 60%)}
+html.file body{background-image:repeating-linear-gradient(0deg,rgba(120,90,30,.05) 0 1px,transparent 1px 28px),radial-gradient(ellipse at 30% 0%,rgba(255,255,255,.5),transparent 60%)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg2)}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+svg{fill:currentColor}
+.cut{fill:var(--cut)}
+svg [fill="none"]{fill:none}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg2);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.top-in{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;flex:none;color:var(--brass);filter:drop-shadow(0 0 7px var(--glow))}
+.brand{font-family:var(--f-stencil);font-weight:700;font-size:22px;letter-spacing:.06em;line-height:1;text-transform:uppercase;min-width:0}
+.brand small{display:block;font-family:var(--f-type);font-weight:400;font-size:11.5px;letter-spacing:.06em;text-transform:none;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sp{flex:1}
+.iconbtn{border:1px solid var(--line);background:var(--panel);border-radius:999px;height:36px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap}
+.iconbtn svg{width:16px;height:16px}
+
+main{max-width:680px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:16px calc(96px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg2);border-top:1px solid var(--line);
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs-in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.tab{background:none;border:0;padding:9px 0 10px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.tab svg{width:21px;height:21px}
+.tab[aria-current="page"]{color:var(--brass)}
+
+/* type */
+h2{font-family:var(--f-stencil);font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:uppercase;margin:0;line-height:1.1;text-wrap:balance}
+h3{font-size:15.5px;margin:0;font-weight:700}
+.eyebrow{font-family:var(--f-type);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.muted{color:var(--muted)} .small{font-size:13px} .hint{font-size:12.5px;color:var(--faint);margin:0}
+.sec{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
+.card p{margin:0;max-width:62ch}
+
+.btn{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:10px 14px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:7px;justify-content:center}
+.btn svg{width:16px;height:16px}
+.btn.primary{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}
+.btn.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px}
+.seg button{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 14px;font-weight:600;font-size:13.5px}
+.seg button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft);color:var(--brass)}
+.codebox{display:flex;align-items:center;gap:8px;margin-left:auto}
+.codebox label{font-family:var(--f-type);font-size:12px;color:var(--muted)}
+.codebox input{font:600 16px var(--f-mono);letter-spacing:.22em;width:6.4em;text-transform:uppercase;padding:8px 6px 8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);text-align:center}
+@media (max-width:480px){.codebox{margin-left:0}}
+
+/* scoreboard */
+.score{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:stretch}
+.plate{--tc:var(--red);border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:9px 11px;display:flex;flex-direction:column;gap:6px;min-width:0;transition:box-shadow .2s,border-color .2s}
+.plate.blue{--tc:var(--blue)} .plate.green{--tc:var(--green)}
+.plate.turn{border-color:var(--tc);box-shadow:0 0 0 1px var(--tc) inset,0 0 18px -4px var(--tc)}
+.plate-h{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.plate-name{font-family:var(--f-stencil);font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:var(--tc)}
+.plate-ct{font-family:var(--f-mono);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.plate-ct small{font-size:12px;color:var(--muted);font-weight:500}
+.pips{display:flex;flex-wrap:wrap;gap:3px}
+.pip{width:13px;height:15px;color:var(--tc)}
+.pip.gone{opacity:.22}
+.turnflag{font-family:var(--f-type);font-size:11.5px;color:var(--tc);min-height:15px}
+.mid{display:flex;flex-direction:column;justify-content:center;gap:6px;align-items:center}
+.mid .btn{padding:9px 10px;font-size:13px;white-space:nowrap}
+.tokens{display:flex;gap:4px;flex-wrap:wrap}
+.tok{width:15px;height:15px;border-radius:50%;border:2px solid var(--brass);background:var(--brass-soft)}
+.tok.used{border-color:var(--line);background:transparent;opacity:.6}
+.score.duet{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto}
+.banner{border:1px dashed var(--brass);border-radius:10px;padding:9px 12px;font-size:13.5px;color:var(--brass);background:var(--brass-soft)}
+
+/* clue strip */
+.clue{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-left:4px solid var(--cc,var(--brass));background:var(--panel);border-radius:10px;padding:9px 12px;min-width:0}
+.clue .eyebrow{flex:none}
+.clue-word{font-family:var(--f-word);font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase;line-height:1;min-width:0;overflow-wrap:anywhere}
+.clue-n{font-family:var(--f-mono);font-weight:600;font-size:20px;color:var(--cc,var(--brass))}
+.cluein{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px}
+.cluein input,.cluein select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-width:0}
+.cluein input{text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.cluein input::placeholder{text-transform:none;letter-spacing:0;font-weight:400;color:var(--faint)}
+.cluelog{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.cluelog li{display:flex;gap:8px;align-items:baseline;border-left:3px solid var(--lc,var(--line));padding-left:8px}
+.cluelog b{font-family:var(--f-word);letter-spacing:.05em;font-weight:600}
+.cluelog .num{font-family:var(--f-mono);color:var(--muted)}
+
+/* board */
+.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(5px,1.5vw,10px);perspective:900px}
+.cn{position:relative;aspect-ratio:1.48;max-width:100%;border-radius:8px;border:0;padding:0;cursor:pointer;user-select:none;-webkit-user-select:none;
+  background:linear-gradient(175deg,var(--card),var(--card2));color:var(--card-ink);
+  box-shadow:0 2px 0 var(--shadow),0 5px 12px -6px var(--shadow),inset 0 0 0 3px var(--card),inset 0 0 0 4px var(--card-line);
+  display:grid;grid-template-rows:1fr auto;padding:5px 5px 6px;overflow:hidden;transition:transform .12s ease}
+.cn:active{transform:scale(.96)}
+.cn-top{display:flex;align-items:flex-start;justify-content:space-between;gap:3px;min-height:0;padding:1px 3px 0}
+.cn-ico{width:16%;max-width:16px;aspect-ratio:1;color:var(--card-line);flex:none}
+.cn-up{font-family:var(--f-word);font-weight:600;text-transform:uppercase;letter-spacing:.03em;transform:rotate(180deg);opacity:.42;white-space:nowrap;line-height:1;font-size:9px;overflow:hidden}
+.cn-label{background:var(--label);border-radius:4px;box-shadow:inset 0 0 0 1px var(--card-line);display:flex;align-items:center;justify-content:center;padding:4px 3px;min-width:0}
+.cn-w{font-family:var(--f-word);font-weight:600;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;line-height:1;font-size:15px}
+@media (max-width:430px){.cn-up{display:none}.cn{padding:4px 3px 4px}.cn-label{padding:4px 2px}}
+.cn.cov{--cc:var(--tan);background:linear-gradient(160deg,color-mix(in srgb,var(--cc) 82%,#fff 18%),var(--cc));color:#fff;
+  box-shadow:0 2px 0 var(--shadow),inset 0 0 0 3px rgba(255,255,255,.12),inset 0 0 0 4px rgba(0,0,0,.18)}
+.cn.cov.c-red{--cc:var(--red)} .cn.cov.c-blue{--cc:var(--blue)} .cn.cov.c-green{--cc:var(--green)} .cn.cov.c-tan{--cc:var(--tan);color:var(--card-ink)} .cn.cov.c-black{--cc:var(--ink);background:radial-gradient(circle at 50% 30%,#2a2c33,var(--ink))}
+.cn.cov .cn-top{justify-content:center;align-items:center}
+.cn.cov .cn-up{display:none}
+.cn.cov .cn-ico{width:auto;max-width:none;height:100%;max-height:44px;color:currentColor;opacity:.92}
+.cn.cov .cn-label{background:rgba(0,0,0,.22);box-shadow:none;padding:2px}
+.cn.cov.c-tan .cn-label{background:rgba(255,255,255,.35)}
+.cn.cov .cn-w{opacity:.85;font-size:9px!important}
+.cn.flip{animation:cnflip .45s ease-out}
+@keyframes cnflip{0%{transform:rotateY(90deg)}100%{transform:none}}
+.board.tint .cn:not(.cov)::after{content:"";position:absolute;inset:auto 0 0 0;height:5px;background:var(--kc)}
+.board.tint .cn:not(.cov){box-shadow:0 2px 0 var(--shadow),inset 0 0 0 3px var(--kc),inset 0 0 0 4px var(--card-line)}
+.board.picking .cn{outline:1.5px dashed var(--faint);outline-offset:-5px}
+.cn.sel{outline:3px solid var(--brass)!important;outline-offset:-3px!important;transform:scale(.94)}
+.cn.sel::before{content:"\00d7";position:absolute;top:3px;right:4px;width:16px;height:16px;border-radius:50%;background:var(--brass);color:var(--brass-ink);font:700 14px/16px var(--f-body);text-align:center}
+.cn.fresh{animation:cnflip .45s ease-out}
+@media (prefers-reduced-motion:reduce){.cn.flip,.cn.fresh{animation:none}.plate{transition:none}}
+.boardbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.boardbar .sp{flex:1}
+
+/* sheet */
+.sheet-bg{position:fixed;inset:0;z-index:80;background:rgba(5,7,12,.6)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:81;max-height:82vh;overflow:auto;background:var(--bg2);border-top:1px solid var(--line);border-radius:18px 18px 0 0;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px;box-shadow:0 -12px 40px rgba(0,0,0,.45)}
+.sheet>*{max-width:560px;width:100%;margin:0 auto}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sheet-word{font-family:var(--f-word);font-weight:700;font-size:28px;letter-spacing:.05em;text-transform:uppercase;line-height:1}
+.picks{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:8px}
+.pk{--tc:var(--red);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--panel);text-align:center;font-weight:700;font-size:13px}
+.pk.blue{--tc:var(--blue)}.pk.green{--tc:var(--green)}.pk.tan{--tc:var(--tan)}.pk.black{--tc:var(--fg)}
+.pk-art{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:var(--tc);background:radial-gradient(circle at 50% 40%,var(--brass-soft),transparent 72%);border:1px solid var(--line)}
+.pk-art svg{width:36px;height:36px}
+.pk.cur{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
+.pk small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+
+/* key */
+.keycard{--kb:var(--red);padding:10px;border-radius:14px;background:var(--panel2);border:8px solid var(--kb);box-shadow:0 0 22px -6px var(--kb),inset 0 0 0 1px rgba(0,0,0,.25);transition:filter .15s}
+.keycard.blue{--kb:var(--blue)} .keycard.duet{--kb:var(--green)}
+.keycard.hide{filter:blur(13px) saturate(.6)}
+.kgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.kc{aspect-ratio:1.3;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;padding:3px;background:var(--kcol);color:#fff;font-family:var(--f-word);font-weight:600;text-transform:uppercase;line-height:1;overflow:hidden;position:relative}
+.kc.tan{color:var(--card-ink)}
+.kc span{white-space:nowrap;font-size:10px}
+.kc.done{opacity:.35}
+.kc.done::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.25) 5px 7px)}
+.kc svg{position:absolute;top:12%;left:50%;transform:translateX(-50%);width:34%;height:auto;opacity:.6}
+.holdbtn{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding:14px}
+.togrow{display:flex;align-items:center;gap:12px;background:none;border:0;padding:4px 0;text-align:left;width:100%}
+.sw{width:44px;height:26px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:left .15s}
+.togrow[aria-pressed="true"] .sw{background:var(--brass);border-color:var(--brass)}
+.togrow[aria-pressed="true"] .sw::after{left:20px;background:var(--brass-ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* words */
+.stamp{display:inline-block;font-family:var(--f-stencil);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);border:2px solid var(--brass);border-radius:4px;padding:2px 8px;transform:rotate(-3deg);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel2);display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--f-mono);font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:5px 6px}
+.chip{font-family:var(--f-word);font-weight:500;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:6px;border:1px solid var(--line);background:var(--bg);display:inline-flex;gap:7px;align-items:center}
+.chip .str{display:inline-flex;gap:2px}
+.chip .str i{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--red)}
+.chip .str i.on{background:var(--red)}
+.chip.gone{text-decoration:line-through;color:var(--faint)}
+.chip.new{border-color:var(--green);color:var(--green)}
+.pool{display:flex;flex-wrap:wrap;gap:4px 5px;max-height:360px;overflow:auto;padding:2px 4px 2px 0}
+.pool button{font-family:var(--f-word);font-weight:500;font-size:12.5px;letter-spacing:.04em;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:3px 8px;border-radius:5px}
+.pool button.banned{text-decoration:line-through;color:var(--faint);opacity:.6}
+.pool button.retired{text-decoration:line-through;color:var(--faint);opacity:.4;cursor:default}
+.pool button.added{border-color:var(--green);color:var(--green)}
+.search{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;width:100%}
+
+/* rules */
+details.faq{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+details.faq summary{font-weight:700;cursor:pointer}
+details.faq ul,details.faq ol{margin:8px 0 2px;padding-left:20px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:6px}
+details.faq b{color:var(--fg)}
+
+/* modal + overlays */
+.modal{position:fixed;z-index:81;left:50%;top:14%;transform:translateX(-50%);width:min(calc(100% - 32px),440px);background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lookopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.lookopt[aria-pressed="true"]{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
+.swatch{width:56px;height:42px;border-radius:8px;flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:5px;border:1px solid rgba(0,0,0,.2)}
+.swatch i{border-radius:2px}
+.lookopt b{display:block;font-family:var(--f-stencil);letter-spacing:.06em;text-transform:uppercase;font-size:16px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--fg);color:var(--bg);font-weight:700;font-size:13.5px;padding:9px 16px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px);text-align:center}
+.notice{margin:0;padding:10px 12px;border-radius:10px;border:1px solid var(--green);background:var(--panel);font-size:14px}
+
+.gameover{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;overflow:auto;background:radial-gradient(circle at 50% 25%,#3b1a17,#06070a 72%);
+  padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));color:#efe8d8}
+.gameover.go-blue{background:radial-gradient(circle at 50% 25%,#16294a,#06070a 72%)}
+.gameover.go-green{background:radial-gradient(circle at 50% 25%,#183522,#06070a 72%)}
+.gameover.go-black{background:radial-gradient(circle at 50% 25%,#2a2a2e,#000 72%)}
+.go-rays{position:fixed;inset:-50%;background:repeating-conic-gradient(from 0deg,rgba(214,166,79,.07) 0deg 8deg,transparent 8deg 20deg);animation:goSpin 40s linear infinite;pointer-events:none}
+@keyframes goSpin{to{transform:rotate(360deg)}}
+.go-card{position:relative;width:min(100%,460px);display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.go-ico{width:110px;height:110px;color:var(--gc,#d6a64f);filter:drop-shadow(0 0 24px var(--gc,#d6a64f));animation:goPop .7s cubic-bezier(.2,1.6,.4,1) both}
+.go-ico .cut{fill:#06070a}
+.go-red{--gc:#ee6a55}.go-blue{--gc:#6aa4f2}.go-green{--gc:#6fd08a}.go-black{--gc:#c9c3b6}
+.go-title{font-family:"Stardos Stencil",Impact,sans-serif;font-weight:700;font-size:clamp(36px,11vw,56px);letter-spacing:.05em;text-transform:uppercase;line-height:1;margin:0;color:var(--gc);text-shadow:0 0 30px var(--gc);animation:goPop .8s .15s cubic-bezier(.2,1.4,.4,1) both}
+.go-sub{font-family:"Special Elite","Courier New",monospace;font-size:17px;color:#d8d0bf;margin:0}
+.go-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.go-btns .btn{background:#1b2333;border-color:#33405a;color:#efe8d8}
+.go-btns .btn.primary{background:var(--gc);border-color:var(--gc);color:#111}
+@keyframes goPop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.go-rays,.go-ico,.go-title{animation:none}}
+
+/* v5 additions */
+.chipline{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sync{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.sync.on{color:var(--green);border-color:color-mix(in srgb,var(--green) 55%,var(--line))}
+.sync.on i{background:var(--green);box-shadow:0 0 8px var(--green)}
+.matchtag{font-family:var(--f-mono);font-weight:600;letter-spacing:.12em;color:var(--brass)}
+.giver{display:flex;align-items:center;gap:8px;justify-content:space-between;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 10px}
+.giver b{font-family:var(--f-stencil);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.cn-by{position:absolute;top:4px;right:4px;display:flex;gap:2px}
+.cn-by span{display:inline-flex;align-items:center;gap:1px;font:700 9px/1 var(--f-body);color:var(--card-ink);background:var(--tan);border-radius:4px;padding:2px 3px}
+.cn-by svg{width:9px;height:9px}
+.cn.partial .cn-label{box-shadow:inset 0 0 0 1px var(--tan),inset 0 -3px 0 var(--tan)}
+.warnbox{border:1px solid var(--red);background:color-mix(in srgb,var(--red) 12%,var(--panel));color:var(--fg);border-radius:10px;padding:9px 12px;font-size:13.5px}
+.setrow{display:flex;flex-direction:column;gap:8px;padding-top:6px;border-top:1px solid var(--line)}
+.setrow:first-of-type{border-top:0;padding-top:0}
+.vol{display:flex;align-items:center;gap:10px}
+.vol input{flex:1;accent-color:var(--brass)}
+.vol .num{font-family:var(--f-mono);width:3ch;text-align:right;color:var(--muted)}
+.modal{max-height:86vh;overflow:auto}
+.packrow{display:flex;align-items:center;gap:12px;background:none;border:0;border-top:1px solid var(--line);padding:10px 0;text-align:left;width:100%}
+.packrow:first-child{border-top:0}
+.packrow .pk-sample{font-family:var(--f-word);font-size:12px;letter-spacing:.04em;color:var(--faint);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.packrow .cnt{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.packrow[aria-pressed="true"] .sw{background:var(--brass);border-color:var(--brass)}
+.packrow[aria-pressed="true"] .sw::after{left:20px;background:var(--brass-ink)}
+.cn.packword .cn-ico{color:var(--brass)}
+.seg.wide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.vol svg{width:20px;height:20px;flex:none;color:var(--muted)}
+.plate-ct{white-space:nowrap}
+.score.duet .plate-name{font-size:15px}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-agent" viewBox="0 0 48 48"><path d="M8 46c1-10 7-16 16-16s15 6 16 16z"/><path class="cut" d="M20.5 30.5L24 39l3.5-8.5z"/><circle cx="24" cy="21" r="7"/><path d="M14.5 15.5c.8-6.5 3.6-10 9.5-10s8.7 3.5 9.5 10z"/><ellipse cx="24" cy="16" rx="14" ry="3.2"/></symbol>
+  <symbol id="i-bystander" viewBox="0 0 48 48"><path d="M8 46c1-10 7-16 16-16s15 6 16 16z"/><circle cx="24" cy="17" r="8.5"/></symbol>
+  <symbol id="i-assassin" viewBox="0 0 48 48"><path d="M24 3C14 3 9.5 11 9.5 20v5c0 2.6 1.3 4.4 3.2 5.6L7 46h34l-5.7-15.4c1.9-1.2 3.2-3 3.2-5.6v-5C38.5 11 34 3 24 3z"/><path class="cut" d="M16 21c1.6-4.6 4.6-7 8-7s6.4 2.4 8 7v3.4c0 3.4-3.6 5.6-8 5.6s-8-2.2-8-5.6z"/><path d="M18.5 22.5l4 1.6-4 1.2zM29.5 22.5l-4 1.6 4 1.2z"/></symbol>
+  <symbol id="i-logo" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M24 1.5v6M24 40.5v6M1.5 24h6M40.5 24h6" stroke="currentColor" stroke-width="2.4"/><g transform="translate(9.6 8.4) scale(.6)"><path d="M8 46c1-10 7-16 16-16s15 6 16 16z"/><path class="cut" d="M20.5 30.5L24 39l3.5-8.5z"/><circle cx="24" cy="21" r="7"/><path d="M14.5 15.5c.8-6.5 3.6-10 9.5-10s8.7 3.5 9.5 10z"/><ellipse cx="24" cy="16" rx="14" ry="3.2"/></g></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="7.5" height="6" rx="1.4"/><rect x="13.5" y="4" width="7.5" height="6" rx="1.4"/><rect x="3" y="14" width="7.5" height="6" rx="1.4"/><rect x="13.5" y="14" width="7.5" height="6" rx="1.4"/></g></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="12" r="4.5"/><path d="M12.5 12H21M18 12v3.5M15 12v2.5"/></g></symbol>
+  <symbol id="i-words" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="6" y="3" width="13" height="15" rx="2"/><path d="M4 7v12a2 2 0 0 0 2 2h10"/><path d="M9.5 8h6M9.5 12h6" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-rules" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5.5c3-1.5 5.5-1.5 8 0v14c-2.5-1.5-5-1.5-8 0z"/><path d="M20 5.5c-3-1.5-5.5-1.5-8 0v14c2.5-1.5 5-1.5 8 0z"/></g></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></g></symbol>
+  <symbol id="i-deal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="3" width="10" height="14" rx="1.8" transform="rotate(12 14 10)"/><rect x="5" y="6" width="10" height="14" rx="1.8" transform="rotate(-8 10 13)"/></g></symbol>
+  <symbol id="i-look" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/><path d="M3 7V5h6"/></g></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 11l18-7-7 18-2.5-8z"/></symbol>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8l1.6 2.3 2.7-.7.6 2.7 2.6.9-.9 2.6 1.9 2-1.9 2 .9 2.6-2.6.9-.6 2.7-2.7-.7L12 21.2l-1.6-2.3-2.7.7-.6-2.7-2.6-.9.9-2.6-1.9-2 1.9-2-.9-2.6 2.6-.9.6-2.7 2.7.7z"/></g></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></g></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></g></symbol>
+</svg>
+<div id="app"></div>
+<script>
+const WORDS = ["AARDVARK", "ABACUS", "ABBEY", "ACACIA", "ACCOUNTANT", "ACORN", "ACROBAT", "ACTOR", "ADMIRAL", "AIRPORT", "AIRSHIP", "ALABAMA", "ALBATROSS", "ALBUM", "ALIBI", "ALLIGATOR", "ALMANAC", "ALOE", "ALPACA", "AMPHITHEATER", "AMPLIFIER", "AMULET", "ANCHOVY", "ANKLE", "ANKLET", "ANNIVERSARY", "ANTEATER", "ANTELOPE", "ANTENNA", "ANVIL", "APARTMENT", "AQUARIUM", "ARCADE", "ARCH", "ARCHER", "ARCHIPELAGO", "ARCHITECT", "ARCTIC", "ARENA", "ARIZONA", "ARMADILLO", "ARMCHAIR", "ARMORY", "ARMPIT", "ARROW", "ARTIST", "ASPEN", "ASTEROID", "ASTRONOMER", "ATHENS", "ATHLETE", "ATLAS", "ATOM", "AUCTION", "AUCTIONEER", "AURORA", "AWL", "AXIS", "BABOON", "BACKPACK", "BADGE", "BADGER", "BAGPIPE", "BAGUETTE", "BAKER", "BAKERY", "BALACLAVA", "BALCONY", "BALLAD", "BALLERINA", "BALLET", "BALLOT", "BALLROOM", "BAMBOO", "BANDANA", "BANDIT", "BANGKOK", "BANISTER", "BANJO", "BANKER", "BANNER", "BANSHEE", "BARBER", "BARCELONA", "BARCODE", "BARGE", "BARN", "BARRACKS", "BARRACUDA", "BARREL", "BARRICADE", "BARSTOOL", "BASEMENT", "BASIL", "BASILISK", "BASIN", "BASKET", "BASSOON", "BATHROBE", "BATHTUB", "BATON", "BATTER", "BAZAAR", "BEACH BALL", "BEACON", "BEAGLE", "BEAKER", "BEANBAG", "BEANIE", "BEDPOST", "BEDROCK", "BEEHIVE", "BEEKEEPER", "BEETHOVEN", "BELFRY", "BELLOWS", "BELLY", "BERET", "BIB", "BILLBOARD", "BINDER", "BINGO", "BINOCULARS", "BIRCH", "BIRDHOUSE", "BIRTHDAY", "BIRTHMARK", "BISON", "BLACKOUT", "BLANKET", "BLAZER", "BLENDER", "BLIMP", "BLINDFOLD", "BLOODHOUND", "BLOODLINE", "BLOSSOM", "BLOUSE", "BLOWFISH", "BLUEBIRD", "BLUEPRINT", "BLUFF", "BOAR", "BOARDWALK", "BOATHOUSE", "BOBBER", "BOBCAT", "BOBSLED", "BOG", "BONFIRE", "BONNET", "BOOKCASE", "BOOKMARK", "BOOKSHELF", "BOOKWORM", "BOOMERANG", "BOSTON", "BOTTLECAP", "BOULDER", "BOUNCER", "BOUQUET", "BOUTIQUE", "BOW TIE", "BOWLING", "BOXCAR", "BRACELET", "BRAID", "BRAINSTORM", "BRAKE", "BRAMBLE", "BRANCH", "BREADCRUMB", "BREEZE", "BRICKLAYER", "BRIEFCASE", "BRISTLE", "BRONZE", "BROOCH", "BROOK", "BROWSER", "BUBBLEGUM", "BUCKLE", "BUFF", "BULLDOG", "BULLDOZER", "BULLETIN", "BULLFROG", "BULLHORN", "BUMPER", "BUNGALOW", "BUNGEE", "BUNKER", "BUOY", "BURGLAR", "BUTCHER", "BUTLER", "BUTTERCUP", "BUZZARD", "CABBAGE", "CABINET", "CABOOSE", "CADET", "CAFETERIA", "CAGE", "CAIRO", "CALZONE", "CAMOUFLAGE", "CAMPER", "CAMPUS", "CANAL", "CANARY", "CANCUN", "CANDELABRA", "CANDLESTICK", "CANDY", "CANOE", "CANTEEN", "CANYON", "CAPSULE", "CARABINER", "CARAFE", "CARAVAN", "CARDBOARD", "CARDIGAN", "CARDINAL", "CARIBOU", "CARNATION", "CARNIVAL", "CAROUSEL", "CARP", "CARPOOL", "CARPORT", "CARRIAGE", "CARTOON", "CARTRIDGE", "CARTWHEEL", "CASHIER", "CASSEROLE", "CASSETTE", "CASTANETS", "CATALOG", "CATAMARAN", "CATAPULT", "CATERPILLAR", "CATFISH", "CATHEDRAL", "CAVERN", "CEDAR", "CEILING", "CELLAR", "CELLO", "CENTIPEDE", "CHAIN MAIL", "CHAINSAW", "CHALET", "CHALICE", "CHALKBOARD", "CHAMBER", "CHAMELEON", "CHANDELIER", "CHAPEL", "CHAPERONE", "CHARGER", "CHARIOT", "CHAUFFEUR", "CHECKBOOK", "CHECKERS", "CHECKMATE", "CHEETAH", "CHEF", "CHEMIST", "CHESSBOARD", "CHESTNUT", "CHICAGO", "CHIHUAHUA", "CHIME", "CHIMERA", "CHIMPANZEE", "CHIN", "CHINCHILLA", "CHIPMUNK", "CHISEL", "CHOIR", "CHOPPER", "CHOPSTICK", "CHORUS", "CICADA", "CINEMA", "CIPHER", "CIRCUIT", "CITADEL", "CLAMP", "CLARINET", "CLASP", "CLAW", "CLAY", "CLERK", "CLINIC", "CLIP", "CLIPBOARD", "CLIPPER", "CLOCKWORK", "CLOGS", "CLOSET", "CLOVER", "CLOWNFISH", "CLUBHOUSE", "COASTER", "COBRA", "COBWEB", "COCKATOO", "COCKPIT", "COCKROACH", "COCOON", "COD", "CODEBOOK", "COLANDER", "COLLAGE", "COLT", "COLUMN", "COMEDIAN", "COMPASS", "COMPOST", "CONCERTO", "CONDOR", "CONFETTI", "CONSTELLATION", "CONTEST", "CONVERTIBLE", "CORAL", "CORD", "CORGI", "CORK", "CORKBOARD", "CORKSCREW", "CORNER", "CORONATION", "CORSAGE", "CORSET", "COSMONAUT", "COT", "COUPE", "COUPON", "COURIER", "COURTHOUSE", "COURTYARD", "COVERALLS", "COWGIRL", "CRADLE", "CRANK", "CRATE", "CRATER", "CRAVAT", "CRAWL", "CREEK", "CREST", "CREVASSE", "CRIB", "CROCODILE", "CROP", "CROQUET", "CROSSBOW", "CROSSWORD", "CROUTON", "CROWBAR", "CRUISE", "CRUISER", "CRUMPET", "CRUST", "CRUTCH", "CRYPT", "CUB", "CUBA", "CUBICLE", "CUE", "CUFFLINK", "CUPBOARD", "CUPID", "CURFEW", "CURRENT", "CURSOR", "CURTAIN", "CUSHION", "CUSTARD", "CUTLERY", "CYCLOPS", "CYMBAL", "CYPRESS", "DACHSHUND", "DAFFODIL", "DAGGER", "DAIRY", "DALMATIAN", "DANCER", "DANDELION", "DAREDEVIL", "DAYDREAM", "DEADLINE", "DEBATE", "DEBUT", "DECANTER", "DECOY", "DEER", "DENVER", "DEPOT", "DEPUTY", "DERBY", "DESKTOP", "DETECTIVE", "DETROIT", "DEW", "DIAL", "DIMPLE", "DINER", "DINGHY", "DINGO", "DIPLOMA", "DIPLOMAT", "DISCO", "DISGUISE", "DISH", "DIVER", "DOCK", "DODGEBALL", "DOG TAG", "DOLPHIN", "DOODLE", "DOORBELL", "DOORKNOB", "DOORMAT", "DOORSTOP", "DOORWAY", "DORM", "DOSE", "DOSSIER", "DRAGONFLY", "DRAPES", "DRAWBRIDGE", "DRAWER", "DREAMCATCHER", "DRIFTWOOD", "DRIZZLE", "DRUID", "DRUMMER", "DRUMROLL", "DRUMSTICK", "DUBAI", "DUBLIN", "DUCKLING", "DUET", "DUMBBELL", "DUNE", "DUSTER", "DUSTPAN", "DUVET", "EARBUD", "EARMUFFS", "EARPLUG", "EARRING", "EARTHWORM", "EASEL", "ECHO", "ECLIPSE", "EDGE", "EDISON", "EDITOR", "EEL", "EGGPLANT", "ELBOW", "ELECTION", "ELECTRICIAN", "ELECTRON", "ELEVATOR", "ELM", "EMBER", "EMBLEM", "EMPIRE", "EMU", "ENCORE", "ENGINEER", "ENVELOPE", "ERASER", "ESCALATOR", "ESPRESSO", "ESTUARY", "EVEREST", "EXHAUST", "EXHIBIT", "EYEBROW", "EYELASH", "EYEPATCH", "FABLE", "FACTORY", "FAIRWAY", "FALCON", "FARMER", "FARMHOUSE", "FAUCET", "FAWN", "FAX", "FEDORA", "FERN", "FERRET", "FERRY", "FESTIVAL", "FIDGET", "FIGURINE", "FIJI", "FILTER", "FINCH", "FINGERPRINT", "FIREBALL", "FIRECRACKER", "FIREFIGHTER", "FIREFLY", "FIREHOUSE", "FIREWOOD", "FIREWORK", "FISHERMAN", "FJORD", "FLAGPOLE", "FLAME", "FLAMINGO", "FLANNEL", "FLAPJACK", "FLARE", "FLASHBACK", "FLASHCARD", "FLASHLIGHT", "FLASK", "FLEA", "FLEET", "FLIGHT", "FLIP-FLOP", "FLIPPER", "FLOAT", "FLOPPY", "FLORENCE", "FLORIST", "FLOUNDER", "FLYSWATTER", "FOAL", "FOGHORN", "FOLD", "FOLDER", "FONDUE", "FOOTBALL", "FOOTPRINT", "FOOTSTOOL", "FOREHEAD", "FORGE", "FORKLIFT", "FORTRESS", "FORTUNE", "FOUNDRY", "FOUNTAIN", "FOX", "FOXHOLE", "FRECKLE", "FREEZER", "FREIGHT", "FREIGHTER", "FRISBEE", "FRONT", "FUNERAL", "FUNNEL", "FURNACE", "FUSE", "GADGET", "GALA", "GALE", "GALILEO", "GALLERY", "GALOSHES", "GARAGE", "GARBAGE", "GARDENER", "GARDENIA", "GARLAND", "GARNISH", "GATEKEEPER", "GAUGE", "GAUNTLET", "GAVEL", "GAZEBO", "GAZELLE", "GECKO", "GENE", "GENEVA", "GEOLOGIST", "GERANIUM", "GEYSER", "GIRAFFE", "GLADE", "GLADIATOR", "GLIDER", "GLITCH", "GLITTER", "GLOBE", "GLOW", "GLUE", "GO-KART", "GOBI", "GOBLET", "GOGGLES", "GOLDFISH", "GOLDMINE", "GOLEM", "GOLFER", "GONDOLA", "GONG", "GOPHER", "GORGE", "GOSPEL", "GOWN", "GRADUATE", "GRADUATION", "GRAFFITI", "GRANARY", "GRAPEFRUIT", "GRAPEVINE", "GRASSHOPPER", "GRASSLAND", "GRATER", "GRAVE", "GRAVEL", "GRAVESTONE", "GRAVITY", "GRAVY", "GRENADE", "GREYHOUND", "GRID", "GRIDDLE", "GRIDLOCK", "GRIFFIN", "GRILL", "GRIP", "GROOVE", "GROTTO", "GROUNDHOG", "GROVE", "GUADALAJARA", "GUARD", "GULL", "GULLY", "GUMBALL", "GUMDROP", "GUPPY", "GUTTER", "GYM", "GYMNASIUM", "HACKSAW", "HAIRBRUSH", "HAIRCUT", "HAIRDRESSER", "HAIRNET", "HAIRPIN", "HALIBUT", "HALL", "HALO", "HAMLET", "HAMMERHEAD", "HAMMOCK", "HAMPER", "HANDBAG", "HANDCUFF", "HANDLE", "HANDLEBAR", "HANDPRINT", "HANDSAW", "HANDSHAKE", "HANDSTAND", "HANGAR", "HANGER", "HARBOR", "HARE", "HARMONICA", "HARNESS", "HARPOON", "HARPSICHORD", "HARVEST", "HATBOX", "HATCH", "HATCHET", "HAVANA", "HAYSTACK", "HAZE", "HAZEL", "HEADBAND", "HEADBOARD", "HEADLAMP", "HEADLINE", "HEADPHONES", "HEADSET", "HEADSTONE", "HEARSE", "HEARTBEAT", "HEATER", "HEATWAVE", "HEDGEHOG", "HEEL", "HEIR", "HEIRLOOM", "HELIUM", "HEMLOCK", "HEN", "HERD", "HERMIT", "HERON", "HERRING", "HICCUP", "HIDEOUT", "HIGHLIGHT", "HIGHLIGHTER", "HIGHWAY", "HILLTOP", "HINGE", "HIPPO", "HOLIDAY", "HOLLAND", "HOLLY", "HOLOGRAM", "HOLSTER", "HONEYCOMB", "HONEYMOON", "HOODIE", "HOOP", "HOPSCOTCH", "HORIZON", "HORNET", "HORSEPOWER", "HOSTEL", "HOTDOG", "HOTSPOT", "HOUDINI", "HOUND", "HOURGLASS", "HOUSTON", "HOVERCRAFT", "HUB", "HUDDLE", "HULA", "HUMMINGBIRD", "HURDLE", "HURRICANE", "HUSKY", "HYACINTH", "HYDRA", "HYDROGEN", "HYENA", "HYMN", "IBEX", "ICEBERG", "ICEBOX", "IGUANA", "IMAGE", "IMPALA", "INCUBATOR", "INFERNO", "INKPAD", "INKWELL", "INN", "INVENTOR", "INVOICE", "IRELAND", "IRIS", "ISOTOPE", "ITALY", "JACKAL", "JACKET", "JACKHAMMER", "JACKPOT", "JACKRABBIT", "JAGUAR", "JALAPENO", "JAMAICA", "JAMBOREE", "JANITOR", "JAPAN", "JAR", "JAW", "JELLY BEAN", "JESTER", "JETPACK", "JIGSAW", "JOURNAL", "JOURNALIST", "JOYSTICK", "JUG", "JUGGLER", "JUKEBOX", "JUMP ROPE", "JUMPSUIT", "JUNIPER", "JUNKYARD", "KALEIDOSCOPE", "KANSAS", "KARAOKE", "KAYAK", "KAZOO", "KEEL", "KELP", "KENNEL", "KENYA", "KERNEL", "KETTLE", "KEYBOARD", "KEYCARD", "KEYCHAIN", "KEYHOLE", "KEYPAD", "KEYSTONE", "KICKSTAND", "KIDNEY", "KILN", "KIMONO", "KINGFISHER", "KINGPIN", "KIOSK", "KITTEN", "KNAPSACK", "KOALA", "KOI", "KRAKEN", "LABEL", "LABYRINTH", "LADLE", "LADYBUG", "LAGOON", "LAMB", "LAMPSHADE", "LANDLORD", "LANDMARK", "LANDSCAPE", "LANDSLIDE", "LANTERN", "LANYARD", "LAPTOP", "LARK", "LASSO", "LATCH", "LATTE", "LAUNCH", "LAUNCHPAD", "LAUNDROMAT", "LAUREL", "LAVA", "LAVENDER", "LEASH", "LEDGE", "LEDGER", "LEFTOVER", "LEGGINGS", "LEMMING", "LEMUR", "LENS", "LEOPARD", "LEOTARD", "LEVER", "LIBRARIAN", "LIFEBOAT", "LIFEGUARD", "LIFEJACKET", "LIGHTBULB", "LIGHTHOUSE", "LILAC", "LILY", "LIMB", "LIMBO", "LIMELIGHT", "LIMERICK", "LIMESTONE", "LIMO", "LINCOLN", "LINEN", "LIPSTICK", "LISBON", "LIVER", "LLAMA", "LOCKBOX", "LOCKDOWN", "LOCKER", "LOCKET", "LOCKSMITH", "LOCOMOTIVE", "LODGE", "LOGBOOK", "LOLLIPOP", "LOOKOUT", "LOOM", "LOON", "LOOP", "LOOPHOLE", "LOTTERY", "LOTUS", "LOUNGE", "LOVESEAT", "LUAU", "LUGGAGE", "LULLABY", "LUNG", "LYNX", "LYRE", "MACARONI", "MACAW", "MADRID", "MAGISTRATE", "MAGMA", "MAGNET", "MAGNIFIER", "MAGNOLIA", "MAGPIE", "MAILBAG", "MAILBOX", "MAINFRAME", "MAKEOVER", "MALL", "MALLARD", "MALLET", "MANATEE", "MANDOLIN", "MANHOLE", "MANILA", "MANNEQUIN", "MANSION", "MANTEL", "MANTIS", "MARIGOLD", "MARINA", "MARIONETTE", "MARKER", "MARLIN", "MARSH", "MARSHAL", "MARSHMALLOW", "MASCARA", "MASK", "MASQUERADE", "MASTERMIND", "MATADOR", "MATCHBOX", "MATCHSTICK", "MATE", "MAUSOLEUM", "MEADOW", "MECHANIC", "MEDAL", "MEDALLION", "MEDIUM", "MEDUSA", "MEERKAT", "MELODY", "MEMPHIS", "METEORITE", "METRONOME", "MIAMI", "MICROCHIP", "MICROFILM", "MICROPHONE", "MIDNIGHT", "MIDWIFE", "MILESTONE", "MINER", "MINERAL", "MINIVAN", "MINK", "MINNOW", "MIRAGE", "MIST", "MISTLETOE", "MITT", "MITTEN", "MOAT", "MOBILE", "MOCCASIN", "MOCKINGBIRD", "MODEM", "MOLECULE", "MOLLUSK", "MONACO", "MONASTERY", "MONEY", "MONGOOSE", "MONITOR", "MONK", "MONOCLE", "MONOLITH", "MONORAIL", "MONSOON", "MONTANA", "MOONSHINE", "MOONWALK", "MOP", "MOSAIC", "MOSS", "MOTH", "MOTOR", "MOTORCYCLE", "MOUNTAIN", "MOUSEPAD", "MOZART", "MUDSLIDE", "MUFFIN", "MULE", "MURAL", "MUSCLE", "MUSEUM", "MUSSEL", "MUZZLE", "NAIROBI", "NAME TAG", "NANNY", "NAPKIN", "NARWHAL", "NAVIGATOR", "NECKLACE", "NECKTIE", "NECTAR", "NEON", "NEPAL", "NEPTUNE", "NEUTRON", "NEVADA", "NEWSFLASH", "NEWSPAPER", "NEWT", "NICKNAME", "NIGHTCAP", "NIGHTINGALE", "NIGHTSTAND", "NILE", "NOMAD", "NORWAY", "NOSTRIL", "NOTCH", "NOTEBOOK", "NOTEPAD", "NOVA", "NUN", "NURSERY", "NUTSHELL", "NYMPH", "OAK", "OAR", "OAXACA", "OBELISK", "OBOE", "OBSERVATORY", "OCARINA", "OCELOT", "ODOMETER", "ODYSSEY", "OFFICE", "OGRE", "OHIO", "OLYMPICS", "OMELET", "OPOSSUM", "ORACLE", "ORANGUTAN", "ORBIT", "ORCA", "ORCHARD", "ORCHESTRA", "ORCHID", "ORE", "OREGON", "ORIGAMI", "ORNAMENT", "OSLO", "OSTRICH", "OTTER", "OTTOMAN", "OUTFIELD", "OUTLAW", "OUTLET", "OUTPOST", "OVEN", "OVERALLS", "OVERCOAT", "OVERPASS", "OWL", "OX", "OXYGEN", "PACIFIER", "PACK", "PADDLEBOAT", "PADLOCK", "PAGEANT", "PAGER", "PAGODA", "PAINTBALL", "PAINTBRUSH", "PAINTER", "PAJAMAS", "PALETTE", "PAMPHLET", "PANAMA", "PANDA", "PANEL", "PANSY", "PANTHER", "PANTRY", "PAPERBACK", "PAPERCLIP", "PAPERWEIGHT", "PAPRIKA", "PARADOX", "PARAKEET", "PARAMEDIC", "PARASOL", "PARCEL", "PARIS", "PARKA", "PARLOR", "PARTRIDGE", "PASSAGE", "PASSPORT", "PASSWORD", "PASTA", "PASTRY", "PATCHWORK", "PATROL", "PAVEMENT", "PAVILION", "PAYCHECK", "PEACOAT", "PEACOCK", "PEAK", "PEASANT", "PEBBLE", "PEDESTAL", "PEEL", "PEG", "PEGASUS", "PELICAN", "PENCIL", "PENDULUM", "PENINSULA", "PENKNIFE", "PENTHOUSE", "PEPPERCORN", "PEPPERMINT", "PERCH", "PERFUME", "PERISCOPE", "PERMIT", "PERSIA", "PERU", "PETAL", "PETUNIA", "PHANTOM", "PHARAOH", "PHARMACIST", "PHARMACY", "PHEASANT", "PHONEBOOK", "PHOTOGRAPHER", "PHYSICIST", "PIANIST", "PICASSO", "PICCOLO", "PICK", "PICKUP", "PICNIC", "PIECE", "PIGEON", "PIGGYBACK", "PIGLET", "PIKE", "PILE", "PILGRIM", "PILLAR", "PINATA", "PINBALL", "PINCUSHION", "PINECONE", "PINPOINT", "PINWHEEL", "PIPELINE", "PIRANHA", "PISTACHIO", "PISTON", "PIT STOP", "PITCHFORK", "PIXEL", "PIXIE", "PLACARD", "PLACEMAT", "PLANET", "PLANETARIUM", "PLAQUE", "PLATEAU", "PLATO", "PLATTER", "PLAYBOOK", "PLAYLIST", "PLAZA", "PLIERS", "PLUG", "PLUNGER", "PODCAST", "POET", "POLAND", "POLLEN", "POLTERGEIST", "PONCHO", "POND", "PONY", "POODLE", "PORCH", "PORCUPINE", "PORPOISE", "PORTFOLIO", "POSTAGE", "POSTCARD", "POSTER", "POSTMAN", "POSTMARK", "POTHOLDER", "POTHOLE", "POTLUCK", "POTTERY", "POUCH", "PRAGUE", "PRAIRIE", "PRAWN", "PRECINCT", "PRICE TAG", "PRINT", "PRINTER", "PRISM", "PROFESSOR", "PROJECTOR", "PROM", "PROP", "PROPELLER", "PROTON", "PROTRACTOR", "PUDDLE", "PUFFIN", "PUG", "PULLEY", "PULLOVER", "PULSAR", "PULSE", "PUMA", "PUNCH", "PUPPY", "PUSHPIN", "PYTHON", "QUARRY", "QUARTET", "QUARTZ", "QUASAR", "QUAY", "QUEBEC", "QUEST", "QUICKSAND", "QUICKSILVER", "QUIZ", "RACCOON", "RADAR", "RADIATOR", "RAFFLE", "RAFT", "RAIN CHECK", "RAINCOAT", "RAINDROP", "RAINFOREST", "RAINSTORM", "RANGER", "RANSOM", "RAPIDS", "RATTLE", "RATTLESNAKE", "RAVEN", "RAVINE", "RECEIPT", "RECEPTIONIST", "RECESS", "RECIPE", "RECLINER", "REEL", "REFEREE", "REHEARSAL", "RELAY", "REPTILE", "RESORT", "RESTAURANT", "REUNION", "RHINO", "RICKSHAW", "RIDDLE", "RIDGE", "RIM", "RINGLEADER", "RINGTONE", "RIO", "RIPPLE", "RIVET", "ROADBLOCK", "ROADMAP", "ROADRUNNER", "ROAST", "ROBE", "ROLLER COASTER", "ROOFTOP", "ROOSTER", "ROUTER", "ROVER", "ROWBOAT", "RUBY", "RUCKSACK", "RUG", "RUNE", "RUNNER", "RUNWAY", "RUSH", "SAFARI", "SAFEHOUSE", "SAGA", "SAGE", "SAILBOAT", "SAILOR", "SALAMANDER", "SALESMAN", "SALMON", "SALON", "SAMURAI", "SANCTUARY", "SANDAL", "SANDBAG", "SANDBAR", "SANDCASTLE", "SANDPAPER", "SANDSTORM", "SAP", "SAPPHIRE", "SARDINE", "SARONG", "SASH", "SATCHEL", "SAUCEPAN", "SAUCER", "SAVANNA", "SAWDUST", "SAWMILL", "SAXOPHONE", "SCAFFOLD", "SCALLOP", "SCALPEL", "SCANNER", "SCARF", "SCEPTER", "SCHOOLHOUSE", "SCISSORS", "SCONCE", "SCOOP", "SCOOTER", "SCORE", "SCOREBOARD", "SCOTLAND", "SCOUT", "SCRAP", "SCRAPBOOK", "SCREENSHOT", "SCREW", "SCREWDRIVER", "SCRIPT", "SCULPTOR", "SEAGULL", "SEAHORSE", "SEASHELL", "SEASON", "SEAT", "SEATBELT", "SEAWEED", "SECRET", "SECRETARY", "SEDAN", "SEEDLING", "SEESAW", "SELFIE", "SENATOR", "SENSOR", "SEOUL", "SEQUIN", "SERENADE", "SERGEANT", "SHACK", "SHAFT", "SHARPENER", "SHAWL", "SHEEPDOG", "SHELF", "SHELTER", "SHERIFF", "SHIELD", "SHIFT", "SHIPWRECK", "SHIPYARD", "SHOEBOX", "SHOEHORN", "SHOELACE", "SHORE", "SHOULDER", "SHOVEL", "SHOWDOWN", "SHREW", "SHRIMP", "SHUTTER", "SHUTTLE", "SIBERIA", "SICILY", "SICKLE", "SIDEKICK", "SIDEWALK", "SIEVE", "SIGNAL", "SIGNPOST", "SILO", "SINGER", "SIREN", "SITAR", "SKATEPARK", "SKELETON", "SKETCH", "SKETCHBOOK", "SKEWER", "SKID", "SKIFF", "SKILLET", "SKIN", "SKIRT", "SKUNK", "SKYDIVER", "SKYLIGHT", "SKYLINE", "SLACKS", "SLAPSTICK", "SLATE", "SLEDGEHAMMER", "SLEEPOVER", "SLEEVE", "SLEIGH", "SLIDE", "SLINGSHOT", "SLOGAN", "SLOPE", "SNAIL", "SNAPPER", "SNARE", "SNEAKER", "SNORKEL", "SNOW GLOBE", "SNOWBALL", "SNOWDRIFT", "SNOWFALL", "SNOWFLAKE", "SNOWMOBILE", "SNOWPLOW", "SNOWSTORM", "SOAPBOX", "SOCKET", "SOFA", "SOIL", "SOLDER", "SOLE", "SOLO", "SONAR", "SONATA", "SORCERER", "SOUVENIR", "SPA", "SPACESHIP", "SPACESUIT", "SPACEWALK", "SPAIN", "SPANIEL", "SPARK", "SPARROW", "SPATULA", "SPEAKER", "SPEAR", "SPECIMEN", "SPECTER", "SPEED BUMP", "SPEEDBOAT", "SPIGOT", "SPIRE", "SPOOL", "SPOTLIGHT", "SPRINKLE", "SPRINKLER", "SPRITE", "SPROUT", "SPRUCE", "SPYGLASS", "SQUID", "STAGE", "STAGECOACH", "STAIRCASE", "STALACTITE", "STALK", "STALL", "STALLION", "STAND", "STAPLE", "STAPLER", "STARFISH", "STARLIGHT", "STARLING", "STATIC", "STATION", "STATUE", "STEAMBOAT", "STEAMROLLER", "STEEPLE", "STENCIL", "STILETTO", "STILTS", "STINGRAY", "STOCKING", "STOCKPILE", "STOMACH", "STOOL", "STOPPER", "STORK", "STRAINER", "STRAND", "STRAP", "STREAMER", "STRETCHER", "STRIPE", "STROKE", "STROLLER", "STRONGBOX", "STUD", "STUDIO", "STURGEON", "SUBMARINE", "SUBURB", "SUBWAY", "SUITCASE", "SUMMIT", "SUNBEAM", "SUNBURN", "SUNDIAL", "SUNGLASSES", "SUNRISE", "SUNROOF", "SUPERMARKET", "SUPERNOVA", "SURGEON", "SURVEYOR", "SUSPENDERS", "SWALLOW", "SWAN", "SWEATER", "SWEATSHIRT", "SWEDEN", "SWEETHEART", "SWITCHBOARD", "SWORDFISH", "SYDNEY", "SYMPHONY", "TAB", "TABLECLOTH", "TABLESPOON", "TACK", "TADPOLE", "TAHITI", "TAILOR", "TALISMAN", "TAMBOURINE", "TANDEM", "TANGERINE", "TANKER", "TAPE", "TAPESTRY", "TAPIR", "TARANTULA", "TARGET", "TARP", "TASSEL", "TAVERN", "TAXI", "TEACUP", "TEAKETTLE", "TEAPOT", "TEARDROP", "TEDDY", "TELEGRAM", "TELEGRAPH", "TENT", "TERMINAL", "TERMITE", "TERRIER", "THERMOMETER", "THERMOS", "THERMOSTAT", "THICKET", "THIMBLE", "THISTLE", "THORN", "THREAD", "THROAT", "THRONE", "THUMBTACK", "THUNDERBOLT", "TIARA", "TIBET", "TIDE", "TIEBREAKER", "TIGHTROPE", "TILE", "TIMBER", "TIME BOMB", "TINSEL", "TITAN", "TOAD", "TOADSTOOL", "TOASTER", "TOBOGGAN", "TOE", "TOFFEE", "TOGA", "TOILET", "TOKEN", "TOLLBOOTH", "TOMAHAWK", "TOMBSTONE", "TONGS", "TONGUE", "TOOLBELT", "TOOLBOX", "TOOTHACHE", "TOOTHBRUSH", "TOOTHPASTE", "TOOTHPICK", "TOP HAT", "TOPSOIL", "TORONTO", "TORPEDO", "TORTOISE", "TOUCAN", "TOUCHSCREEN", "TOURIST", "TOURNAMENT", "TOWEL", "TOWNHOUSE", "TRACTOR", "TRAIL", "TRAINER", "TRAM", "TRAMPOLINE", "TRANSISTOR", "TRAP", "TRAPDOOR", "TRAPEZE", "TRAY", "TREADMILL", "TREASURE", "TREEHOUSE", "TREETOP", "TRELLIS", "TRENCHCOAT", "TRIBE", "TRICYCLE", "TRIDENT", "TRIPOD", "TRIPWIRE", "TRIVET", "TROLLEY", "TROMBONE", "TROPHY", "TROUT", "TROWEL", "TROY", "TRUMPET", "TSUNAMI", "TUBA", "TUGBOAT", "TULIP", "TUNA", "TUNDRA", "TUNE", "TUNIC", "TURBINE", "TURN", "TURNSTILE", "TURTLENECK", "TUSCANY", "TUSK", "TUTOR", "TWEEZERS", "TWIG", "TWIN", "TWINE", "TWISTER", "TYPEWRITER", "UKULELE", "UMBRELLA", "UMPIRE", "UNDERPASS", "UNICYCLE", "UNIFORM", "UPSTAIRS", "URCHIN", "URN", "USHER", "UTAH", "VACATION", "VALET", "VALLEY", "VALVE", "VASE", "VAULT", "VEGAS", "VEIL", "VELVET", "VENDOR", "VENICE", "VENOM", "VENT", "VERDICT", "VESSEL", "VEST", "VETERAN", "VIAL", "VIENNA", "VILLA", "VINE", "VINEGAR", "VINYL", "VIOLA", "VIOLIN", "VIPER", "VISE", "VISOR", "VOICEMAIL", "VULTURE", "WAFER", "WAIST", "WAISTCOAT", "WAITER", "WALES", "WALLABY", "WALLET", "WALLPAPER", "WARDEN", "WARDROBE", "WAREHOUSE", "WARLOCK", "WARRANT", "WARTHOG", "WASABI", "WASHCLOTH", "WASP", "WATCHDOG", "WATERBED", "WATERFALL", "WATERMARK", "WATERMELON", "WEASEL", "WEATHERVANE", "WEAVER", "WEBCAM", "WEDGE", "WEEKEND", "WELDER", "WETLAND", "WETSUIT", "WHARF", "WHEELBARROW", "WHEELIE", "WHIRLPOOL", "WHIRLWIND", "WHISK", "WHISPER", "WHITEBOARD", "WICK", "WIDGET", "WIG", "WIGWAM", "WILD CARD", "WILLOW", "WINCH", "WIND CHIME", "WINDBREAKER", "WINDFALL", "WINDMILL", "WINDOWSILL", "WINDSHIELD", "WINDSOCK", "WIRE", "WIRETAP", "WISHBONE", "WISTERIA", "WITNESS", "WOK", "WOLF", "WOLVERINE", "WOMBAT", "WOODPECKER", "WOODWORK", "WORKBENCH", "WORKOUT", "WORKSHOP", "WORMHOLE", "WRAITH", "WRAPPER", "WREATH", "WRENCH", "WRIST", "WRISTBAND", "WRISTWATCH", "XYLOPHONE", "YACHT", "YAK", "YARDSTICK", "YARN", "YETI", "YEW", "YO-YO", "YODEL", "YUKON", "ZEBRA", "ZEPPELIN", "ZIPLINE", "ZODIAC", "ZOO", "ZOOKEEPER", "ZURICH"];
+const PACKS = {"movies": {"name": "Movies & TV", "words": ["TRAILER", "BLOCKBUSTER", "PREMIERE", "OSCAR", "STUNTMAN", "CAMEO", "CLIFFHANGER", "SITCOM", "BINGE", "RERUN", "FINALE", "SPOILER", "CREDITS", "ACTRESS", "AUDITION", "BACKSTAGE", "BLOOPER", "CASTING", "MONTAGE", "SOUNDTRACK", "SCREENPLAY", "SUBTITLE", "TELENOVELA", "ANIME", "DRIVE-IN", "RED CARPET", "SEQUEL", "JAWS", "ROCKY", "TITANIC", "GREASE", "PSYCHO", "JUMANJI", "SHREK", "MATRIX", "GODZILLA", "MOANA", "COCO", "ENCANTO", "BARBIE", "INCEPTION", "AVENGERS", "SUPERMAN", "BATMAN", "SPIDER-MAN", "HULK", "YODA", "VADER", "TERMINATOR", "ROBOCOP", "RAMBO", "SCARFACE", "GOONIES", "BEETLEJUICE", "ARMAGEDDON", "TOP GUN", "JURASSIC", "GHOSTBUSTERS", "ALADDIN", "MULAN", "BAMBI", "DUMBO", "PINOCCHIO", "CINDERELLA", "GRINCH", "ROCKETEER", "NEMO", "WALL-E", "TARZAN", "ZORRO", "SIMPSONS", "SOPRANOS", "SEINFELD", "JEOPARDY", "SURVIVOR", "GAME SHOW", "CLAPPERBOARD", "HITCHCOCK", "WESTERN", "MUSICAL", "HORROR", "DOCUMENTARY"]}, "sports": {"name": "Sports", "words": ["TOUCHDOWN", "QUARTERBACK", "FUMBLE", "BLITZ", "END ZONE", "FIELD GOAL", "HOME RUN", "DUGOUT", "BULLPEN", "SHORTSTOP", "STRIKEOUT", "CATCHER", "CURVEBALL", "INNING", "BUNT", "GRAND SLAM", "DUNK", "REBOUND", "LAYUP", "FREE THROW", "BACKBOARD", "BUZZER", "TIMEOUT", "PENALTY", "OFFSIDE", "GOALKEEPER", "HAT TRICK", "SLAPSHOT", "PUCK", "FACEOFF", "KNOCKOUT", "UPPERCUT", "PODIUM", "SPRINT", "TRIATHLON", "JAVELIN", "DISCUS", "POLE VAULT", "SNOWBOARD", "SURFBOARD", "SPARE", "CADDIE", "BIRDIE", "BOGEY", "PUTTER", "TEE", "DEUCE", "VOLLEY", "SHUTTLECOCK", "KICKBALL", "CHEERLEADER", "POMPOM", "BLEACHERS", "PLAYOFF", "CHAMPIONSHIP", "ROOKIE", "TAKEDOWN", "SINGLET", "HEADLOCK", "SOFTBALL", "SOCCER", "GOLAZO", "LINEBACKER", "HALFTIME", "OVERTIME", "SUPER BOWL", "WORLD SERIES", "WRESTLER", "STOPWATCH", "TRACK MEET", "BATTING CAGE", "SHOT CLOCK", "SWEEP", "UNDERDOG", "TAILGATE", "MASCOT", "JERSEY"]}, "food": {"name": "Food", "words": ["TACO", "BURRITO", "ENCHILADA", "TAMALE", "QUESADILLA", "NACHO", "GUACAMOLE", "CHURRO", "POZOLE", "MENUDO", "ELOTE", "HORCHATA", "TORTA", "FLAN", "SOPAPILLA", "EMPANADA", "CHORIZO", "CARNITAS", "CEVICHE", "TOSTADA", "FAJITA", "BIRRIA", "LASAGNA", "RAVIOLI", "MEATLOAF", "PANCAKE", "WAFFLE", "BAGEL", "CROISSANT", "BROWNIE", "COOKIE", "PRETZEL", "POPSICLE", "SUNDAE", "MILKSHAKE", "RAMEN", "SUSHI", "DUMPLING", "TOFU", "FALAFEL", "HUMMUS", "PITA", "BRISKET", "STEAK", "SAUSAGE", "MEATBALL", "HOT DOG", "BURGER", "FRIES", "AVOCADO", "MANGO", "PAPAYA", "COCONUT", "LIME", "BLUEBERRY", "RASPBERRY", "STRAWBERRY", "CANTALOUPE", "PLUM", "APRICOT", "FIG", "GRAPE", "BROCCOLI", "CAULIFLOWER", "CELERY", "SPINACH", "LETTUCE", "RADISH", "ZUCCHINI", "YAM", "PEPPERONI", "SALAMI", "CHEDDAR", "MOZZARELLA", "YOGURT", "CEREAL", "GRANOLA", "OATMEAL", "JELLY", "MARMALADE", "SYRUP", "MAYO", "CINNAMON", "VANILLA", "CARAMEL", "FUDGE", "TRUFFLE", "LICORICE", "GUMMY BEAR", "SPAGHETTI", "CUPCAKE", "BISCOTTI", "GARLIC", "ONION RING"]}, "california": {"name": "California", "words": ["SACRAMENTO", "TAHOE", "YOSEMITE", "NAPA", "SONOMA", "MALIBU", "BERKELEY", "OAKLAND", "FRESNO", "MODESTO", "STOCKTON", "DAVIS", "FOLSOM", "ROSEVILLE", "NATOMAS", "DODGERS", "WARRIORS", "RAIDERS", "ALCATRAZ", "REDWOOD", "SEQUOIA", "GOLDEN GATE", "CABLE CAR", "DISNEYLAND", "SILICON VALLEY", "DROUGHT", "SURFER", "GOLD RUSH", "PROSPECTOR", "MISSION", "PALM TREE", "VINEYARD", "AVOCADO", "FREEWAY", "CAPITOL", "TOWER BRIDGE", "OLD TOWN", "SIERRA", "MOJAVE", "DEATH VALLEY", "JOSHUA TREE", "BIG SUR", "CARMEL", "MONTEREY", "SANTA CRUZ", "SEA LION", "POPPY", "GRIZZLY", "SAN DIEGO", "LA JOLLA", "SAN FRANCISCO", "LOS ANGELES", "SANTA MONICA", "VENICE BEACH", "HOLLYWOOD SIGN", "PIER", "WILDFIRE", "TRAFFIC", "IN-N-OUT", "TACO TRUCK", "LOWRIDER", "SKATEBOARD", "SUNSET", "DELTA BREEZE", "AMERICAN RIVER", "ARDEN", "GOLD COUNTRY", "CHINATOWN", "LEVEE", "RICE FIELD", "TOMATO"]}, "spanish": {"name": "Spanish words", "words": ["CASA", "PERRO", "GATO", "AGUA", "FUEGO", "LUNA", "SOL", "ESTRELLA", "CORAZÓN", "MESA", "SILLA", "LIBRO", "ZAPATO", "SOMBRERO", "PIÑATA", "PALETA", "PAN DULCE", "QUESO", "LECHE", "HUEVO", "POLLO", "CARNE", "FRIJOL", "ARROZ", "TORTILLA", "MOLCAJETE", "COMAL", "OLLA", "MERCADO", "TIANGUIS", "PLAYA", "MONTAÑA", "RÍO", "CIELO", "NUBE", "LLUVIA", "VIENTO", "ÁRBOL", "FLOR", "MARIPOSA", "CABALLO", "TORO", "BURRO", "PÁJARO", "CULEBRA", "CHANCLA", "ABUELA", "TÍO", "PRIMO", "COMPADRE", "COMADRE", "MIJO", "NOVIO", "BAILE", "MÚSICA", "GUITARRA", "TROMPETA", "CORRIDO", "LUCHA LIBRE", "LUCHADOR", "CHARRO", "MARIACHI", "NOCHE", "CALAVERA", "CATRINA", "OFRENDA", "VELA", "CAMPANA", "ESCUELA", "MAESTRO", "DINERO", "TIENDA", "CAMIÓN", "CARRO", "LLAVE", "PUERTA", "VENTANA", "ESPEJO", "RELOJ", "CAMA", "ALMOHADA", "COBIJA", "PALOMA", "GALLO", "NOPAL", "CHILE", "LIMÓN", "ELOTE", "CAFECITO", "CHISME", "FIESTA", "PAPEL PICADO"]}};
+const USED = new Set(["ABANDON", "ACCIDENT", "ACCORDION", "ACE", "ACID", "ADRENALINE", "AFRICA", "AGE", "AGENT", "AIR", "ALARM", "ALASKA", "ALCHEMIST", "ALCOHOL", "ALERT", "ALIEN", "ALLEY", "ALLIANCE", "ALPS", "ALWAYS", "AMAZON", "AMBULANCE", "AMERICA", "ANALYSIS", "ANCHOR", "ANGEL", "ANGER", "ANIMAL", "ANT", "ANTARCTICA", "ANTHEM", "APACHE", "APEX", "APPLE", "APPLICATION", "APRON", "ARM", "ARMOR", "ARMY", "ART", "ASH", "ASTRONAUT", "ATLANTIS", "ATTIC", "AUNT", "AUSTRALIA", "AUTHOR", "AVALANCHE", "AXE", "AXIOM", "AZTEC", "BABY", "BACK", "BACON", "BAG", "BAIT", "BALANCE", "BALL", "BALLOON", "BANANA", "BAND", "BANK", "BAR", "BARBECUE", "BARD", "BARK", "BARTENDER", "BASE", "BASEBALL", "BASIC", "BASKETBALL", "BASS", "BAT", "BATH", "BATTERY", "BATTLE", "BATTLESHIP", "BAY", "BAYOU", "BEACH", "BEAD", "BEAM", "BEAN", "BEAR", "BEARD", "BEAST", "BEAT", "BEAVER", "BED", "BEE", "BEEF", "BEER", "BEETLE", "BEHIND", "BEIJING", "BELL", "BELT", "BENCH", "BERLIN", "BERMUDA", "BERRY", "BETA", "BEVERAGE", "BICYCLE", "BIG BANG", "BIG BEN", "BIKINI", "BILL", "BIRTH", "BISCUIT", "BIT", "BLACK", "BLACK HOLE", "BLACKSMITH", "BLADE", "BLIND", "BLIZZARD", "BLOCK", "BLOG", "BLONDE", "BLOOD", "BLOW", "BLUES", "BOARD", "BODY", "BOGEYMAN", "BOIL", "BOLT", "BOMB", "BOND", "BONE", "BONSAI", "BONUS", "BOOK", "BOOM", "BOOT", "BOOTH", "BOSS", "BOTTLE", "BOTTOM", "BOW", "BOWL", "BOWLER", "BOX", "BOXER", "BOY", "BRACE", "BRAIN", "BRASS", "BRAZIL", "BREAD", "BREAK", "BRICK", "BRIDE", "BRIDGE", "BRIEF", "BROOM", "BROTHER", "BROWN", "BRUCE", "BRUSH", "BUBBLE", "BUCK", "BUCKET", "BUD", "BUFFALO", "BUFFET", "BUG", "BUGLE", "BULB", "BULLY", "BUN", "BUNK", "BURN", "BUS", "BUSH", "BUST", "BUTTER", "BUTTERFLY", "BUTTON", "CABIN", "CABLE", "CACTUS", "CAESAR", "CAKE", "CALCULATOR", "CALENDAR", "CALF", "CAMEL", "CAMERA", "CAMP", "CAMPFIRE", "CAN", "CANADA", "CANCER", "CANDLE", "CANE", "CANNON", "CANVAS", "CAP", "CAPE", "CAPITAL", "CAPITALISM", "CAPTAIN", "CAR", "CARD", "CARGO", "CAROL", "CARPENTER", "CARPET", "CARROT", "CART", "CASINO", "CAST", "CASTLE", "CAT", "CATAN", "CAULDRON", "CAVE", "CELEBRATION", "CELL", "CENTAUR", "CENTER", "CENTURY", "CEREMONY", "CHAIN", "CHAIR", "CHALK", "CHAMPAGNE", "CHAMPION", "CHANCE", "CHANGE", "CHANNEL", "CHARGE", "CHARM", "CHASE", "CHECK", "CHEEK", "CHEESE", "CHERRY", "CHESS", "CHEST", "CHEVRON", "CHICK", "CHICKEN", "CHIEF", "CHILL", "CHIMNEY", "CHINA", "CHIP", "CHIRP", "CHOCOLATE", "CHOP", "CHRISTMAS", "CHURCH", "CIGAR", "CIRCLE", "CIRCUS", "CLAM", "CLAP", "CLASS", "CLEOPATRA", "CLIFF", "CLOAK", "CLOCK", "CLOUD", "CLOWN", "CLUB", "CLUE", "CLUTCH", "COACH", "COAL", "COAST", "COAT", "COCKTAIL", "CODE", "COFFEE", "COFFIN", "COIN", "COLD", "COLLAR", "COLLEGE", "COLOSSEUM", "COLUMBUS", "COMB", "COMET", "COMIC", "COMMUNISM", "COMPOUND", "COMPUTER", "CONCERT", "CONDUCTOR", "CONE", "CONTRACT", "COOK", "COOKBOOK", "COORDINATE", "COPPER", "COPY", "CORN", "COSTUME", "COTTAGE", "COTTON", "COUCH", "COUGAR", "COUNT", "COUNTRY", "COUPLE", "COURT", "COVER", "COW", "COWBOY", "COYOTE", "CRAB", "CRACK", "CRACKER", "CRAFT", "CRANE", "CRASH", "CRAYON", "CREAM", "CREATURE", "CRICKET", "CROSS", "CROW", "CROWN", "CRUMB", "CRUNCH", "CRUSADER", "CRUSH", "CRYSTAL", "CUBE", "CUCKOO", "CUCUMBER", "CUFF", "CUP", "CURRY", "CURSE", "CYCLE", "CZECH", "DAISY", "DAME", "DANCE", "DART", "DARWIN", "DASH", "DATE", "DAY", "DEAL", "DEATH", "DECEMBER", "DECEPTION", "DECK", "DEGREE", "DELTA", "DEMON", "DENTIST", "DESERT", "DESK", "DETENTION", "DEVIL", "DIADEM", "DIAMOND", "DIARY", "DICE", "DIE", "DIGEST", "DIGIT", "DINOSAUR", "DIRECTOR", "DIRT", "DISCORD", "DISCOUNT", "DISEASE", "DISGUST", "DISK", "DISNEY", "DITCH", "DOCTOR", "DOG", "DOGHOUSE", "DOLL", "DOLLAR", "DOMINOES", "DONKEY", "DONUT", "DOOM", "DOOR", "DOPE", "DOT", "DOUBLE", "DOVE", "DOWN", "DRAFT", "DRAG", "DRAGON", "DRAIN", "DRAKE", "DRAW", "DRAWING", "DREAM", "DRESS", "DRESSING", "DRILL", "DRIP", "DRIVE", "DRIVER", "DRONE", "DROP", "DRUG", "DRUM", "DRYER", "DUCK", "DUEL", "DUNGEON", "DUST", "DWARF", "EAGLE", "EAR", "EARTH", "EARTHQUAKE", "EASTER", "EAT", "EDEN", "EGG", "EGO", "EGYPT", "EINSTEIN", "ELEPHANT", "ELF", "EMBASSY", "EMERALD", "EMISSION", "ENGINE", "ENGLAND", "ENTRANCE", "EQUESTRIAN", "ESCORT", "EUROPE", "EVE", "EVIL", "EVOLUTION", "EXAM", "EXCUSE", "EXPANSION", "EXPERIMENT", "EXPLOSION", "EXPRESS", "EYE", "FACE", "FAIR", "FAIRY", "FALL", "FAMILY", "FAN", "FANG", "FANTASY", "FARM", "FAST", "FAT", "FEAR", "FEAST", "FEATHER", "FENCE", "FEVER", "FIDDLE", "FIELD", "FIGHTER", "FIGURE", "FILE", "FILM", "FINAL", "FINGER", "FIRE", "FIREPLACE", "FIRM", "FISH", "FISHING", "FIST", "FIT", "FLAG", "FLAKE", "FLASH", "FLAT", "FLESH", "FLOOD", "FLOOR", "FLOW", "FLOWER", "FLUFF", "FLUKE", "FLUSH", "FLUTE", "FLY", "FOAM", "FOCUS", "FOG", "FOIL", "FOOT", "FORCE", "FOREST", "FORK", "FOSSIL", "FRAME", "FRANCE", "FRANKENSTEIN", "FREE", "FRICTION", "FROG", "FROST", "FROZEN", "FRUITCAKE", "FUEL", "FURNITURE", "FUTURE", "GAIA", "GALAXY", "GALLEON", "GAME", "GANG", "GANGSTER", "GAP", "GARDEN", "GARGOYLE", "GAS", "GATE", "GEAR", "GEEK", "GEM", "GENIE", "GENIUS", "GERBIL", "GERMANY", "GHOST", "GIANT", "GIN", "GINGER", "GINGERBREAD", "GIRL", "GLACIER", "GLASS", "GLASSES", "GLOVE", "GO", "GOAL", "GOAT", "GOBLIN", "GOLD", "GOLDILOCKS", "GOLF", "GOOFY", "GOOSE", "GORILLA", "GOSSIP", "GOVERNOR", "GRACE", "GRAIN", "GRAMPA", "GRANDMA", "GRASS", "GRAVEYARD", "GREECE", "GREED", "GREEN", "GREENHOUSE", "GREMLIN", "GROOM", "GROUND", "GROUNDSKEEPER", "GROUP", "GUCCI", "GUIDE", "GUITAR", "GUM", "GUN", "GYMNAST", "HAIL", "HAIR", "HALLOWEEN", "HAM", "HAMBURGER", "HAMMER", "HAMSTER", "HAND", "HARP", "HASH", "HAT", "HATE", "HAUNT", "HAWAII", "HAWK", "HEAD", "HEALTH", "HEART", "HEDGE", "HELICOPTER", "HELL", "HELMET", "HERB", "HERCULES", "HIDE", "HIGH", "HIJAB", "HIMALAYAS", "HIP", "HIPPOCRATES", "HIT", "HIVE", "HOCKEY", "HOLE", "HOLLYWOOD", "HOMER", "HONEY", "HOOD", "HOOK", "HORN", "HORSE", "HORSESHOE", "HOSE", "HOSPITAL", "HOST", "HOT", "HOTEL", "HOUSE", "HOUSEBOAT", "HUT", "ICE", "ICE AGE", "ICE CREAM", "ICELAND", "ICICLE", "IDEA", "IGLOO", "INCENSE", "INCH", "INDIA", "INK", "INTERN", "INTERNET", "INTESTINE", "IRON", "ISLAND", "ISTANBUL", "IVORY", "IVY", "JACK", "JAIL", "JAM", "JASMINE", "JAVA", "JAZZ", "JELLYFISH", "JERK", "JESSIE", "JESUS", "JET", "JEWEL", "JEWELER", "JINX", "JOAN OF ARC", "JOB", "JOCKEY", "JOINT", "JOKER", "JOY", "JUDGE", "JUICE", "JUMP", "JUMPER", "JUNGLE", "JUNK", "JUPITER", "KANGAROO", "KATANA", "KEBAB", "KEEPER", "KEG", "KETCHUP", "KEVIN", "KEY", "KICK", "KID", "KILT", "KIMCHI", "KING", "KISS", "KITCHEN", "KITE", "KIWI", "KNEE", "KNIFE", "KNIGHT", "KNOB", "KNOCK", "KNOT", "KNUCKLE", "KREMLIN", "KUNG FU", "LAB", "LACE", "LADDER", "LADY", "LAKE", "LAMP", "LAND", "LANE", "LAP", "LARGE", "LASER", "LAST", "LATEX", "LAUNDRY", "LAWN", "LAWYER", "LAY", "LEAD", "LEAF", "LEAGUE", "LEAK", "LEATHER", "LEG", "LEGEND", "LEMON", "LEMONADE", "LEONARDO", "LEPRECHAUN", "LETTER", "LEVEL", "LIBERTY", "LIBRARY", "LICK", "LIE", "LIFE", "LIGHT", "LIGHTNING", "LIGHTSABER", "LIMOUSINE", "LINE", "LINK", "LION", "LIP", "LIQUOR", "LIST", "LITTER", "LIZARD", "LOAF", "LOBSTER", "LOCH NESS", "LOCK", "LOCUST", "LOG", "LONDON", "LOOSE", "LOSS", "LOTION", "LOVE", "LUCK", "LUMBERJACK", "LUNCH", "MACHU PICCHU", "MAGAZINE", "MAGICIAN", "MAHJONG", "MAIL", "MAJOR", "MAKEUP", "MAMMOTH", "MANHATTAN", "MANICURE", "MAP", "MAPLE", "MARACAS", "MARATHON", "MARBLE", "MARCH", "MARGIN", "MARK", "MARKET", "MARTINI", "MASS", "MATCH", "MATTRESS", "MAUI", "MAY", "MAYOR", "MAZE", "MEAN", "MEAT", "MEDIC", "MEMBER", "MEMORY", "MENORAH", "MERCURY", "MERMAID", "MESS", "METAL", "METEOR", "METER", "MEXICO", "MICROSCOPE", "MICROWAVE", "MILE", "MILK", "MILL", "MILLIONAIRE", "MINE", "MINISTRY", "MINOTAUR", "MINT", "MINUTE", "MIRROR", "MISS", "MISSILE", "MISSIONARY", "MIX", "MOCK", "MODE", "MODEL", "MOHAWK", "MOLD", "MOLE", "MONA LISA", "MONKEY", "MOON", "MOONLIGHT", "MOOSE", "MOPED", "MOSCOW", "MOSES", "MOSQUITO", "MOTEL", "MOTHER", "MOUNT", "MOUNTIE", "MOUSE", "MOUTH", "MOVIE", "MUD", "MUG", "MUGGLE", "MULLIGAN", "MUMMY", "MUSHROOM", "MUSKETEER", "MUSTARD", "MUTANT", "NAIL", "NAP", "NAPOLEON", "NAVEL", "NEBULA", "NEEDLE", "NERVE", "NEST", "NET", "NEW YORK", "NEWTON", "NIGHT", "NIGHTMARE", "NINJA", "NOAH", "NOBEL", "NOODLE", "NOSE", "NOTE", "NOTICE", "NOTRE DAME", "NOVEL", "NUCLEAR", "NUGGET", "NURSE", "NUT", "NUTCRACKER", "NUTMEG", "NYLON", "OASIS", "OBSESSION", "OCEAN", "OCTOPUS", "OFFENSE", "OFFICER", "OIL", "OLD", "OLIVE", "OLYMPUS", "ONION", "OPERA", "ORANGE", "ORGAN", "OXFORD", "OYSTER", "PACIFIC", "PACKAGE", "PAD", "PADDLE", "PAGE", "PAIN", "PAINT", "PALACE", "PALM", "PAN", "PANTS", "PAPER", "PARACHUTE", "PARADE", "PARALYSIS", "PARK", "PARROT", "PART", "PARTY", "PASS", "PASTE", "PATCH", "PATIENT", "PAWN", "PEA", "PEACE", "PEACH", "PEANUT", "PEARL", "PECK", "PEN", "PENDANT", "PENGUIN", "PENNY", "PENTAGON", "PEPPER", "PERIOD", "PET", "PETER", "PEW", "PHO", "PHOENIX", "PHONE", "PHOTO", "PIANO", "PICKLE", "PIE", "PIG", "PILL", "PILLOW", "PILOT", "PIN", "PINCH", "PINE", "PINEAPPLE", "PINK", "PIP", "PIPE", "PIRATE", "PISTOL", "PIT", "PITCH", "PITCHER", "PIZZA", "PLANE", "PLANT", "PLASTIC", "PLATE", "PLATFORM", "PLATYPUS", "PLAY", "PLAYER", "PLAYGROUND", "PLOT", "PLOW", "PLUMBER", "PLUTO", "POCKET", "POD", "POINT", "POISON", "POKER", "POLE", "POLICE", "POLISH", "POLO", "POOL", "POOR", "POP", "POPCORN", "PORK", "PORT", "PORTAL", "PORTRAIT", "POSSESS", "POST", "POT", "POTATO", "POTION", "POTTER", "POUND", "POUTINE", "POWDER", "POWER", "PRESENT", "PRESS", "PRICK", "PRINCESS", "PRISON", "PRISONER", "PRODUCE", "PROOF", "PROPHECY", "PUB", "PUMPKIN", "PUNK", "PUNT", "PUPIL", "PUPPET", "PURPLE", "PURSE", "PUSH", "PUZZLE", "PYRAMID", "QUACK", "QUAIL", "QUAKE", "QUARANTINE", "QUARTER", "QUEEN", "QUILL", "QUILT", "QUIVER", "RABBIT", "RACE", "RACK", "RACKET", "RADIO", "RADIOACTIVE", "RAGE", "RAIL", "RAINBOW", "RAKE", "RAM", "RANCH", "RANGE", "RANK", "RAT", "RAVE", "RAY", "RAZOR", "RECORD", "RED", "REEF", "REGRET", "REINDEER", "RELIEF", "REMOTE", "RESIDENT", "RESUME", "REVEREND", "REVIEW", "REVOLUTION", "RIB", "RIBBON", "RICE", "RIFLE", "RING", "RIP", "RIVER", "ROAD", "ROBIN", "ROBOT", "ROCK", "ROCKET", "ROD", "RODEO", "ROE", "ROLE", "ROLL", "ROME", "ROOF", "ROOT", "ROPE", "ROSE", "ROULETTE", "ROUND", "ROW", "RUBBER", "RULER", "RUSSIA", "RUST", "SACK", "SADDLE", "SAFE", "SAHARA", "SAIL", "SALAD", "SALOON", "SALSA", "SALT", "SAND", "SANDBOX", "SANDWICH", "SANTA", "SATELLITE", "SATURN", "SAW", "SCALE", "SCARECROW", "SCHOOL", "SCIENTIST", "SCORPION", "SCRATCH", "SCREEN", "SCROLL", "SCUBA", "SCUBA DIVER", "SEAL", "SECOND", "SEED", "SERVER", "SHADE", "SHADOW", "SHAKE", "SHAKESPEARE", "SHAMPOO", "SHARK", "SHED", "SHEEP", "SHEET", "SHELL", "SHEPHERD", "SHERLOCK", "SHERWOOD", "SHIP", "SHOE", "SHOOT", "SHOP", "SHORTS", "SHOT", "SHOWER", "SIGN", "SILHOUETTE", "SILK", "SINK", "SISTER", "SKATES", "SKI", "SKULL", "SKYSCRAPER", "SLED", "SLEEP", "SLING", "SLIP", "SLIPPER", "SLOTH", "SLUG", "SMELL", "SMITH", "SMOKE", "SMOOTHIE", "SMUGGLER", "SNAKE", "SNAP", "SNOW", "SNOWMAN", "SOAP", "SOCK", "SOLDIER", "SONG", "SOUL", "SOUND", "SOUP", "SPACE", "SPADE", "SPELL", "SPHINX", "SPIDER", "SPIKE", "SPINE", "SPIRIT", "SPONGE", "SPOON", "SPOT", "SPRAY", "SPRING", "SPURS", "SPY", "SQUARE", "SQUASH", "SQUIRREL", "STABLE", "STADIUM", "STAFF", "STAMP", "STAR", "STATE", "STEAM", "STEEL", "STEP", "STETHOSCOPE", "STICK", "STICKER", "STOCK", "STOP", "STOPLIGHT", "STORM", "STORY", "STOVE", "STRAW", "STREAM", "STREET", "STRIKE", "STRING", "SUB", "SUGAR", "SUIT", "SUMO", "SUN", "SUNFLOWER", "SUPERHERO", "SWAMP", "SWARM", "SWEAT", "SWING", "SWITCH", "SWORD", "TABLE", "TABLET", "TAG", "TAIL", "TANK", "TAP", "TASTE", "TATTOO", "TAX", "TEA", "TEACHER", "TEAM", "TEAR", "TELESCOPE", "TEMPLE", "TEXAS", "THEATER", "THIEF", "THUMB", "THUNDER", "TICK", "TICKET", "TIE", "TIGER", "TIME", "TIN", "TIP", "TIPI", "TISSUE", "TITLE", "TOAST", "TOKYO", "TOOTH", "TORCH", "TORNADO", "TOWER", "TOY", "TRACK", "TRAIN", "TRASH", "TRIANGLE", "TRICK", "TRIP", "TROLL", "TRUCK", "TRUNK", "TUBE", "TUNNEL", "TURBAN", "TURKEY", "TURTLE", "TUTU", "TUXEDO", "UNDERTAKER", "UNICORN", "UNIVERSITY", "VACUUM", "VALENTINE", "VAMPIRE", "VAN", "VENUS", "VET", "VIKING", "VIOLET", "VIRUS", "VOLCANO", "VOLUME", "WAGON", "WAITRESS", "WAKE", "WALL", "WALRUS", "WAR", "WASHER", "WASHINGTON", "WATCH", "WATER", "WAVE", "WAX", "WEB", "WEDDING", "WEED", "WELL", "WEREWOLF", "WHALE", "WHEEL", "WHEELCHAIR", "WHIP", "WHISTLE", "WIND", "WINDOW", "WING", "WISH", "WITCH", "WIZARD", "WONDERLAND", "WOOD", "WOOL", "WORM", "YARD", "YELLOWSTONE", "ZIPPER", "ZOMBIE", "ZONE"]);
+const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ls = { get(k,d){ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+const ico = (id,cls="") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+const ROLE_ICO = {red:"i-agent",blue:"i-agent",green:"i-agent",tan:"i-bystander",black:"i-assassin"};
+const ROLE_NAME = {red:"Red agent",blue:"Blue agent",green:"Agent",tan:"Bystander",black:"Assassin"};
+const TEAM = {red:"Red",blue:"Blue"};
+const other = t => t==="red"?"blue":"red";
+const strip = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase();
+
+/* ---------- tracker state (same storage as before, so counts carry over) ---------- */
+let banned = new Set(ls.get("banned",[]));
+let S = normalize(ls.get("tracker",null)), dbRef=null, sampleFn=null, shared=false;
+function normalize(v){ v=v||{}; return {counts:(v.counts&&typeof v.counts==="object")?{...v.counts}:{}, retired:Array.isArray(v.retired)?[...v.retired]:[], added:Array.isArray(v.added)?v.added.filter(a=>a&&a.word).map(a=>({word:String(a.word),for:String(a.for||"")})):[], seen:Array.isArray(v.seen)?[...v.seen]:[]}; }
+async function saveTracker(){ const body=JSON.parse(JSON.stringify(S)); if(dbRef){ try{ await dbRef.set(body); return; }catch(e){} } ls.set("tracker",body); }
+const PACKWORDS = new Set(Object.values(PACKS).flatMap(p=>p.words));
+function allBase(){ return [...new Set([...WORDS, ...S.added.map(a=>a.word)])].sort(); }
+function allWords(){ return [...new Set([...allBase(), ...PACKWORDS])].sort(); }
+function live(list){ const r=new Set(S.retired); return list.filter(w=>!r.has(w)&&!banned.has(w)); }
+
+/* ---------- packs (per device) ---------- */
+let packsOn = new Set((ls.get("cn-packs",[])||[]).filter(k=>PACKS[k]));
+let packMix = ls.get("cn-mix","few"); if(!["few","lots","only"].includes(packMix)) packMix="few";
+const MIXN = {few:6, lots:12, only:25};
+
+/* ---------- seeded dealing ---------- */
+function hash(s){ let h=1779033703^s.length; for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19;} return h>>>0; }
+function rng(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function shuffle(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function newCode(){ let s=""; for(let i=0;i<4;i++) s+=ALPH[Math.floor(Math.random()*ALPH.length)]; return s; }
+function makeKey(mode, code){
+  // The key depends only on mode + code, never on the word list, so it can't shift.
+  const r = rng(hash(mode+":"+code+":key"));
+  if(mode==="classic"){
+    const first = r()<.5?"red":"blue";
+    return {first, keyA: shuffle([...Array(9).fill(first),...Array(8).fill(other(first)),...Array(7).fill("tan"),"black"], r), keyB:[]};
+  }
+  const p=[]; const add=(n,a,b)=>{for(let i=0;i<n;i++)p.push([a,b]);};
+  add(3,"green","green");add(1,"black","black");add(1,"green","black");add(1,"black","green");
+  add(1,"black","tan");add(1,"tan","black");add(5,"green","tan");add(5,"tan","green");add(7,"tan","tan");
+  const q=shuffle(p,r); return {first:"red", keyA:q.map(x=>x[0]), keyB:q.map(x=>x[1])};
+}
+function deal(mode, code){
+  const packKeys=[...packsOn].sort();
+  const r = rng(hash(mode+":"+code+":"+packKeys.join(",")+":"+packMix));
+  const base = shuffle(live(allBase()).filter(w=>!PACKWORDS.has(w)), r);
+  const pk = shuffle(live([...new Set(packKeys.flatMap(k=>PACKS[k].words))]), r);
+  const nPack = packKeys.length ? Math.min(pk.length, MIXN[packMix]) : 0;
+  const chosen = [...pk.slice(0,nPack), ...base.slice(0,25-nPack)];
+  const rest = packMix==="only" ? [...pk.slice(nPack), ...base.slice(25-nPack)] : shuffle([...pk.slice(nPack), ...base.slice(25-nPack)], r);
+  const k = makeKey(mode, code);
+  return {mode, code, grid:shuffle(chosen,r), order:rest, nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
+    keyA:k.keyA, keyB:k.keyB, first:k.first, turn:k.first, giver:"A", rev:0, at:0};
+}
+function fingerprint(g){ const h=hash(g.grid.join("|")+"#"+g.keyA.join("")+g.keyB.join("")); return ALPH[h%24]+ALPH[(h>>>5)%24]+ALPH[(h>>>10)%24]; }
+function saveGame(){ const {order,...rest}=G; ls.set("cn-game",{...rest, order:order.slice(0,400)}); }
+function loadGame(){
+  const s = ls.get("cn-game",null);
+  if(!s || !s.code || !Array.isArray(s.grid) || s.grid.length!==25) return null;
+  const mode = s.mode==="duet"?"duet":"classic";
+  const k = makeKey(mode, s.code);
+  const keyOk = a => Array.isArray(a) && a.length===25;
+  return {mode, code:s.code, grid:s.grid, order:Array.isArray(s.order)?s.order:deal(mode,s.code).order, nextIdx:s.nextIdx||0,
+    covers:s.covers||{}, by:s.by||{}, clues:s.clues||[], over:s.over||null, turnsLeft:s.turnsLeft??9,
+    keyA:keyOk(s.keyA)?s.keyA:k.keyA, keyB:mode==="duet"?(keyOk(s.keyB)?s.keyB:k.keyB):[], first:s.first||k.first,
+    turn:s.turn||s.first||k.first, giver:s.giver==="B"?"B":"A", rev:s.rev||0, at:s.at||0};
+}
+
+/* ---------- ui state ---------- */
+let tab = ls.get("cn-tab","board"); if(!["board","key","words","rules"].includes(tab)) tab="board";
+let look = ls.get("cn-look","hq");
+let soundOn = ls.get("cn-sound",true), volume = ls.get("cn-vol",60), syncOn = ls.get("cn-sync",true);
+let side = "A", reveal=false, keepShow=false, tint=false;
+let picking=false, selected=new Set(), flipIdx=new Set(), sheetFor=null, settingsOpen=false, poolQ="", noticeText="";
+let toastTimer=null, dismissed=false;
+
+/* ---------- sound (synthesized, no files) ---------- */
+let AC=null;
+function ac(){ if(!soundOn) return null; try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended") AC.resume(); }catch(e){ AC=null; } return AC; }
+function tone(f, dur, type="sine", g=.5, at=0, to=null){
+  const a=ac(); if(!a) return; const t=a.currentTime+at, v=(volume/100)*.35*g;
+  const o=a.createOscillator(), gn=a.createGain(); o.type=type; o.frequency.setValueAtTime(f,t); if(to) o.frequency.exponentialRampToValueAtTime(to,t+dur);
+  gn.gain.setValueAtTime(0.0001,t); gn.gain.exponentialRampToValueAtTime(Math.max(v,0.0002),t+.012); gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(gn).connect(a.destination); o.start(t); o.stop(t+dur+.05);
+}
+function noise(dur, freq=1800, g=.5, at=0, q=1.2){
+  const a=ac(); if(!a) return; const t=a.currentTime+at, v=(volume/100)*.4*g;
+  const len=Math.max(1,Math.floor(a.sampleRate*dur)), buf=a.createBuffer(1,len,a.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
+  const s=a.createBufferSource(), f=a.createBiquadFilter(), gn=a.createGain(); s.buffer=buf; f.type="bandpass"; f.frequency.value=freq; f.Q.value=q;
+  gn.gain.setValueAtTime(Math.max(v,0.0002),t); gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  s.connect(f).connect(gn).connect(a.destination); s.start(t);
+}
+const SFX = {
+  flip(){ noise(.07,2400,.6); tone(900,.05,"triangle",.25,.02); },
+  agent(team){ const base={red:523.25,blue:587.33,green:659.25}[team]||523.25; tone(base,.16,"triangle",.5,.05); tone(base*1.5,.28,"triangle",.5,.15); },
+  bystander(){ tone(196,.22,"triangle",.6,.04,150); noise(.08,400,.4,.04); },
+  assassin(){ tone(220,.9,"sawtooth",.35,.05,55); tone(233,.9,"sawtooth",.3,.05,58); noise(.5,300,.5,.05,.7); },
+  win(){ [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,.35,"triangle",.5,i*.12)); },
+  turn(){ tone(440,.12,"sine",.35); tone(330,.18,"sine",.3,.1); },
+  clue(){ [0,.07,.14].forEach(d=>noise(.035,3200,.5,d,3)); tone(1200,.05,"square",.12,.22); },
+  swap(){ noise(.25,900,.4,0,.6); tone(300,.25,"sine",.2,0,600); }
+};
+function sfx(name,arg){ try{ SFX[name]&&SFX[name](arg); }catch(e){} }
+
+function counts(){
+  const c={red:0,blue:0,green:0,tan:0,black:0};
+  Object.values(G.covers).forEach(v=>{ if(c[v]!=null) c[v]++; });
+  return c;
+}
+function totals(){ return G.mode==="classic" ? {[G.first]:9,[other(G.first)]:8} : {green:15}; }
+
+/* ---------- covering + turns ---------- */
+function checkWin(){
+  if(G.over) return;
+  const c=counts(), t=totals();
+  if(G.mode==="classic"){
+    if(c.red>=t.red){ G.over={kind:"red", why:"Every red agent has been contacted."}; }
+    else if(c.blue>=t.blue){ G.over={kind:"blue", why:"Every blue agent has been contacted."}; }
+  } else if(c.green>=15){ G.over={kind:"green", why:"All 15 agents found. Mission complete."}; }
+}
+function cover(i, choice){
+  const prev=G.covers[i], wasOver=!!G.over;
+  if(choice===null){ delete G.covers[i]; delete G.by[i]; }
+  else if(G.mode==="duet" && choice==="tan"){
+    const b = G.by[i] = {...(G.by[i]||{})}; const fresh=!b[G.giver]; b[G.giver]=1;
+    if(b.A&&b.B) G.covers[i]="tan"; else delete G.covers[i];
+    flipIdx.add(i); sfx("bystander");
+    if(fresh && !G.over){ endTurn(true); return; }
+  }
+  else {
+    G.covers[i]=choice; flipIdx.add(i);
+    const isNew = !prev;
+    if(choice==="black"){ sfx("assassin"); if(isNew && !G.over) G.over = G.mode==="classic" ? {kind:other(G.turn), why:`${TEAM[G.turn]} team found the assassin.`} : {kind:"black", why:"You contacted the assassin. Mission failed."}; }
+    else if(choice==="tan"){ sfx("bystander"); if(isNew && !G.over){ G.turn=other(G.turn); toast(`Bystander. ${TEAM[G.turn]} team's turn.`); } }
+    else {
+      sfx("agent",choice);
+      if(G.mode==="classic" && isNew && !G.over && choice!==G.turn){ G.turn=other(G.turn); toast(`Wrong agent. ${TEAM[G.turn]} team's turn.`); }
+    }
+  }
+  checkWin();
+  if(G.over && !wasOver){ dismissed=false; if(G.over.kind!=="black") setTimeout(()=>sfx("win"),350); }
+  changed();
+}
+function endTurn(auto){
+  if(G.over) return;
+  if(G.mode==="classic"){ G.turn=other(G.turn); toast(`${TEAM[G.turn]} team's turn.`); }
+  else {
+    G.turnsLeft=Math.max(0,G.turnsLeft-1); G.giver = G.giver==="A"?"B":"A";
+    toast(G.turnsLeft? `${auto?"Bystander. ":""}Turn over. Side ${G.giver} gives the next clue. ${G.turnsLeft} left.` : `${auto?"Bystander. ":""}Out of turns. Sudden death.`);
+  }
+  sfx("turn");
+  changed();
+}
+function toast(t){ const el=$("#toast"); if(!el) return; el.textContent=t; el.hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>{el.hidden=true;},2600); }
+function changed(){ G.rev=(G.rev||0)+1; G.at=Date.now(); saveGame(); render(); pushSync(); }
+
+/* ---------- clue checks ---------- */
+function clueProblem(w){
+  const c=strip(w).replace(/[^A-Z]/g,""); if(!c) return "Type the clue word first.";
+  const stems = s => [s, s.replace(/ES$/,""), s.replace(/S$/,"")];
+  for(let i=0;i<25;i++){
+    if(G.covers[i]) continue;
+    const word=G.grid[i], parts=strip(word).split(/[^A-Z]+/).filter(Boolean).concat(strip(word).replace(/[^A-Z]/g,""));
+    for(const p of parts){
+      if(stems(c).some(x=>stems(p).includes(x))) return `${word} is on the board. Pick a different clue.`;
+      if(p.length>=4 && c.includes(p)) return `Your clue contains ${word}, which is on the board.`;
+      if(c.length>=4 && p.includes(c)) return `${word} contains your clue. Pick a different clue.`;
+    }
+  }
+  return null;
+}
+
+/* ---------- rendering ---------- */
+function header(){
+  const n = syncPeers();
+  return `<header class="top"><div class="top-in">
+    <svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg>
+    <div class="brand">Codenames<small>${G.mode==="classic"?"Classic":"Duet"} · ${G.code} · Match <span class="matchtag">${fingerprint(G)}</span></small></div>
+    <span class="sp"></span>
+    ${room&&syncOn?`<span class="sync ${n?"on":""}" title="Live sync">${n?`<i></i>${n+1} linked`:`<i></i>Solo`}</span>`:""}
+    <button class="iconbtn" data-act="settings" aria-label="Settings">${ico("i-gear")}</button>
+  </div></header>`;
+}
+function tabsBar(){
+  const T=[["board","Board","i-board"],["key","Key","i-key"],["words","Words","i-words"],["rules","Rules","i-rules"]];
+  return `<nav class="tabs"><div class="tabs-in">${T.map(([id,l,i])=>`<button class="tab" data-tab="${id}" ${tab===id?'aria-current="page"':""}>${ico(i)}${l}</button>`).join("")}</div></nav>`;
+}
+function scoreboard(){
+  const c=counts(), t=totals();
+  if(G.mode==="classic"){
+    const plate=(team)=>{
+      const left=t[team]-c[team];
+      return `<div class="plate ${team} ${G.turn===team&&!G.over?"turn":""}">
+        <div class="plate-h"><span class="plate-name">${TEAM[team]}</span><span class="plate-ct">${left}<small> left</small></span></div>
+        <div class="pips">${Array.from({length:t[team]},(_,k)=>`<svg class="pip ${k<c[team]?"gone":""}"><use href="#i-agent"/></svg>`).join("")}</div>
+        <div class="turnflag">${G.turn===team&&!G.over?"Their turn":G.first===team?"Went first":""}</div></div>`;
+    };
+    return `<div class="score">${plate("red")}<div class="mid"><button class="btn" data-act="endturn" ${G.over?"disabled":""}>End turn</button></div>${plate("blue")}</div>`;
+  }
+  const out = G.turnsLeft<=0 && !G.over;
+  return `<div class="score duet">
+    <div class="plate green turn"><div class="plate-h"><span class="plate-name">Agents</span><span class="plate-ct">${c.green}<small> / 15</small></span></div>
+      <div class="pips">${Array.from({length:15},(_,k)=>`<svg class="pip ${k<c.green?"":"gone"}"><use href="#i-agent"/></svg>`).join("")}</div></div>
+    <div class="plate" style="--tc:var(--brass)"><div class="plate-h"><span class="plate-name">Turns</span><span class="plate-ct">${G.turnsLeft}</span></div>
+      <div class="tokens">${Array.from({length:9},(_,k)=>`<i class="tok ${k<9-G.turnsLeft?"used":""}"></i>`).join("")}</div></div>
+    <div class="mid"><button class="btn" data-act="endturn" ${G.over||out?"disabled":""}>End turn</button></div>
+  </div>
+  ${out?`<div class="banner">Out of turns. Sudden death: no more clues. Keep guessing, and any bystander or assassin loses the game.</div>`
+       :`<div class="giver"><span class="small">Clue giver: <b>Side ${G.giver}</b> <span class="muted">· guesses follow Side ${G.giver}'s key</span></span><button class="btn ghost" data-act="giver" style="padding:6px 10px;font-size:12.5px">Switch</button></div>`}`;
+}
+function clueBlock(){
+  const last = G.clues[G.clues.length-1];
+  const col = c => c.team==="red"?"var(--red)":c.team==="blue"?"var(--blue)":"var(--green)";
+  const who = G.mode==="classic" ? TEAM[G.turn]+" spymaster's" : "Side "+G.giver+"'s";
+  return `<div class="sec">
+    ${last?`<div class="clue" style="--cc:${col(last)}"><span class="eyebrow">${esc(last.label)}</span><span class="clue-word grow">${esc(last.word)}</span><span class="clue-n">${esc(last.n)}</span></div>`:""}
+    <form class="cluein" id="clueform" autocomplete="off">
+      <input id="clueword" maxlength="24" placeholder="${who} clue" aria-label="Clue word" ${G.over?"disabled":""}>
+      <select id="cluen" aria-label="Number">${["1","2","3","4","5","6","7","8","9","0","∞"].map(n=>`<option>${n}</option>`).join("")}</select>
+      <button class="btn primary" type="submit" aria-label="Send clue" ${G.over?"disabled":""}>${ico("i-send")}</button>
+    </form>
+    ${G.clues.length>1?`<details><summary class="small muted" style="cursor:pointer">Clue log (${G.clues.length})</summary><ol class="cluelog" style="margin-top:8px">${G.clues.slice().reverse().map(c=>`<li style="--lc:${col(c)}"><span class="eyebrow">${esc(c.label)}</span><b>${esc(c.word)}</b><span class="num">${esc(c.n)}</span></li>`).join("")}</ol></details>`:""}
+  </div>`;
+}
+function boardTab(){
+  const keyArr = G.mode==="classic"||side==="A" ? G.keyA : G.keyB;
+  const kcol = {red:"var(--red)",blue:"var(--blue)",green:"var(--green)",tan:"var(--tan)",black:"var(--ink)"};
+  const cards = G.grid.map((w,i)=>{
+    const c=G.covers[i], b=G.by[i]||{}, partial=!c&&(b.A||b.B);
+    const cls=["cn", c?`cov c-${c}`:"", partial?"partial":"", PACKWORDS.has(w)?"packword":"", selected.has(i)?"sel":"", flipIdx.has(i)?"flip":""].join(" ");
+    const icon = c ? ROLE_ICO[c] : "i-agent";
+    const marks = partial ? `<span class="cn-by">${["A","B"].filter(s=>b[s]).map(s=>`<span title="Bystander for Side ${s}'s clues">${ico("i-bystander")}${s}</span>`).join("")}</span>` : "";
+    return `<button class="${cls}" data-i="${i}" style="--kc:${kcol[keyArr[i]]}" aria-label="${esc(w)}${c?", covered by "+ROLE_NAME[c]:partial?", bystander for one side":""}">
+      <span class="cn-top">${ico(icon,"cn-ico")}<span class="cn-up">${esc(w)}</span></span>${marks}
+      <span class="cn-label"><span class="cn-w">${esc(w)}</span></span></button>`;
+  }).join("");
+  const rb = !picking ? `${ico("i-swap")}Replace words` : selected.size ? `${ico("i-swap")}Replace ${selected.size} word${selected.size>1?"s":""}` : "Pick words to replace";
+  return `
+  <div class="row">
+    <div class="seg" role="group" aria-label="Game mode"><button data-act="mode" data-v="classic" aria-pressed="${G.mode==="classic"}">Classic</button><button data-act="mode" data-v="duet" aria-pressed="${G.mode==="duet"}">Duet</button></div>
+    <button class="btn primary" data-act="deal">${ico("i-deal")}Deal new grid</button>
+    <div class="codebox"><label for="code">Game code</label><input id="code" maxlength="4" value="${G.code}" autocomplete="off" spellcheck="false"></div>
+  </div>
+  ${mismatch?`<div class="warnbox">Another linked device has different words for code ${esc(G.code)}. Tap <b>Use theirs</b> so everyone plays the same grid. <button class="btn" data-act="usetheirs" style="margin-left:6px;padding:6px 10px">Use theirs</button></div>`:""}
+  ${G.over&&dismissed?`<div class="banner">Game over: ${esc(G.over.why)} Tap Deal new grid to play again.</div>`:""}
+  ${scoreboard()}
+  ${clueBlock()}
+  <div class="board ${tint?"tint":""} ${picking?"picking":""}" id="board">${cards}</div>
+  <p class="hint">${picking?"Tap the words you want gone, then tap Replace again. The key stays the same.":G.mode==="duet"?"Tap a card to mark it. A bystander only counts for the side that gave the clue; the card stays in play for the other side.":"Tap a card to cover it with the agent the spymaster's key shows."}</p>
+  <div class="boardbar">
+    <button class="btn ${picking?"on":""}" data-act="replace">${rb}</button>
+    ${picking?`<button class="btn ghost" data-act="cancelrep">Cancel</button>`:""}
+    <span class="sp"></span>
+    <button class="btn ghost" data-act="clear">Clear covers</button>
+  </div>
+  ${noticeText?`<p class="notice">${esc(noticeText)}</p>`:""}`;
+}
+function keyTab(){
+  const duet = G.mode==="duet";
+  const keyArr = !duet||side==="A" ? G.keyA : G.keyB;
+  const kcol = {red:"var(--red)",blue:"var(--blue)",green:"var(--green)",tan:"var(--tan)",black:"var(--ink)"};
+  const show = reveal||keepShow;
+  const cells = G.grid.map((w,i)=>`<div class="kc ${keyArr[i]==="tan"?"tan":""} ${G.covers[i]?"done":""}" style="--kcol:${kcol[keyArr[i]]}">${ico(ROLE_ICO[keyArr[i]])}<span>${esc(w)}</span></div>`).join("");
+  return `<div class="sec">
+    <div><div class="eyebrow">For the spymaster only · Match ${fingerprint(G)}</div><h2>${duet?`Key card · Side ${side}`:"Spymaster key"}</h2></div>
+    ${duet?`<div class="seg" role="group" aria-label="Key side"><button data-act="side" data-v="A" aria-pressed="${side==="A"}">Side A</button><button data-act="side" data-v="B" aria-pressed="${side==="B"}">Side B</button></div>
+      <p class="hint">Each player holds their own side. Side ${side} shows 9 agents and 3 assassins.</p>`
+      :`<p class="small" style="margin:0"><b style="color:var(--${G.first})">${TEAM[G.first]} goes first</b> with 9 agents. The border shows the starting team, like the real key card.</p>`}
+    <div class="keycard ${duet?"duet":G.first} ${show?"":"hide"}" id="keycard"><div class="kgrid">${cells}</div></div>
+    <button class="btn primary holdbtn" id="hold">${ico("i-eye")}${show&&!reveal?"Key is showing":"Press and hold to see the key"}</button>
+    <div class="card">
+      <button class="togrow" data-act="keep" aria-pressed="${keepShow}"><span class="sw"></span><span class="grow"><b>Keep the key showing</b><br><span class="small muted">For the phone that stays with the spymaster.</span></span></button>
+      <button class="togrow" data-act="tint" aria-pressed="${tint}"><span class="sw"></span><span class="grow"><b>Color the board with the key</b><br><span class="small muted">Adds a colored edge to each card on this phone's Board tab.</span></span></button>
+      <div class="legend">${(duet?[["green","Agent"],["tan","Bystander"],["ink","Assassin"]]:[["red","Red agent"],["blue","Blue agent"],["tan","Bystander"],["ink","Assassin"]]).map(([c,l])=>`<span><i class="dot" style="background:var(--${c})"></i>${l}</span>`).join("")}</div>
+    </div>
+  </div>`;
+}
+function wordsTab(){
+  const all=allWords(), ret=new Set(S.retired), add=new Set(S.added.map(a=>a.word));
+  const liveN = all.length - S.retired.filter(w=>all.includes(w)).length;
+  const strikes = Object.entries(S.counts).filter(([w,n])=>n>0&&n<3&&!ret.has(w)).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const q = strip(poolQ.trim());
+  const list = all.filter(w=>!q||strip(w).includes(q));
+  return `<div class="sec">
+    <div class="row"><div class="grow"><div class="eyebrow">Word bank</div><h2>Fresh words</h2></div><span class="stamp">Not in either box</span></div>
+    <div class="stats"><div class="stat"><b>${liveN.toLocaleString()}</b><span>words in play</span></div><div class="stat"><b>${S.retired.length}</b><span>retired</span></div><div class="stat"><b>${S.added.length}</b><span>added by Claude</span></div></div>
+    <div class="card">
+      <h3>Theme packs</h3>
+      <p class="small muted">Turn on packs to mix themed words into your grids. Changes apply to the next grid you deal. Linked devices follow the device that deals.</p>
+      <div>${Object.entries(PACKS).map(([k,p])=>`<button class="packrow" data-act="pack" data-v="${k}" aria-pressed="${packsOn.has(k)}"><span class="sw"></span><span class="grow"><b>${esc(p.name)}</b> <span class="cnt">${p.words.length}</span><span class="pk-sample">${p.words.slice(0,6).map(esc).join(" · ")}</span></span></button>`).join("")}</div>
+      <div class="eyebrow">How many pack words per grid</div>
+      <div class="seg wide" role="group" aria-label="Pack mix"><button data-act="mix" data-v="few" aria-pressed="${packMix==="few"}">A few (6)</button><button data-act="mix" data-v="lots" aria-pressed="${packMix==="lots"}">Lots (12)</button><button data-act="mix" data-v="only" aria-pressed="${packMix==="only"}">Packs only</button></div>
+      <button class="btn primary" data-act="dealpacks">${ico("i-deal")}Deal a grid with these packs</button>
+    </div>
+    <div class="card">
+      <h3>Word tracker</h3>
+      <p class="small muted">Each word you replace gets a strike. After 3 strikes in 3 different games it's retired, and Claude adds 2 new words. ${shared?"Counts are shared everywhere this page is open.":"Counts are saved on this device."}</p>
+      ${strikes.length?`<div class="eyebrow">Strikes so far</div><div class="chips">${strikes.map(([w,n])=>`<span class="chip">${esc(w)}<span class="str" aria-label="${n} of 3">${[0,1,2].map(k=>`<i class="${k<n?"on":""}"></i>`).join("")}</span></span>`).join("")}</div>`:""}
+      ${S.retired.length?`<div class="eyebrow">Retired</div><div class="chips">${S.retired.map(w=>`<span class="chip gone">${esc(w)}</span>`).join("")}</div>`:""}
+      ${S.added.length?`<div class="eyebrow">Added by Claude</div><div class="chips">${S.added.map(a=>`<span class="chip new" title="Replaced ${esc(a.for)}">${esc(a.word)}</span>`).join("")}</div>`:""}
+      ${!strikes.length&&!S.retired.length&&!S.added.length?`<p class="hint">No strikes yet. Words you swap out with Replace words show up here.</p>`:""}
+    </div>
+    <div class="card">
+      <h3>All words</h3>
+      <p class="small muted">Tap a word to keep it off future grids on this device. Tap again to bring it back. Struck words change which grid a code deals, so keep devices the same or use live sync.${banned.size?` ${banned.size} struck.`:""}</p>
+      <input class="search" id="poolq" placeholder="Find a word" value="${esc(poolQ)}" autocomplete="off">
+      <div class="pool" id="pool">${list.slice(0,q?400:2400).map(w=> ret.has(w)?`<button class="retired" disabled>${esc(w)}</button>`:`<button class="${banned.has(w)?"banned":""} ${add.has(w)?"added":""}" data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div>
+    </div>
+  </div>`;
+}
+function rulesTab(){
+  return `<div class="sec">
+    <div><div class="eyebrow">Briefing</div><h2>How to play</h2></div>
+    <details class="faq" open><summary>Classic, two teams</summary><ul>
+      <li>Split into <b>Red</b> and <b>Blue</b>. Each team picks a spymaster, who sits on the far side and opens the <b>Key</b> tab.</li>
+      <li>The starting team has <b>9 agents</b>, the other has <b>8</b>. There are <b>7 bystanders</b> and <b>1 assassin</b>.</li>
+      <li>On your turn the spymaster gives one word and a number, like <b>OCEAN 2</b>. Type it in the clue bar so the table can see it. The app won't take a clue that is, or is part of, a word still on the board.</li>
+      <li>Guess by tapping cards and covering them with what the key shows. A bystander or the other team's agent ends your turn. You can also tap <b>End turn</b>.</li>
+      <li>You get one extra guess beyond the number. Find all your agents first to win. Hit the assassin and you lose. If you reveal the other team's last agent, they win.</li>
+    </ul></details>
+    <details class="faq"><summary>Duet, two players working together</summary><ul>
+      <li>Each player opens the Key tab on their own phone and picks their side: one takes <b>Side A</b>, the other <b>Side B</b>.</li>
+      <li>Together you must find <b>15 agents</b> within <b>9 turns</b>. Each side shows 9 agents and 3 assassins.</li>
+      <li>Take turns giving clues. The board shows whose clue it is, and guesses are judged by that side's key.</li>
+      <li>A bystander ends the turn and uses a turn token. It only counts for the side that gave the clue: the card stays in play, because it might be an agent on the other side. If both sides mark it, it's covered.</li>
+      <li>Hit an assassin and you both lose. When the tokens run out you're in sudden death: no more clues, and any mistake loses.</li>
+    </ul></details>
+    <details class="faq"><summary>Playing on several devices</summary><ul>
+      <li>Pick the same mode and type the same 4-letter <b>game code</b> on every device. The header shows a 3-letter <b>Match</b> code; if every device shows the same one, you're on the same grid and key.</li>
+      <li><b>Live sync</b> (in Settings) links every device on the same code: covers, clues, turns and replaced words show up everywhere in a second or two. The header shows how many devices are linked. Everyone needs to be signed in and have access to this page.</li>
+      <li>A good setup: an iPad on the table on the Board tab, and each captain's phone on the Key tab with <b>Keep the key showing</b> on.</li>
+    </ul></details>
+    <details class="faq"><summary>About the word bank</summary><ul>
+      <li>Every word here is missing from the original Codenames box and from Codenames Duet, including plurals.</li>
+      <li>Theme packs (Words tab) mix in Movies & TV, Sports, Food, California or Spanish words.</li>
+      <li>A word replaced in 3 different games is retired for good, and Claude adds 2 new words in its place. The first time, the page asks you to allow it to use Claude.</li>
+    </ul></details>
+  </div>`;
+}
+function settingsModal(){
+  const opt=(id,name,sub,cols)=>`<button class="lookopt" data-act="setlook" data-v="${id}" aria-pressed="${look===id}"><span class="swatch" style="background:${cols[0]}">${cols.slice(1).map(c=>`<i style="background:${c}"></i>`).join("")}</span><span class="grow"><b>${name}</b><span class="small muted">${sub}</span></span></button>`;
+  const n=syncPeers();
+  return `<div class="sheet-bg" data-act="closesettings"></div><div class="modal" role="dialog" aria-label="Settings">
+    <h2>Settings</h2>
+    <div class="setrow"><div class="eyebrow">Look</div>
+      ${opt("hq","Spy HQ","Dark briefing room. Easy on the eyes at night.",["#101722","#d6a64f","#d9533f","#4c8ae0","#ece1c6","#58ad6d","#273448"])}
+      ${opt("file","Classified","Manila case file with red stamps. Best in a bright room.",["#e2d3ae","#a8281d","#b9382a","#2c5d9f","#fbf6e8","#3c7f4d","#c6b388"])}</div>
+    <div class="setrow"><div class="eyebrow">Sound</div>
+      <button class="togrow" data-act="sound" aria-pressed="${soundOn}"><span class="sw"></span><span class="grow"><b>Sound effects</b><br><span class="small muted">Card flips, agents, bystanders, the assassin and wins.</span></span></button>
+      <div class="vol">${ico("i-sound")}<input type="range" id="vol" min="0" max="100" step="5" value="${volume}" aria-label="Volume" ${soundOn?"":"disabled"}><span class="num" id="volnum">${volume}</span></div>
+      <button class="btn" data-act="testsound" ${soundOn?"":"disabled"}>Play a test sound</button></div>
+    <div class="setrow"><div class="eyebrow">Live sync</div>
+      <button class="togrow" data-act="sync" aria-pressed="${syncOn}"><span class="sw"></span><span class="grow"><b>Link devices on the same code</b><br><span class="small muted">${!room?"Not available here. Sync works when this page is opened on claude.ai while signed in.":syncOn?(n?`Linked with ${n} other device${n>1?"s":""} on code ${esc(G.code)}.`:`Waiting for other devices on code ${esc(G.code)}.`):"Off. Each device keeps its own covers."}</span></span></button></div>
+    <button class="btn" data-act="closesettings">Done</button></div>`;
+}
+function overlays(){
+  let h="";
+  if(sheetFor!=null){
+    const i=sheetFor, cur=G.covers[i], b=G.by[i]||{};
+    const opts = G.mode==="classic" ? ["red","blue","tan","black"] : ["green","tan","black"];
+    const label = o => G.mode==="duet"&&o==="tan" ? `Bystander<small>For Side ${G.giver}'s clue</small>` : ROLE_NAME[o]+(o==="black"?"<small>Ends the game</small>":"");
+    const isCur = o => G.mode==="duet"&&o==="tan" ? !!b[G.giver] : cur===o;
+    h+=`<div class="sheet-bg" data-act="closesheet"></div><div class="sheet" role="dialog" aria-label="Cover ${esc(G.grid[i])}">
+      <div class="sheet-head"><div><div class="eyebrow">${G.mode==="duet"?`Guess on Side ${G.giver}'s clue`:"Cover this card"}</div><div class="sheet-word">${esc(G.grid[i])}</div></div><button class="btn ghost" data-act="closesheet">Close</button></div>
+      <div class="picks" style="--n:${opts.length}">${opts.map(o=>`<button class="pk ${o} ${isCur(o)?"cur":""}" data-act="pick" data-v="${o}"><span class="pk-art">${ico(ROLE_ICO[o])}</span>${label(o)}</button>`).join("")}</div>
+      ${cur||b.A||b.B?`<button class="btn" data-act="pick" data-v="none">Clear this card</button>`:""}
+    </div>`;
+  }
+  if(settingsOpen) h+=settingsModal();
+  if(G.over && !dismissed){
+    const k=G.over.kind;
+    const title = k==="red"?"Red team wins":k==="blue"?"Blue team wins":k==="green"?"Mission complete":"Mission failed";
+    h+=`<div class="gameover go-${k}" role="dialog" aria-label="${title}"><div class="go-rays"></div><div class="go-card">
+      <svg class="go-ico" aria-hidden="true"><use href="#${k==="black"?"i-assassin":"i-agent"}"/></svg>
+      <h1 class="go-title">${title}</h1><p class="go-sub">${esc(G.over.why)}</p>
+      <div class="go-btns"><button class="btn primary" data-act="deal">Deal new grid</button><button class="btn" data-act="dismiss">Back to the board</button></div>
+    </div></div>`;
+  }
+  return h + `<div class="toast" id="toast" hidden></div>`;
+}
+function render(){
+  document.documentElement.classList.toggle("file", look==="file");
+  const body = tab==="board"?boardTab():tab==="key"?keyTab():tab==="words"?wordsTab():rulesTab();
+  const t=$("#toast"), tt=t&&!t.hidden?t.textContent:null;
+  const sy = window.scrollY;
+  $("#app").innerHTML = header() + `<main>${body}</main>` + tabsBar() + overlays();
+  if(tt){ const n=$("#toast"); n.textContent=tt; n.hidden=false; }
+  window.scrollTo(0,sy);
+  flipIdx = new Set();
+  fit(); wireHold();
+}
+function fit(){
+  document.querySelectorAll(".cn:not(.cov) .cn-w").forEach(el=>{
+    const box=el.parentElement, maxW=box.clientWidth-6;
+    let size=Math.min(17, Math.max(8, box.clientWidth*.2));
+    el.style.fontSize=size+"px";
+    while(el.scrollWidth>maxW && size>6.5){ size-=.5; el.style.fontSize=size+"px"; }
+    const up=el.closest(".cn").querySelector(".cn-up"); if(up) up.style.fontSize=Math.max(7,size*.6)+"px";
+  });
+  document.querySelectorAll(".kc span").forEach(el=>{
+    const maxW=el.parentElement.clientWidth-4; let size=Math.min(12,Math.max(8,maxW*.17));
+    el.style.fontSize=size+"px";
+    while(el.scrollWidth>maxW && size>6){ size-=.5; el.style.fontSize=size+"px"; }
+  });
+}
+function wireHold(){
+  const b=$("#hold"); if(!b) return;
+  const on=e=>{ e.preventDefault(); reveal=true; $("#keycard")?.classList.remove("hide"); };
+  const off=()=>{ reveal=false; if(!keepShow) $("#keycard")?.classList.add("hide"); };
+  b.addEventListener("pointerdown",on); b.addEventListener("pointerup",off); b.addEventListener("pointerleave",off); b.addEventListener("pointercancel",off);
+  b.addEventListener("keydown",e=>{ if(e.key===" "||e.key==="Enter") on(e); }); b.addEventListener("keyup",off);
+  b.addEventListener("contextmenu",e=>e.preventDefault());
+}
+
+/* ---------- replace + tracker ---------- */
+function doReplace(){
+  if(!picking){ picking=true; selected=new Set(); render(); return; }
+  if(!selected.size){ render(); return; }
+  const old=[], onBoard=new Set(G.grid);
+  [...selected].sort((a,b)=>a-b).forEach(i=>{
+    while(G.nextIdx<G.order.length && onBoard.has(G.order[G.nextIdx])) G.nextIdx++;
+    if(G.nextIdx>=G.order.length) return;
+    old.push(G.grid[i]); G.grid[i]=G.order[G.nextIdx++]; onBoard.add(G.grid[i]); delete G.covers[i]; delete G.by[i]; flipIdx.add(i);
+  });
+  picking=false; selected=new Set(); sfx("swap"); changed();
+  recordReplacements(old);
+}
+async function recordReplacements(old){
+  const newly=[];
+  old.forEach(w=>{
+    const k=G.mode+":"+G.code+":"+w;
+    if(S.seen.includes(k)) return;
+    S.seen.push(k);
+    const n=(S.counts[w]||0)+1; S.counts[w]=n;
+    if(n>=3 && !S.retired.includes(w)){ S.retired.push(w); newly.push(w); }
+  });
+  if(S.seen.length>400) S.seen=S.seen.slice(-400);
+  await saveTracker(); render();
+  if(newly.length) await findReplacements(newly);
+}
+function setNotice(t){ noticeText=t; render(); }
+async function findReplacements(ret){
+  const names=ret.join(", "), need=ret.length*2;
+  if(!sampleFn){ setNotice(`Retired ${names} after 3 replacements. New words can be added once this page is allowed to ask Claude.`); return; }
+  setNotice(`Retired ${names} after 3 replacements. Asking Claude for ${need} new words…`);
+  const taken=new Set([...USED,...allWords().map(strip),...S.retired.map(strip)]);
+  const prompt=`I'm playing the word game Codenames with a custom word pool. Suggest ${need+6} new words for the pool.
+Each word must be a common, concrete English noun that adults and teens all know, one word (no proper names, brands or phrases), and it should have more than one meaning or lots of associations so clue-givers can link it to other words.
+Players found these words too hard and removed them, so avoid obscure or very specific words like them: ${S.retired.join(", ")}.
+Do not suggest any word from the original Codenames or Codenames Duet boxes, or any word already in my pool. Here are words to avoid: ${S.retired.concat(Object.keys(S.counts)).slice(0,200).join(", ")}.
+Reply with only a JSON array of uppercase strings, for example ["LANTERN","SPARK"].`;
+  try{
+    const out=await sampleFn.json(prompt,{modelTier:"quick",cache:false});
+    const got=[];
+    for(const x of Array.isArray(out)?out:[]){
+      const w=String(x).toUpperCase().trim();
+      if(!/^[A-Z][A-Z-]{1,13}$/.test(w)) continue;
+      if([w,w.replace(/E?S$/,""),w+"S",w+"ES"].some(s=>taken.has(s))) continue;
+      taken.add(w); got.push(w); if(got.length>=need) break;
+    }
+    ret.forEach((r,k)=>got.slice(k*2,k*2+2).forEach(w=>S.added.push({word:w,for:r})));
+    await saveTracker();
+    setNotice(got.length?`Retired ${names}. Added ${got.join(", ")} to the word bank.`:`Retired ${names}. Claude's suggestions were already in use, so nothing new was added this time.`);
+  }catch(e){
+    const why=e&&(e.code==="not_granted"||e.code==="sampling_disabled")?" because asking Claude wasn't allowed":e&&e.code==="rate_limited"?" because of a usage limit":"";
+    setNotice(`Retired ${names}. Couldn't get new words right now${why}.`);
+  }
+}
+
+/* ---------- live sync (room presence; nothing stored) ---------- */
+let roomNs=null, room=null, roomName="", myPeer=null, mismatch=null, peerUnsub=null;
+function compact(){
+  return {v:2, m:G.mode, c:G.code, g:G.grid, ka:G.keyA.map(x=>x[0]).join(""), kb:G.keyB.map(x=>x[0]).join(""), f:G.first, t:G.turn,
+    cv:G.grid.map((_,i)=>(G.covers[i]||"-")[0]).join(""), by:G.grid.map((_,i)=>{const b=G.by[i]||{}; return (b.A?1:0)+(b.B?2:0);}).join(""),
+    gv:G.giver, tl:G.turnsLeft, o:G.over, cl:G.clues.slice(-6), ni:G.nextIdx, rev:G.rev, at:G.at};
+}
+const LET={r:"red",b:"blue",g:"green",t:"tan",k:"black"};
+function keyFrom(s){ return String(s||"").split("").map(ch=>({r:"red",b:"blue",g:"green",t:"tan",k:"black"})[ch]||"tan"); }
+function keyStr(arr){ return arr.map(x=>x==="black"?"k":x[0]).join(""); }
+function compactKeys(){ const c=compact(); c.ka=keyStr(G.keyA); c.kb=keyStr(G.keyB); c.cv=G.grid.map((_,i)=>{const v=G.covers[i]; return v?(v==="black"?"k":v[0]):"-";}).join(""); return c; }
+function adopt(st){
+  if(!st || st.v!==2 || !Array.isArray(st.g) || st.g.length!==25) return;
+  const old=G.covers;
+  G.grid=st.g.map(String).slice(0,25); G.keyA=keyFrom(st.ka); G.keyB=st.m==="duet"?keyFrom(st.kb):[]; G.first=st.f==="blue"?"blue":"red"; G.turn=st.t==="blue"?"blue":"red";
+  G.covers={}; String(st.cv||"").split("").forEach((ch,i)=>{ if(LET[ch]) G.covers[i]=LET[ch]; });
+  G.by={}; String(st.by||"").split("").forEach((ch,i)=>{ const n=+ch; if(n) G.by[i]={...(n&1?{A:1}:{}),...(n&2?{B:1}:{})}; });
+  G.giver=st.gv==="B"?"B":"A"; G.turnsLeft=Math.max(0,Math.min(9,+st.tl||0)); G.clues=Array.isArray(st.cl)?st.cl.slice(-20).map(c=>({word:String(c.word||"").slice(0,24),n:String(c.n||""),team:String(c.team||""),label:String(c.label||"")})):[];
+  const wasOver=!!G.over; G.over = st.o&&st.o.kind ? {kind:String(st.o.kind), why:String(st.o.why||"")} : null; if(G.over&&!wasOver) dismissed=false;
+  G.nextIdx=+st.ni||G.nextIdx; G.rev=+st.rev||0; G.at=+st.at||0;
+  Object.keys(G.covers).forEach(i=>{ if(!old[i]) flipIdx.add(+i); });
+  if(flipIdx.size) sfx("flip");
+  mismatch=null; saveGame(); render();
+}
+function pushSync(){ if(room&&syncOn){ room.presence({st:compactKeys()}).catch(()=>{}); } }
+function syncPeers(){ if(!room) return 0; try{ return room.peers().filter(p=>!(p.isMe&&p.sameTab)&&p.presence&&p.presence.st).length; }catch(e){ return 0; } }
+function onRoom(){
+  if(!room) return;
+  const ps=room.peers(); const me=ps.find(p=>p.isMe&&p.sameTab); if(me) myPeer=me.peer;
+  let best=null;
+  ps.forEach(p=>{ if(p.isMe&&p.sameTab) return; const st=p.presence&&p.presence.st; if(!st||st.m!==G.mode||st.c!==G.code) return;
+    if(!best || (st.rev||0)>(best.st.rev||0) || ((st.rev||0)===(best.st.rev||0) && (st.at||0)>(best.st.at||0))) best={st,peer:p.peer}; });
+  mismatch=null;
+  if(best){
+    const r1=best.st.rev||0, r0=G.rev||0;
+    const same = best.st.g.join("|")===G.grid.join("|");
+    if(r1>r0 || (r1===r0 && (best.st.at||0)>(G.at||0))) adopt(best.st);
+    else if(!same && r1===r0 && r0===0){ if(myPeer && best.peer<myPeer) adopt(best.st); }
+    else if(!same && r1<r0){ pushSync(); }
+  }
+  const hdr=document.querySelector(".top"); if(hdr){ const tmp=document.createElement("div"); tmp.innerHTML=header(); hdr.replaceWith(tmp.firstElementChild); }
+}
+async function joinRoom(){
+  if(!roomNs || !syncOn) return;
+  const name=("cn-"+G.mode+"-"+G.code).toLowerCase();
+  if(room && roomName===name) { pushSync(); return; }
+  await leaveRoom();
+  try{
+    room=await roomNs.join(name); roomName=name;
+    const r=room;
+    const u1=r.onPeers(()=>onRoom(), ()=>{ if(room===r){ room=null; render(); } });
+    const u2=r.on("next", msg=>{
+      if(msg.isMe&&msg.sameTab) return; const d=msg.data||{};
+      if(!/^[A-Z]{4}$/.test(String(d.c||""))||!["classic","duet"].includes(d.m)) return;
+      if(d.m===G.mode && d.c===G.code) return;
+      newGame(d.m, d.c, {quiet:true}); toast("Following the new grid from another device.");
+    }, ()=>{});
+    peerUnsub=()=>{ u1(); u2(); };
+    pushSync(); render();
+  }catch(e){ room=null; roomName=""; }
+}
+async function leaveRoom(){ try{ peerUnsub&&peerUnsub(); }catch(e){} peerUnsub=null; if(room){ try{ await room.leave(); }catch(e){} } room=null; roomName=""; mismatch=null; }
+
+/* ---------- events ---------- */
+function newGame(mode, code, opts={}){
+  const prevRoom = room;
+  G=deal(mode, code||newCode()); dismissed=false; picking=false; selected=new Set(); sheetFor=null; noticeText=""; side="A";
+  G.rev = opts.quiet ? 0 : 1; G.at=Date.now(); saveGame(); render();
+  (async()=>{
+    if(prevRoom && syncOn && !opts.quiet){ try{ await prevRoom.emit("next",{m:G.mode,c:G.code}); }catch(e){} }
+    await joinRoom(); pushSync();
+  })();
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act],[data-tab],.cn,[data-w]"); if(!t) return;
+  if(t.dataset.tab){ tab=t.dataset.tab; ls.set("cn-tab",tab); reveal=false; render(); window.scrollTo(0,0); return; }
+  if(t.classList.contains("cn")){
+    const i=+t.dataset.i;
+    if(picking){ selected.has(i)?selected.delete(i):selected.add(i); render(); }
+    else { sheetFor=i; render(); }
+    return;
+  }
+  if(t.dataset.w && t.closest("#pool")){ const w=t.dataset.w; banned.has(w)?banned.delete(w):banned.add(w); ls.set("banned",[...banned]); render(); return; }
+  const a=t.dataset.act, v=t.dataset.v;
+  if(a==="mode"){ if(G.mode!==v) newGame(v, G.code); }
+  else if(a==="deal"){ newGame(G.mode); }
+  else if(a==="dealpacks"){ tab="board"; ls.set("cn-tab",tab); newGame(G.mode); window.scrollTo(0,0); }
+  else if(a==="endturn"){ endTurn(false); }
+  else if(a==="giver"){ G.giver=G.giver==="A"?"B":"A"; changed(); }
+  else if(a==="replace"){ doReplace(); }
+  else if(a==="cancelrep"){ picking=false; selected=new Set(); render(); }
+  else if(a==="clear"){ G.covers={}; G.by={}; G.clues=[]; G.over=null; dismissed=false; G.turn=G.first; G.turnsLeft=9; G.giver="A"; changed(); }
+  else if(a==="closesheet"){ sheetFor=null; render(); }
+  else if(a==="pick"){ const i=sheetFor; sheetFor=null; cover(i, v==="none"?null:v); }
+  else if(a==="settings"){ settingsOpen=true; render(); }
+  else if(a==="closesettings"){ settingsOpen=false; render(); }
+  else if(a==="setlook"){ look=v; ls.set("cn-look",look); render(); }
+  else if(a==="sound"){ soundOn=!soundOn; ls.set("cn-sound",soundOn); render(); if(soundOn) sfx("flip"); }
+  else if(a==="testsound"){ sfx("agent","red"); setTimeout(()=>sfx("bystander"),450); }
+  else if(a==="sync"){ syncOn=!syncOn; ls.set("cn-sync",syncOn); if(syncOn) joinRoom(); else leaveRoom().then(render); render(); }
+  else if(a==="usetheirs"){ onRoom(); }
+  else if(a==="pack"){ packsOn.has(v)?packsOn.delete(v):packsOn.add(v); ls.set("cn-packs",[...packsOn]); render(); }
+  else if(a==="mix"){ packMix=v; ls.set("cn-mix",v); render(); }
+  else if(a==="dismiss"){ dismissed=true; render(); }
+  else if(a==="side"){ side=v; render(); }
+  else if(a==="keep"){ keepShow=!keepShow; render(); }
+  else if(a==="tint"){ tint=!tint; render(); }
+});
+document.addEventListener("submit",e=>{
+  if(e.target.id!=="clueform") return;
+  e.preventDefault();
+  const raw=$("#clueword").value.trim(), n=$("#cluen").value;
+  const prob=clueProblem(raw); if(prob){ toast(prob); return; }
+  const w=raw.toUpperCase().slice(0,24);
+  const label = G.mode==="classic" ? TEAM[G.turn] : "Side "+G.giver;
+  G.clues.push({word:w, n, team:G.mode==="classic"?G.turn:"green", label});
+  sfx("clue"); changed();
+});
+document.addEventListener("input",e=>{
+  if(e.target.id==="code"){
+    const v=e.target.value.toUpperCase().replace(/[^A-Z]/g,"").slice(0,4); e.target.value=v;
+    if(v.length===4 && v!==G.code){ newGame(G.mode, v, {quiet:true}); setTimeout(()=>{ const c=$("#code"); if(c){ c.focus(); c.setSelectionRange(4,4);} },0); }
+  } else if(e.target.id==="poolq"){
+    poolQ=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#poolq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); }
+  } else if(e.target.id==="vol"){
+    volume=+e.target.value; ls.set("cn-vol",volume); const n=$("#volnum"); if(n) n.textContent=volume;
+  }
+});
+document.addEventListener("change",e=>{ if(e.target.id==="vol") sfx("agent","blue"); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && (sheetFor!=null||settingsOpen)){ sheetFor=null; settingsOpen=false; render(); } });
+window.addEventListener("resize",fit);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+
+let G = loadGame() || deal("classic", newCode());
+if(G.over) dismissed=true;
+render();
+
+(async()=>{
+  if(!window.claude||typeof window.claude.use!=="function") return;
+  const [db,smp,rm]=await Promise.all([window.claude.use("db").catch(()=>null), window.claude.use("sample").catch(()=>null), window.claude.use("room").catch(()=>null)]);
+  sampleFn=smp; roomNs=rm;
+  if(db){
+    try{
+      dbRef=db.doc("deck/tracker");
+      dbRef.onSnapshot(snap=>{ shared=true; if(snap.exists) S=normalize(snap.data()); if(tab==="words") render(); },
+        ()=>{ dbRef=null; shared=false; });
+    }catch(e){ dbRef=null; }
+  }
+  if(roomNs) joinRoom();
+})();
+</script>
+
+</body></html>

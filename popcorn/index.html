@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pass the Popcorn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--mint:#E9FBF8;--mint2:#D3F5EF;--teal:#00B3A4;--teal-d:#00857A;--pink:#FF4F9A;--pink-d:#E0307C;--mango:#FFB443;--navy:#1B2A4A;--navy2:#4A5A7A;--line:#C5ECE5;--white:#fff;--r:20px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--mint);color:var(--navy);font-family:'Bricolage Grotesque',system-ui,sans-serif;min-height:100%}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+button{font-family:inherit;cursor:pointer;border:0;color:inherit;transition:transform .12s ease,background .2s,box-shadow .2s}
+button:active{transform:scale(.97)}
+#app{max-width:1100px;margin:0 auto;padding:18px 18px 40px;min-height:100vh}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:18px 20px;border-radius:16px;font-size:19px;font-weight:600}
+.btn-pink{background:var(--pink);color:#fff;box-shadow:0 6px 0 var(--pink-d)}
+.btn-pink:active{box-shadow:0 2px 0 var(--pink-d);transform:translateY(4px)}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 6px 0 var(--teal-d)}
+.btn-teal:active{box-shadow:0 2px 0 var(--teal-d);transform:translateY(4px)}
+.btn-ghost{background:#fff;border:2px solid var(--line);color:var(--navy)}
+.btn-sm{padding:11px 16px;font-size:15px;border-radius:12px;width:auto}
+.link{background:none;color:var(--navy2);font-size:14px;text-decoration:underline;padding:6px}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+.brand{font-weight:800;color:var(--pink);letter-spacing:-.03em}
+.muted{color:var(--navy2)}
+.card{background:#fff;border-radius:var(--r);border:1.5px solid var(--line)}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:calc(100vh - 60px);gap:18px}
+.stack{display:flex;flex-direction:column;gap:12px;width:100%;max-width:440px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:600;white-space:nowrap}
+.t-cast{background:var(--pink);color:#fff}.t-characters{background:var(--mango);color:#3A2400}.t-story{background:var(--teal);color:#fff}.t-quote{background:var(--navy);color:#fff}.t-genre{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.tile{display:inline-flex;align-items:center;justify-content:center;min-width:92px;padding:8px 12px;border-radius:12px;font-size:14px;font-weight:600;transition:transform .5s;transform-style:preserve-3d}
+.tile.down{background:#EEF3F6 !important;color:#9AA7BC !important;border:1.5px dashed #C9D3E0}
+.tile.flip{animation:tflip .6s ease}
+@keyframes tflip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg)}100%{transform:rotateY(0)}}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.top .brand{font-size:22px}
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.answer{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#FFF3DE;border:1.5px solid #FFD89A;border-radius:14px;padding:10px 14px;margin-bottom:12px;font-size:15px}
+.answer b{font-size:18px}
+.clue{background:var(--teal);color:#fff;border-radius:24px;padding:24px 24px 26px;min-height:210px;display:flex;flex-direction:column;gap:14px;animation:cin .45s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes cin{from{transform:rotateX(-70deg) translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+.clue .txt{font-size:clamp(24px,3.4vw,36px);line-height:1.25;font-weight:600;letter-spacing:-.01em}
+.clue .pill{align-self:flex-start;background:#fff;color:var(--teal-d)}
+.trail{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.trail .row{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;padding:10px 12px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.panel{margin-top:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.panel .q{font-size:18px;font-weight:500}
+.panel .q b{color:var(--pink);font-weight:800}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opt{padding:16px 10px;border-radius:14px;font-size:17px;font-weight:600}
+.players{padding:8px 16px}
+.pl{display:flex;flex-direction:column;gap:8px;padding:13px 0;border-bottom:1px solid var(--line)}
+.pl:last-child{border-bottom:0}
+.pl .nm{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600}
+.pl .tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.04em}
+.tag-r{background:var(--navy);color:#fff}.tag-c{background:var(--pink);color:#fff}
+.gbtn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 8px;border-radius:14px;font-size:17px;font-weight:600}
+.gbtn small{font-size:12px;font-weight:500;opacity:.85}
+.g-ok{background:var(--pink);color:#fff;box-shadow:0 4px 0 var(--pink-d)}
+.g-no{background:#EEF3F6;color:#7D8AA2}
+.confirm{background:#FFF3DE;border:1.5px solid #FFD89A;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.warn{font-size:14px;color:#9A4A00}
+.row2{display:flex;gap:10px}
+.row2>*{flex:1}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;padding:13px 20px;border-radius:14px;font-size:15px;max-width:90vw;transition:transform .3s;z-index:9;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.inp{width:100%;padding:15px 16px;border-radius:14px;border:2px solid var(--line);font-family:inherit;font-size:18px;color:var(--navy);background:#fff;outline:none}
+.inp:focus{border-color:var(--teal)}
+.seg{display:flex;background:#fff;border:2px solid var(--line);border-radius:14px;padding:4px}
+.seg button{flex:1;padding:11px;border-radius:10px;background:none;font-size:15px;font-weight:600;color:var(--navy2)}
+.seg button.on{background:var(--teal);color:#fff}
+.err{color:#C2185B;font-size:14px;min-height:18px}
+.big{font-size:clamp(44px,9vw,84px);font-weight:800;color:var(--pink);letter-spacing:-.04em;line-height:1}
+.soon{opacity:.55}
+.burst span{position:absolute;width:14px;height:14px;border-radius:50%;animation:pop 1.4s ease-out forwards}
+@keyframes pop{from{transform:translate(0,0) scale(.4);opacity:1}to{transform:translate(var(--x),var(--y)) scale(1);opacity:0}}
+.result-title{font-size:clamp(34px,6vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.movie{font-size:clamp(26px,4.5vw,40px);font-weight:800;color:var(--teal-d)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+const DECK=[
+{g:"Action drama, 2000",c:"Russell Crowe, Joaquin Phoenix, Connie Nielsen",ch:"Maximus, Commodus, Lucilla",s:"A betrayed Roman general is sold into slavery and fights his way back to Rome for revenge.",q:"“Are you not entertained?”",a:"Gladiator"},
+{g:"Comedy, 2000",c:"Ben Stiller, Robert De Niro, Teri Polo",ch:"Greg Focker, Jack Byrnes, Pam",s:"A male nurse meets his girlfriend's ex-CIA father before proposing.",q:"“I have nipples, Greg. Could you milk me?”",a:"Meet the Parents"},
+{g:"Animated comedy, 2001",c:"Mike Myers, Eddie Murphy, Cameron Diaz",ch:"Donkey, Princess Fiona, Lord Farquaad",s:"A grumpy ogre agrees to rescue a princess so he can get his swamp back.",q:"“Ogres are like onions.”",a:"Shrek"},
+{g:"Fantasy, 2001",c:"Daniel Radcliffe, Emma Watson, Rupert Grint",ch:"Hermione Granger, Ron Weasley, Albus Dumbledore",s:"An orphan finds out on his 11th birthday that he's a wizard.",q:"“It's Levi-O-sa, not Levio-SA.”",a:"Harry Potter and the Sorcerer's Stone"},
+{g:"Fantasy adventure, 2001",c:"Elijah Wood, Ian McKellen, Viggo Mortensen",ch:"Frodo, Gandalf, Aragorn",s:"A hobbit and eight companions set out to destroy a dark lord's cursed jewelry.",q:"“You shall not pass!”",a:"The Lord of the Rings: The Fellowship of the Ring"},
+{g:"Heist, 2001",c:"George Clooney, Brad Pitt, Matt Damon, Julia Roberts",ch:"Rusty Ryan, Linus Caldwell, Tess, Terry Benedict",s:"A con man fresh out of prison puts together a crew to rob three Las Vegas casinos in one night.",q:"“'Cause the house always wins.”",a:"Ocean's Eleven"},
+{g:"Superhero, 2002",c:"Tobey Maguire, Kirsten Dunst, Willem Dafoe",ch:"Peter Parker, Mary Jane Watson, Norman Osborn",s:"A nerdy teen gets superpowers from a lab-animal bite and takes on the Green Goblin.",q:"“With great power comes great responsibility.”",a:"Spider-Man"},
+{g:"Animated adventure, 2003",c:"Albert Brooks, Ellen DeGeneres, Willem Dafoe",ch:"Marlin, Dory, Gill, Crush",s:"An overprotective clownfish crosses the ocean to rescue his son.",q:"“Just keep swimming.”",a:"Finding Nemo"},
+{g:"Action adventure, 2003",c:"Johnny Depp, Orlando Bloom, Keira Knightley, Geoffrey Rush",ch:"Jack Sparrow, Will Turner, Elizabeth Swann, Barbossa",s:"A blacksmith teams up with an eccentric rogue to save a governor's daughter from cursed buccaneers.",q:"“Why is the rum gone?”",a:"Pirates of the Caribbean: The Curse of the Black Pearl"},
+{g:"Holiday comedy, 2003",c:"Will Ferrell, James Caan, Zooey Deschanel",ch:"Buddy, Walter Hobbs, Jovie",s:"A human raised at the North Pole goes to New York to find his real dad.",q:"“Son of a nutcracker!”",a:"Elf"},
+{g:"Teen comedy, 2004",c:"Lindsay Lohan, Rachel McAdams, Tina Fey, Amanda Seyfried",ch:"Cady Heron, Regina George, Gretchen Wieners, Karen Smith",s:"A teen raised in Africa tries to survive the cruel social order of an Illinois high school.",q:"“On Wednesdays we wear pink.”",a:"Mean Girls"},
+{g:"Comedy, 2004",c:"Will Ferrell, Christina Applegate, Steve Carell, Paul Rudd",ch:"Veronica Corningstone, Brick Tamland, Brian Fantana, Champ Kind",s:"A 1970s San Diego news anchor's ego takes a hit when an ambitious woman joins the station.",q:"“I love lamp.”",a:"Anchorman: The Legend of Ron Burgundy"},
+{g:"Indie comedy, 2004",c:"Jon Heder, Efren Ramirez, Tina Majorino",ch:"Pedro, Deb, Uncle Rico, Kip",s:"An awkward Idaho teen helps his new friend run for class president.",q:"“Vote for Pedro.”",a:"Napoleon Dynamite"},
+{g:"Animated action, 2004",c:"Craig T. Nelson, Holly Hunter, Samuel L. Jackson",ch:"Bob Parr, Helen Parr, Frozone, Syndrome, Edna Mode",s:"A family of undercover superheroes gets pulled out of forced retirement.",q:"“No capes!”",a:"The Incredibles"},
+{g:"Superhero crime, 2008",c:"Christian Bale, Heath Ledger, Aaron Eckhart, Gary Oldman",ch:"Bruce Wayne, The Joker, Harvey Dent, Jim Gordon",s:"A masked vigilante goes up against an anarchist mastermind terrorizing Gotham.",q:"“Why so serious?”",a:"The Dark Knight"},
+{g:"Comedy, 2005",c:"Owen Wilson, Vince Vaughn, Rachel McAdams",ch:"John Beckwith, Jeremy Grey, Claire Cleary",s:"Two divorce mediators sneak into strangers' weddings to meet women.",q:"“Rule #76: No excuses. Play like a champion.”",a:"Wedding Crashers"},
+{g:"Comedy, 2005",c:"Steve Carell, Catherine Keener, Paul Rudd, Seth Rogen",ch:"Andy Stitzer, Trish, David, Cal",s:"A shy electronics-store worker's coworkers make it their mission to end his lifelong streak.",q:"“Kelly Clarkson!”",a:"The 40-Year-Old Virgin"},
+{g:"Spy action, 2006",c:"Daniel Craig, Eva Green, Mads Mikkelsen",ch:"James Bond, Vesper Lynd, Le Chiffre, M",s:"On his first 00 mission, a spy has to beat a terrorist banker at high-stakes poker in Montenegro.",q:"“Shaken or stirred?” “Do I look like I give a damn?”",a:"Casino Royale"},
+{g:"Comedy drama, 2006",c:"Meryl Streep, Anne Hathaway, Emily Blunt, Stanley Tucci",ch:"Miranda Priestly, Andy Sachs, Emily, Nigel",s:"A young journalism grad becomes the assistant to a tyrannical fashion magazine editor.",q:"“Florals? For spring? Groundbreaking.”",a:"The Devil Wears Prada"},
+{g:"Mockumentary comedy, 2006",c:"Sacha Baron Cohen, Ken Davitian, Pamela Anderson",ch:"Azamat Bagatov, Pamela Anderson",s:"A Kazakh TV reporter road-trips across America, mostly with real people who don't know it's a joke.",q:"“Great success!”",a:"Borat"},
+{g:"Teen comedy, 2007",c:"Jonah Hill, Michael Cera, Christopher Mintz-Plasse, Seth Rogen",ch:"Seth, Evan, Fogell, Officer Slater",s:"Two high school seniors try to get alcohol for a party before graduation.",q:"“I am McLovin!”",a:"Superbad"},
+{g:"Superhero, 2008",c:"Robert Downey Jr., Gwyneth Paltrow, Jeff Bridges, Terrence Howard",ch:"Tony Stark, Pepper Potts, Obadiah Stane, Rhodey",s:"A billionaire weapons maker builds a high-tech suit to escape his captors.",q:"“Sometimes you gotta run before you can walk.”",a:"Iron Man"},
+{g:"Action thriller, 2008",c:"Liam Neeson, Maggie Grace, Famke Janssen",ch:"Bryan Mills, Kim, Lenore",s:"A retired CIA agent hunts down the traffickers who kidnapped his daughter in Paris.",q:"“I will find you, and I will kill you.”",a:"Taken"},
+{g:"Comedy, 2009",c:"Bradley Cooper, Ed Helms, Zach Galifianakis, Ken Jeong",ch:"Phil, Stu, Alan, Mr. Chow, Doug",s:"Three groomsmen wake up in Vegas with no memory of the night, and the groom is missing.",q:"“Did Caesar live here?”",a:"The Hangover"},
+{g:"Sci-fi epic, 2009",c:"Sam Worthington, Zoe Saldaña, Sigourney Weaver, Stephen Lang",ch:"Jake Sully, Neytiri, Grace Augustine, Colonel Quaritch",s:"A paralyzed Marine on a distant moon falls for the native people he was sent to infiltrate.",q:"“I see you.”",a:"Avatar"},
+{g:"Animated adventure, 2009",c:"Ed Asner, Jordan Nagai, Christopher Plummer",ch:"Carl Fredricksen, Russell, Dug, Charles Muntz",s:"A widower ties thousands of balloons to his house and flies to South America, and a Scout comes along by accident.",q:"“Squirrel!”",a:"Up"},
+{g:"Sci-fi thriller, 2010",c:"Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",ch:"Cobb, Arthur, Ariadne, Eames",s:"A thief who steals secrets from dreams is hired to plant an idea instead.",q:"“You mustn't be afraid to dream a little bigger, darling.”",a:"Inception"},
+{g:"Animated comedy, 2010",c:"Tom Hanks, Tim Allen, Joan Cusack, Ned Beatty",ch:"Woody, Buzz Lightyear, Jessie, Lotso",s:"As their owner heads off to college, a group of toys ends up donated to a daycare.",q:"“So long, partner.”",a:"Toy Story 3"},
+{g:"Comedy, 2011",c:"Kristen Wiig, Maya Rudolph, Rose Byrne, Melissa McCarthy",ch:"Annie, Lillian, Helen, Megan",s:"A struggling baker's life falls apart while she's maid of honor for her best friend.",q:"“Help me, I'm poor.”",a:"Bridesmaids"},
+{g:"Superhero, 2012",c:"Robert Downey Jr., Chris Evans, Scarlett Johansson, Tom Hiddleston",ch:"Captain America, Thor, Black Widow, Loki, Hulk",s:"Nick Fury brings Earth's mightiest heroes together to stop an alien invasion of New York.",q:"“Puny god.”",a:"The Avengers"},
+{g:"Sci-fi action, 2012",c:"Jennifer Lawrence, Josh Hutcherson, Liam Hemsworth, Woody Harrelson",ch:"Katniss Everdeen, Peeta, Gale, Haymitch",s:"A teen volunteers to take her sister's place in a televised fight to the death.",q:"“I volunteer as tribute!”",a:"The Hunger Games"},
+{g:"Western, 2012",c:"Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Samuel L. Jackson",ch:"Dr. King Schultz, Calvin Candie, Stephen, Broomhilda",s:"A freed slave teams up with a German bounty hunter to rescue his wife from a Mississippi plantation.",q:"“The D is silent.”",a:"Django Unchained"},
+{g:"Animated musical, 2013",c:"Kristen Bell, Idina Menzel, Josh Gad, Jonathan Groff",ch:"Anna, Elsa, Olaf, Kristoff",s:"A fearless princess goes after her sister, whose icy powers have trapped the kingdom in endless winter.",q:"“Some people are worth melting for.”",a:"Frozen"},
+{g:"Crime comedy, 2013",c:"Leonardo DiCaprio, Jonah Hill, Margot Robbie, Matthew McConaughey",ch:"Jordan Belfort, Donnie Azoff, Naomi, Mark Hanna",s:"A stockbroker rises and falls amid fraud, drugs and excess.",q:"“Sell me this pen.”",a:"The Wolf of Wall Street"},
+{g:"Sci-fi comedy, 2014",c:"Chris Pratt, Zoe Saldaña, Dave Bautista, Bradley Cooper",ch:"Star-Lord, Gamora, Drax, Rocket, Groot",s:"A cocky space outlaw and a band of misfits have to protect a powerful orb.",q:"“I am Groot.”",a:"Guardians of the Galaxy"},
+{g:"Sci-fi drama, 2014",c:"Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",ch:"Cooper, Brand, Murph, TARS",s:"Astronauts go through a wormhole to find a new home for humanity as Earth is dying.",q:"“It's not possible.” “No. It's necessary.”",a:"Interstellar"},
+{g:"Sci-fi adventure, 2015",c:"Daisy Ridley, John Boyega, Adam Driver, Harrison Ford",ch:"Rey, Finn, Kylo Ren, Han Solo, BB-8",s:"A desert scavenger and a defecting stormtrooper get swept into the fight against the First Order.",q:"“Chewie, we're home.”",a:"Star Wars: The Force Awakens"},
+{g:"Action, 2015",c:"Tom Hardy, Charlize Theron, Nicholas Hoult",ch:"Furiosa, Nux, Immortan Joe",s:"In a desert wasteland, a warrior turns on a tyrant and flees with his captive wives.",q:"“Oh, what a day! What a lovely day!”",a:"Mad Max: Fury Road"},
+{g:"Superhero comedy, 2016",c:"Ryan Reynolds, Morena Baccarin, T.J. Miller",ch:"Wade Wilson, Vanessa, Weasel, Colossus",s:"A wisecracking mercenary is disfigured by an experiment that gives him healing powers.",q:"“Maximum effort!”",a:"Deadpool"},
+{g:"Musical romance, 2016",c:"Ryan Gosling, Emma Stone, J.K. Simmons, John Legend",ch:"Sebastian, Mia, Keith",s:"A jazz pianist and an aspiring actress fall in love while chasing their dreams in Los Angeles.",q:"“I'm letting life hit me until it gets tired.”",a:"La La Land"},
+{g:"Horror thriller, 2017",c:"Daniel Kaluuya, Allison Williams, Bradley Whitford, Catherine Keener",ch:"Chris Washington, Rose Armitage, Dean, Missy, Rod",s:"A young Black man visits his white girlfriend's parents for the weekend and uncovers a horrifying secret.",q:"“Now you're in the Sunken Place.”",a:"Get Out"},
+{g:"Superhero, 2018",c:"Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Letitia Wright",ch:"T'Challa, Killmonger, Nakia, Shuri, Okoye",s:"The new king of a hidden, high-tech African nation faces a challenger for the throne.",q:"“Wakanda forever!”",a:"Black Panther"},
+{g:"Horror, 2018",c:"Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe",ch:"Evelyn, Lee Abbott, Regan, Marcus",s:"A family has to live in total silence while creatures that hunt by sound roam outside.",q:"“Who are we if we can't protect them?”",a:"A Quiet Place"},
+{g:"Superhero, 2019",c:"Robert Downey Jr., Chris Evans, Josh Brolin, Scarlett Johansson",ch:"Tony Stark, Steve Rogers, Thanos, Natasha Romanoff",s:"The surviving heroes pull off a time heist to undo the snap.",q:"“I love you 3000.”",a:"Avengers: Endgame"},
+{g:"Psychological thriller, 2019",c:"Joaquin Phoenix, Robert De Niro, Zazie Beetz",ch:"Arthur Fleck, Murray Franklin, Sophie",s:"A failed stand-up comedian in Gotham spirals into madness.",q:"“You get what you deserve!”",a:"Joker"},
+{g:"Mystery comedy, 2019",c:"Daniel Craig, Chris Evans, Ana de Armas, Jamie Lee Curtis",ch:"Benoit Blanc, Ransom Drysdale, Marta Cabrera, Harlan Thrombey",s:"A detective investigates the death of a wealthy crime novelist at his family's mansion.",q:"“My house, my rules, my coffee.”",a:"Knives Out"},
+{g:"Action, 2022",c:"Tom Cruise, Miles Teller, Jennifer Connelly, Jon Hamm",ch:"Pete Mitchell, Rooster, Penny Benjamin, Hangman",s:"A veteran Navy pilot trains elite graduates for a near-impossible mission.",q:"“It's not the plane, it's the pilot.”",a:"Top Gun: Maverick"},
+{g:"Sci-fi comedy drama, 2022",c:"Michelle Yeoh, Ke Huy Quan, Stephanie Hsu, Jamie Lee Curtis",ch:"Evelyn Wang, Waymond, Joy, Deirdre",s:"A laundromat owner in the middle of a tax audit has to connect with versions of herself from parallel universes.",q:"“Please, be kind. Especially when we don't know what's going on.”",a:"Everything Everywhere All at Once"},
+{g:"Fantasy comedy, 2023",c:"Margot Robbie, Ryan Gosling, America Ferrera, Will Ferrell",ch:"Ken, Gloria, Allan, Ruth Handler",s:"A doll starts having existential thoughts and goes to the real world.",q:"“I'm Kenough.”",a:"Barbie"},
+{g:"Historical drama, 2023",c:"Cillian Murphy, Emily Blunt, Robert Downey Jr., Matt Damon",ch:"Kitty, Lewis Strauss, Leslie Groves, Niels Bohr",s:"A physicist leads the secret wartime project to build the first atomic bomb.",q:"“Now I am become Death, the destroyer of worlds.”",a:"Oppenheimer"}
+];
+const TYPES=['cast','characters','story','quote'];
+const LABEL={genre:'Genre & year',cast:'Cast',characters:'Characters',story:'Story',quote:'Quote'};
+const KEY={genre:'g',cast:'c',characters:'ch',story:'s',quote:'q'};
+const LOGO=`<svg width="SZ" height="SZ" viewBox="0 0 64 64" aria-hidden="true"><circle cx="20" cy="20" r="9" fill="#FFB443"/><circle cx="32" cy="14" r="10" fill="#fff" stroke="#FFD89A" stroke-width="2"/><circle cx="44" cy="20" r="9" fill="#FFB443"/><circle cx="26" cy="24" r="8" fill="#fff" stroke="#FFD89A" stroke-width="2"/><circle cx="39" cy="25" r="8" fill="#fff" stroke="#FFD89A" stroke-width="2"/><path d="M12 28h40l-5 32H17z" fill="#fff"/><path d="M12 28h8l2.5 32H17zM28 28h8l-.6 32h-6.8zM44 28h8l-5 32h-5.5z" fill="#FF4F9A"/></svg>`;
+const logo=s=>LOGO.replace(/SZ/g,s);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let seen=ls.get('ptp_seen',[]);
+let S=ls.get('ptp_game',null);
+let UI={screen:'home',names:['','',''],mode:'std',err:'',confirm:null,hideAns:false,flipKey:null};
+function save(){if(S&&!S.over)ls.set('ptp_game',S);else ls.del('ptp_game');ls.set('ptp_seen',seen)}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
+function unseenCount(){return DECK.filter(d=>!seen.includes(d.a)).length}
+function drawCard(){let pool=DECK.map((d,i)=>i).filter(i=>!seen.includes(DECK[i].a)&&!S.used.includes(i));if(!pool.length){seen=[];pool=DECK.map((d,i)=>i).filter(i=>!S.used.includes(i));if(!pool.length){S.used=[];pool=DECK.map((d,i)=>i)}toast('You\'ve played every movie. Reshuffling the deck.')}const i=pool[Math.floor(Math.random()*pool.length)];S.used.push(i);return i}
+const n=()=>S.players.length;
+function nextNR(i){let j=i;do{j=(j+1)%n()}while(j===S.reader);return j}
+function dealRound(){const pool=shuffle(TYPES.flatMap(t=>Array(8).fill(t)));S.players.forEach(p=>{p.tiles=pool.splice(0,p.count).map(t=>({type:t,down:false}))})}
+function newMovie(){S.card=drawCard();S.read=['genre'];S.current='genre';S.guessed=[];S.chooser=nextNR(S.reader);S.phase='choose';S.movieNo++;UI.confirm=null;UI.hideAns=false}
+function act(a,x,y){
+ const P=S&&S.players;
+ switch(a){
+ case 'home':UI.screen='home';break;
+ case 'resume':UI.screen=S.screen||'pass';break;
+ case 'setup':UI.screen='setup';UI.err='';if(S&&S.players)UI.names=S.players.map(p=>p.name);break;
+ case 'addName':if(UI.names.length<8)UI.names.push('');render();setTimeout(()=>{const ins=document.querySelectorAll('.inp');ins[ins.length-1].focus()},30);return;
+ case 'delName':UI.names.splice(x,1);break;
+ case 'mode':UI.mode=x;break;
+ case 'start':{readNames();const names=UI.names.map(s=>s.trim()).filter(Boolean);if(names.length<2){UI.err='Add at least 2 players.';break}if(new Set(names.map(s=>s.toLowerCase())).size!==names.length){UI.err='Each player needs a different name.';break}const sc=UI.mode==='long'?3:2;S={players:names.map(nm=>({name:nm,count:sc,tiles:[]})),target:UI.mode==='long'?5:4,round:1,reader:0,used:[],movieNo:0,over:false};dealRound();newMovie();S.screen='pass';UI.screen='pass';break}
+ case 'showCard':S.screen=UI.screen='reader';break;
+ case 'pick':S.read.push(x);S.current=x;S.lastPicker=S.chooser;S.phase='guess';UI.confirm=null;break;
+ case 'swap':S.phase='swap1';break;
+ case 'swapCancel':S.phase='choose';S.swapFrom=null;break;
+ case 'swap1':S.swapFrom=x;S.phase='swap2';break;
+ case 'swap2':{const me=P[S.chooser],them=P[x],a1=me.tiles[S.swapFrom],a2=them.tiles[y];[me.tiles[S.swapFrom],them.tiles[y]]=[a2,a1];toast(`${me.name} swapped ${LABEL[a1.type]} for ${them.name}'s ${LABEL[a2.type]}`);UI.flipKey=[S.chooser+'-'+S.swapFrom,x+'-'+y];S.chooser=nextNR(S.chooser);S.phase='choose';S.swapFrom=null;break}
+ case 'guessTap':UI.confirm=x;break;
+ case 'guessCancel':UI.confirm=null;break;
+ case 'guess':guess(UI.confirm,x);return;
+ case 'nextClue':S.chooser=nextNR(S.lastPicker);S.phase='choose';UI.confirm=null;break;
+ case 'nobody':endMovie({kind:'none'});return;
+ case 'tie':S.used=S.used;newMovie();S.movieNo--;toast('Tie! New movie, same reader.');break;
+ case 'next':S.reader=(S.reader+1)%n();if(S.roundWon){S.roundWon=false;S.round++;dealRound()}newMovie();S.screen=UI.screen='pass';break;
+ case 'hideAns':UI.hideAns=!UI.hideAns;break;
+ case 'quit':UI.screen='quit';break;
+ case 'endGame':S=null;ls.del('ptp_game');UI.screen='home';break;
+ case 'again':{const names=S.players.map(p=>p.name);UI.names=names;UI.mode=S.target===5?'long':'std';S=null;act('start');return}
+ case 'resetSeen':seen=[];toast('Played list cleared. All 50 movies are fresh.');break;
+ }
+ save();render();
+}
+function guess(pi,right){
+ const p=S.players[pi],t=S.current;
+ const idx=p.tiles.findIndex(x=>x.type===t&&!x.down);
+ const legal=idx>-1&&!S.guessed.includes(pi);
+ UI.confirm=null;
+ if(!legal){
+  const d=p.tiles.findIndex(x=>x.down);
+  if(d>-1){p.tiles[d].down=false;UI.flipKey=[pi+'-'+d]}
+  S.guessed.push(pi);
+  if(right){endMovie({kind:'blocked',p:pi,back:d>-1});return}
+  toast(`Rule #5! ${p.name} ${d>-1?'flips a tile back up':'had no tile to flip back'}.`);
+ }else if(right){p.tiles[idx].down=true;endMovie({kind:'got',p:pi,type:t,ti:idx});return}
+ else{S.guessed.push(pi);toast(`Nope! ${p.name} is out of guesses for this movie.`)}
+ save();render();
+}
+function endMovie(r){
+ const m=DECK[S.card];if(!seen.includes(m.a))seen.push(m.a);
+ S.result=r;S.roundWon=false;
+ if(r.kind==='got'){const p=S.players[r.p];if(p.tiles.every(t=>t.down)){if(p.count>=S.target){S.over=true;S.winner=r.p}else{p.count++;S.roundWon=true}}}
+ S.screen=UI.screen='result';save();render();
+}
+function readNames(){document.querySelectorAll('.inp').forEach((el,i)=>UI.names[i]=el.value)}
+function tileHTML(t,key){const fk=UI.flipKey&&UI.flipKey.includes(key)?' flip':'';return `<span class="tile t-${t.type}${t.down?' down':''}${fk}">${t.down?'✓ ':''}${LABEL[t.type]}</span>`}
+function playersHTML(){return `<div class="card players">${S.players.map((p,i)=>`<div class="pl"><div class="nm">${esc(p.name)}${i===S.reader?'<span class="tag tag-r">Reader</span>':''}${S.phase!=='guess'&&i===S.chooser&&UI.screen==='reader'?'<span class="tag tag-c">Picking</span>':''}<span class="muted" style="margin-left:auto;font-size:13px;font-weight:500">${p.tiles.filter(t=>t.down).length}/${p.count}</span></div><div class="tiles">${p.tiles.map((t,j)=>tileHTML(t,i+'-'+j)).join('')}</div></div>`).join('')}</div>`}
+function screenHome(){
+ const resume=S&&!S.over?`<button class="btn btn-teal" onclick="act('resume')">Resume game · Round ${S.round}</button>`:'';
+ return `<div class="center"><div style="animation:cin .6s">${logo(110)}</div><div><h1 class="brand" style="font-size:clamp(44px,8vw,72px)">Pass the Popcorn</h1><p class="muted" style="font-size:18px;margin:8px 0 0">The movie guessing game · 2000 to now</p></div>
+ <div class="stack" style="margin-top:10px">${resume}<button class="btn btn-pink" onclick="act('setup')">New group game</button><button class="btn btn-ghost" onclick="sAct('intro')">Solo · Box Office Run${best?` <span class="pill t-characters" style="font-size:12px">Best ${best}</span>`:''}</button></div>
+ <p class="muted" style="font-size:14px;margin:6px 0 0">Deck 1 · 50 movies · ${unseenCount()} not played yet</p>${seen.length?`<button class="link" onclick="act('resetSeen')">Reset played movies</button>`:''}</div>`}
+function screenSetup(){
+ return `<div class="top"><button class="btn btn-ghost btn-sm" onclick="act('home')">← Back</button><span class="brand">Pass the Popcorn</span><span style="width:70px"></span></div>
+ <div class="stack" style="margin:0 auto"><h2 style="font-size:30px">Who's playing?</h2><p class="muted" style="margin:0 0 4px">Add names in seating order, going left around the table.</p>
+ ${UI.names.map((nm,i)=>`<div style="display:flex;gap:8px"><input class="inp" maxlength="14" placeholder="Player ${i+1}" value="${esc(nm)}" oninput="UI.names[${i}]=this.value;UI.err=''">${UI.names.length>2?`<button class="btn btn-ghost btn-sm" aria-label="Remove player" onclick="readNames();act('delName',${i})">✕</button>`:''}</div>`).join('')}
+ ${UI.names.length<8?`<button class="btn btn-ghost btn-sm" style="align-self:flex-start" onclick="readNames();act('addName')">+ Add player</button>`:''}
+ <p style="margin:14px 0 2px;font-weight:600">Game length</p><div class="seg"><button class="${UI.mode==='std'?'on':''}" onclick="readNames();act('mode','std')">Standard · win at 4</button><button class="${UI.mode==='long'?'on':''}" onclick="readNames();act('mode','long')">Long · win at 5</button></div>
+ <div class="err">${esc(UI.err)}</div><button class="btn btn-pink" onclick="act('start')">Deal the tiles</button></div>`}
+function screenPass(){const r=S.players[S.reader];
+ return `<div class="center"><span class="pill t-genre">Round ${S.round} · Movie ${S.movieNo}</span><p class="muted" style="font-size:20px;margin:0">Pass the tablet to</p><div class="big">${esc(r.name)}</div><p class="muted" style="margin:0;font-size:16px">Only ${esc(r.name)} looks at the next screen. The answer is on it.</p><div class="stack" style="margin-top:12px"><button class="btn btn-teal" onclick="act('showCard')">I'm ${esc(r.name)}, show the card</button></div><button class="link" onclick="act('quit')">Menu</button></div>`}
+function actionHTML(){
+ const P=S.players,ch=P[S.chooser];
+ if(UI.confirm!==null){const p=P[UI.confirm],t=S.current,legal=p.tiles.some(x=>x.type===t&&!x.down)&&!S.guessed.includes(UI.confirm);
+  return `<div class="confirm"><div class="q">Was <b>${esc(p.name)}</b> right?</div>${legal?'':`<div class="warn">Heads up: ${esc(p.name)} ${S.guessed.includes(UI.confirm)?'already guessed this movie':'has no face-up '+LABEL[t]+' tile'}. That breaks rule #5, so they flip a tile back up and can't flip one down.</div>`}<div class="row2"><button class="btn btn-pink btn-sm" onclick="act('guess',true)">Right!</button><button class="btn btn-ghost btn-sm" onclick="act('guess',false)">Wrong</button></div><button class="link" onclick="act('guessCancel')">Cancel</button></div>`}
+ if(S.phase==='choose'){const left=TYPES.filter(t=>!S.read.includes(t));const canSwap=ch.tiles.some(t=>!t.down);
+  return `<div class="q"><b>${esc(ch.name)}</b>, pick the next clue or swap a tile.</div><div class="opts">${left.map(t=>{const mine=ch.tiles.some(x=>x.type===t&&!x.down);return mine?`<button class="opt t-${t}" style="box-shadow:0 0 0 3px #fff,0 0 0 5px var(--navy)" onclick="act('pick','${t}')">${LABEL[t]}<br><small style="font-size:12px;font-weight:500">★ ${esc(ch.name)} has this</small></button>`:`<button class="opt" style="background:#fff;border:2px dashed var(--line);color:var(--navy2)" onclick="act('pick','${t}')">${LABEL[t]}<br><small style="font-size:12px;font-weight:500">Opens it to others</small></button>`}).join('')}</div>${canSwap?`<button class="btn btn-ghost btn-sm" onclick="act('swap')">⇄ ${esc(ch.name)} swaps a tile instead</button>`:''}`}
+ if(S.phase==='swap1')return `<div class="q"><b>${esc(ch.name)}</b>, which of your tiles do you give away?</div><div class="opts">${ch.tiles.map((t,j)=>t.down?'':`<button class="opt t-${t.type}" onclick="act('swap1',${j})">${LABEL[t.type]}</button>`).join('')}</div><button class="link" onclick="act('swapCancel')">Cancel</button>`;
+ if(S.phase==='swap2'){const give=ch.tiles[S.swapFrom].type;
+  return `<div class="q">Take which tile for your <b>${LABEL[give]}</b>?</div>${P.map((p,i)=>i===S.chooser||!p.tiles.some(t=>!t.down)?'':`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="min-width:80px;font-weight:600">${esc(p.name)}</span>${p.tiles.map((t,j)=>t.down?'':`<button class="tile t-${t.type}" onclick="act('swap2',${i},${j})">${LABEL[t.type]}</button>`).join('')}</div>`).join('')}<button class="link" onclick="act('swapCancel')">Cancel</button>`}
+ const t=S.current,left=TYPES.filter(x=>!S.read.includes(x));
+ return `<div class="q">Who guessed it? <span class="muted" style="font-size:15px">Only players with a ${LABEL[t]} tile can guess.</span></div><div class="opts">${P.map((p,i)=>{if(i===S.reader)return'';const has=p.tiles.some(x=>x.type===t&&!x.down),g=S.guessed.includes(i),ok=has&&!g;return `<button class="gbtn ${ok?'g-ok':'g-no'}" onclick="act('guessTap',${i})">${esc(p.name)}<small>${g?'Already guessed':has?'Can guess':'No '+LABEL[t]+' tile'}</small></button>`}).join('')}</div>
+ <div class="row2">${left.length?`<button class="btn btn-teal btn-sm" onclick="act('nextClue')">No one yet · next clue</button>`:`<button class="btn btn-teal btn-sm" onclick="act('nobody')">No one got it</button>`}<button class="btn btn-ghost btn-sm" style="flex:0 0 auto" onclick="act('tie')">Tie</button></div>`}
+function screenReader(){const m=DECK[S.card],cur=S.current;
+ const trail=S.read.filter(x=>x!==cur).map(x=>`<div class="row"><span class="pill t-${x}">${LABEL[x]}</span><span>${esc(m[KEY[x]])}</span></div>`).join('');
+ return `<div class="top"><div style="display:flex;align-items:center;gap:8px">${logo(34)}<span class="brand">Pass the Popcorn</span></div><div style="display:flex;align-items:center;gap:10px"><span class="muted" style="font-size:14px">Round ${S.round} · ${esc(S.players[S.reader].name)} reads</span><button class="btn btn-ghost btn-sm" onclick="act('quit')">Menu</button></div></div>
+ <div class="grid"><div><div class="answer"><span>Answer · <b>${UI.hideAns?'••••••••':esc(m.a)}</b></span><button class="link" onclick="act('hideAns')">${UI.hideAns?'Show':'Hide'}</button></div>
+ <div class="clue" key="${cur}"><span class="pill">${LABEL[cur]}${cur==='genre'?'':' clue'}</span><div class="txt">${esc(m[KEY[cur]])}</div></div>
+ ${trail?`<div class="trail">${trail}</div>`:''}
+ <div class="card panel">${actionHTML()}</div></div>
+ <div>${playersHTML()}<p class="muted" style="font-size:13px;margin:10px 4px">First to flip all their tiles wins the round. Win a round holding ${S.target} tiles to win the game.</p></div></div>`}
+function screenResult(){const m=DECK[S.card],r=S.result,P=S.players;let head,sub='';
+ if(r.kind==='got'){const p=P[r.p];head=`${esc(p.name)} got it!`;sub=`${esc(p.name)} flips a ${LABEL[r.type]} tile.`}
+ else if(r.kind==='blocked'){head=`${esc(P[r.p].name)} blocked it!`;sub=`Right answer, but rule #5 was broken. ${r.back?'A tile flips back up.':'No tile to flip back.'}`}
+ else{head='Nobody got it';sub='Popcorn for no one this time.'}
+ let extra='',btn=`<button class="btn btn-pink" onclick="act('next')">Next movie · pass to ${esc(P[(S.reader+1)%n()].name)}</button>`;
+ if(S.over){const w=P[S.winner];head=`${esc(w.name)} wins the game!`;sub=`Won a round holding ${w.count} tiles. All hail the popcorn champion.`;btn=`<button class="btn btn-pink" onclick="act('again')">Play again, same players</button><button class="btn btn-ghost" onclick="act('endGame')">Back to home</button>`;ls.del('ptp_game')}
+ else if(S.roundWon){const w=P[r.p];extra=`<div class="card" style="padding:16px 20px;width:100%;max-width:440px"><div style="font-size:22px;font-weight:800;color:var(--pink)">${esc(w.name)} wins round ${S.round}!</div><div class="muted">Next round ${esc(w.name)} plays with ${w.count} tiles. Everyone else stays the same.</div></div>`;btn=`<button class="btn btn-pink" onclick="act('next')">Deal round ${S.round+1}</button>`}
+ const burst=r.kind==='got'?`<div class="burst" style="position:relative;width:0;height:0">${Array.from({length:18},(_,i)=>{const a=i/18*6.283,d=120+Math.random()*80;return `<span style="background:${['#FF4F9A','#FFB443','#00B3A4','#fff'][i%4]};--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px"></span>`}).join('')}</div>`:'';
+ return `<div class="center">${burst}${logo(80)}<div class="result-title" style="color:${r.kind==='none'?'var(--navy)':'var(--pink)'}">${head}</div><p class="muted" style="margin:0;font-size:18px">${sub}</p><div class="card" style="padding:18px 22px;width:100%;max-width:440px"><div class="muted" style="font-size:14px">The movie was</div><div class="movie">${esc(m.a)}</div><div class="muted" style="font-size:14px">${esc(m.g)}</div></div>${extra}<div class="stack">${btn}</div></div>`}
+function screenQuit(){return `<div class="center"><h2 style="font-size:30px">Game menu</h2><div class="stack"><button class="btn btn-teal" onclick="act('resume')">Back to the game</button><button class="btn btn-ghost" onclick="act('endGame')">End this game</button></div></div>`}
+
+/* solo */
+let SO=ls.get('ptp_solo',null);let best=ls.get('ptp_best',0);
+const ALIAS={"Ocean's Eleven":["oceans 11"],"The 40-Year-Old Virgin":["40 year old virgin","the 40 year old virgin"],"Avengers: Endgame":["endgame","avengers endgame"],"The Avengers":["avengers"],"Harry Potter and the Sorcerer's Stone":["harry potter","harry potter and the philosophers stone"],"The Lord of the Rings: The Fellowship of the Ring":["lord of the rings","fellowship of the ring","the fellowship of the ring"],"Anchorman: The Legend of Ron Burgundy":["anchorman"],"Pirates of the Caribbean: The Curse of the Black Pearl":["pirates of the caribbean","curse of the black pearl"],"Star Wars: The Force Awakens":["the force awakens","force awakens","star wars 7","star wars episode vii"],"Mad Max: Fury Road":["fury road"],"Top Gun: Maverick":["top gun 2"],"Everything Everywhere All at Once":["everything everywhere"],"Borat":["borat cultural learnings of america"]};
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/&/g,' and ').replace(/[-:]/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/^the /,'').replace(/\s+/g,' ').trim();
+function lev(a,b){const m=a.length,n2=b.length;if(!m)return n2;if(!n2)return m;let prev=Array.from({length:n2+1},(_,j)=>j);for(let i=1;i<=m;i++){const cur=[i];for(let j=1;j<=n2;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur}return prev[n2]}
+function matches(guess,title){const g=norm(guess);if(g.length<2)return false;const opts=[title,title.split(':')[0],...(ALIAS[title]||[])].map(norm);return opts.some(o=>g===o||lev(g,o)<=(o.length<=4?0:Math.max(1,Math.floor(o.length/4))))}
+const PTS=r=>6-r.length;
+function soloDraw(){let pool=DECK.map((d,i)=>i).filter(i=>!seen.includes(DECK[i].a)&&!SO.used.includes(i));if(!pool.length)pool=DECK.map((d,i)=>i).filter(i=>!SO.used.includes(i));if(!pool.length){SO.used=[];pool=DECK.map((d,i)=>i)}const i=pool[Math.floor(Math.random()*pool.length)];SO.used.push(i);return i}
+function soloNew(){SO.card=soloDraw();SO.rev=['genre'];SO.done=null;SO.wrong=0;UI.guess=''}
+function soloSave(){if(SO&&!SO.over)ls.set('ptp_solo',SO);else ls.del('ptp_solo');ls.set('ptp_seen',seen);ls.set('ptp_best',best)}
+function sAct(a,x){
+ switch(a){
+ case 'intro':UI.screen='soloIntro';break;
+ case 'start':SO={n:1,score:0,skips:3,used:[],log:[],over:false};soloNew();UI.screen='solo';break;
+ case 'resume':UI.screen='solo';break;
+ case 'reveal':if(!SO.done&&!SO.rev.includes(x))SO.rev.push(x);break;
+ case 'guess':{const el=document.getElementById('sg');const g=(el?el.value:'').trim();UI.guess=g;if(!g){toast('Type a movie title first.');return}
+  const m=DECK[SO.card];
+  if(matches(g,m.a)){const p=PTS(SO.rev);SO.score+=p;SO.done={ok:true,pts:p};SO.log.push({a:m.a,pts:p})}
+  else{SO.wrong++;const left=TYPES.filter(t=>!SO.rev.includes(t));
+   if(left.length){const t=left[0];SO.rev.push(t);toast(`Not it! ${LABEL[t]} clue revealed. Now worth ${PTS(SO.rev)}.`);UI.guess=''}
+   else{SO.done={ok:false,pts:0};SO.log.push({a:m.a,pts:0})}}
+  break}
+ case 'giveup':{const m=DECK[SO.card];SO.done={ok:false,pts:0};SO.log.push({a:m.a,pts:0});break}
+ case 'skip':if(SO.skips>0&&!SO.done){const m=DECK[SO.card];SO.skips--;if(!seen.includes(m.a))seen.push(m.a);soloNew();toast(`Popcorn passed! ${SO.skips} skip${SO.skips===1?'':'s'} left.`)}break;
+ case 'next':{const m=DECK[SO.card];if(!seen.includes(m.a))seen.push(m.a);if(SO.n>=10){SO.over=true;SO.newBest=SO.score>best;if(SO.newBest)best=SO.score;UI.screen='soloEnd'}else{SO.n++;soloNew()}break}
+ case 'quit':SO=null;ls.del('ptp_solo');UI.screen='home';break;
+ }
+ soloSave();render();
+ if(UI.screen==='solo'&&SO&&!SO.done){const el=document.getElementById('sg');if(el&&a!=='intro'){el.value=UI.guess||'';}}
+}
+function rankFor(s){return s>=40?['Oscar winner','Flawless. Hollywood wants your number.']:s>=30?['Blockbuster','Huge opening weekend.']:s>=20?['Box office hit','Solid run. The sequel is greenlit.']:s>=10?['Cult classic','Not everyone gets it, but you do.']:['Straight to streaming','The popcorn was still good.']}
+function soloIntro(){
+ const resume=SO&&!SO.over?`<button class="btn btn-teal" onclick="sAct('resume')">Resume run · Movie ${SO.n} of 10</button>`:'';
+ return `<div class="top"><button class="btn btn-ghost btn-sm" onclick="act('home')">← Back</button><span class="brand">Pass the Popcorn</span><span style="width:70px"></span></div>
+ <div class="center" style="min-height:auto;margin-top:10px"><span class="pill t-characters">Solo mode</span><h1 class="brand" style="font-size:clamp(40px,7vw,64px)">Box Office Run</h1>
+ <div class="card" style="padding:18px 22px;max-width:480px;text-align:left;display:flex;flex-direction:column;gap:12px;font-size:17px">
+ <div><b>10 movies.</b> Each starts with its genre and year.</div>
+ <div><b>Guess early, earn more.</b> 5 points on the first clue, down to 1 point when all 5 are showing.</div>
+ <div><b>Wrong guess?</b> The next clue reveals for you, so it costs a point.</div>
+ <div><b>3 skips</b> per run. Pass the popcorn on a movie you don't like.</div></div>
+ <p class="muted" style="margin:0">Best score: <b style="color:var(--pink)">${best||'none yet'}</b>${best?' / 50':''}</p>
+ <div class="stack">${resume}<button class="btn btn-pink" onclick="sAct('start')">${resume?'Start a new run':'Start the run'}</button></div></div>`}
+function soloScreen(){const m=DECK[SO.card],cur=SO.rev[SO.rev.length-1],left=TYPES.filter(t=>!SO.rev.includes(t)),pts=PTS(SO.rev);
+ const dots=[0,1,2].map(i=>`<span style="width:12px;height:12px;border-radius:50%;display:inline-block;background:${i<SO.skips?'var(--mango)':'#D9E4E8'}"></span>`).join('');
+ const meter=[5,4,3,2,1].map(v=>`<span style="flex:1;height:10px;border-radius:99px;background:${v<=pts?'var(--pink)':'#D9E4E8'};transition:background .3s"></span>`).join('');
+ const trail=SO.rev.slice(0,-1).reverse().map(x=>`<div class="row"><span class="pill t-${x}">${LABEL[x]}</span><span>${esc(m[KEY[x]])}</span></div>`).join('');
+ let panel;
+ if(SO.done){const ok=SO.done.ok;
+  panel=`<div style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center">${ok?`<div class="burst" style="position:relative;width:0;height:0">${Array.from({length:16},(_,i)=>{const a=i/16*6.283,d=90+Math.random()*60;return `<span style="background:${['#FF4F9A','#FFB443','#00B3A4','#1B2A4A'][i%4]};--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px"></span>`}).join('')}</div>`:''}
+  <div class="result-title" style="font-size:36px;color:${ok?'var(--pink)':'var(--navy)'}">${ok?'Got it! +'+SO.done.pts:'Out of clues'}</div>
+  <div class="muted">${ok?'The movie was':'It was'}</div><div class="movie">${esc(m.a)}</div>
+  <button class="btn btn-pink" style="margin-top:8px" onclick="sAct('next')">${SO.n>=10?'See my final score':'Next movie'}</button></div>`}
+ else{panel=`<div class="q">Guess now for <b>${pts} point${pts===1?'':'s'}</b></div><div style="display:flex;gap:8px">${meter}</div>
+  <form onsubmit="event.preventDefault();sAct('guess')" style="display:flex;gap:8px"><input id="sg" class="inp" autocomplete="off" autocapitalize="words" placeholder="Type the movie title" value="${esc(UI.guess||'')}"><button class="btn btn-pink btn-sm" style="flex:0 0 auto;padding:0 22px">Guess</button></form>
+  ${left.length?`<div style="font-weight:600;margin-top:4px">Or reveal a clue <span class="muted" style="font-weight:500">(−1 point)</span></div><div class="opts">${left.map(t=>`<button class="opt t-${t}" onclick="sAct('reveal','${t}')">${LABEL[t]}</button>`).join('')}</div>`:''}
+  <div class="row2">${SO.skips?`<button class="btn btn-ghost btn-sm" onclick="sAct('skip')">🍿 Skip movie</button>`:''}<button class="btn btn-ghost btn-sm" onclick="sAct('giveup')">Give up</button></div>`}
+ return `<div class="top"><div style="display:flex;align-items:center;gap:8px">${logo(34)}<span class="brand">Box Office Run</span></div><div style="display:flex;align-items:center;gap:14px"><span style="display:flex;gap:4px" title="Skips left">${dots}</span><span class="pill t-genre">Movie ${SO.n}/10</span><span class="pill t-cast">${SO.score} pts</span><button class="btn btn-ghost btn-sm" onclick="act('home')">Menu</button></div></div>
+ <div style="max-width:720px;margin:0 auto"><div class="clue" key="${cur}"><span class="pill">${LABEL[cur]}${cur==='genre'?'':' clue'}</span><div class="txt">${esc(m[KEY[cur]])}</div></div>
+ ${trail?`<div class="trail">${trail}</div>`:''}<div class="card panel">${panel}</div></div>`}
+function soloEnd(){const[r,t]=rankFor(SO.score);
+ return `<div class="center"><div class="burst" style="position:relative;width:0;height:0">${Array.from({length:22},(_,i)=>{const a=i/22*6.283,d=140+Math.random()*90;return `<span style="background:${['#FF4F9A','#FFB443','#00B3A4','#1B2A4A'][i%4]};--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px"></span>`}).join('')}</div>${logo(80)}
+ <span class="pill t-characters">${SO.newBest?'New best score!':'Run complete'}</span><div class="big">${SO.score}<span style="font-size:.4em;color:var(--navy2)"> / 50</span></div><div class="result-title" style="font-size:32px">${r}</div><p class="muted" style="margin:0;font-size:17px">${t}</p>
+ <div class="card" style="width:100%;max-width:440px;padding:6px 18px;text-align:left">${SO.log.map(l=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)"><span>${esc(l.a)}</span><b style="color:${l.pts?'var(--pink)':'var(--navy2)'}">${l.pts?'+'+l.pts:'0'}</b></div>`).join('')}</div>
+ <p class="muted" style="margin:0">Best: ${best} / 50</p><div class="stack"><button class="btn btn-pink" onclick="sAct('start')">Play another run</button><button class="btn btn-ghost" onclick="SO=null;ls.del('ptp_solo');act('home')">Home</button></div></div>`}
+function render(){
+ const s=UI.screen;const map={soloIntro:soloIntro,solo:soloScreen,soloEnd:soloEnd,home:screenHome,setup:screenSetup,pass:screenPass,reader:screenReader,result:screenResult,quit:screenQuit};
+ if(['pass','reader','result','quit'].includes(s)&&!S){UI.screen='home'}if(['solo','soloEnd'].includes(s)&&!SO){UI.screen='home'}
+ document.getElementById('app').innerHTML=(map[UI.screen]||screenHome)();
+ UI.flipKey=null;
+}
+render();
+</script>
+</body>
+</html>

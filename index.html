@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Game Night">
+<meta name="theme-color" content="#0f1115">
+<title>Game Night</title>
+<style>
+:root{--bg:#0f1115;--card:#181b22;--line:#2a2f3a;--fg:#f2efe8;--muted:#a3a7b3;--gold:#e8b94a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#262a36,var(--bg) 60%);color:var(--fg);
+  font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:calc(28px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom))}
+main{max-width:560px;margin:0 auto}
+h1{font:700 34px/1.1 Georgia,"Times New Roman",serif;margin:0 0 6px;letter-spacing:.01em}
+p.sub{margin:0 0 26px;color:var(--muted)}
+a.game{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px;margin:0 0 14px;transition:transform .12s,border-color .12s}
+a.game:active{transform:scale(.98)}
+a.game:hover{border-color:var(--accent)}
+.icon{flex:0 0 56px;height:56px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.icon svg{width:34px;height:34px}
+.txt b{display:block;font-size:19px;margin-bottom:2px}
+.txt span{color:var(--muted);font-size:14px}
+.arrow{margin-left:auto;color:var(--muted);font-size:22px}
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+  <h1>Game Night</h1>
+  <p class="sub">Angel's table companions. Add any of these to your home screen.</p>
+
+  <a class="game" href="werewolf/" style="--accent:#e8b94a">
+    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 13.5A9 9 0 1 1 10.5 3a7 7 0 0 0 10.5 10.5Z"/></svg></div>
+    <div class="txt"><b>Werewolf Moderator</b><span>Runs the night, the votes and the stories. Four editions.</span></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <a class="game" href="codenames/" style="--accent:#e5534b">
+    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5" opacity=".55"/><rect x="3" y="13" width="8" height="8" rx="1.5" opacity=".55"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></div>
+    <div class="txt"><b>Codenames Grids</b><span>Fresh word grids for Codenames and Duet.</span></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <a class="game" href="popcorn/" style="--accent:#f0c23b">
+    <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 9h12l-1.6 12.2a1 1 0 0 1-1 .8H8.6a1 1 0 0 1-1-.8Z"/><circle cx="8" cy="7" r="2.6"/><circle cx="12" cy="5.6" r="2.9"/><circle cx="16" cy="7" r="2.6"/></svg></div>
+    <div class="txt"><b>Pass the Popcorn</b><span>The movie guessing game, 2000 to now. Group or solo.</span></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <footer>Made with Claude</footer>
+</main>
+</body>
+</html>
