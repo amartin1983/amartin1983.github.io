@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pass the Popcorn</title>
+<meta name="theme-color" content="#E9FBF8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Popcorn">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
@@ -214,7 +221,7 @@ const DECK2=[
 {g:"Horror, 2017",c:"Jaeden Martell, Bill Skarsgård, Finn Wolfhard, Sophia Lillis",ch:"Bill Denbrough, Pennywise, Richie, Beverly",s:"A group of misfit kids in Derry, Maine, faces a shape-shifting killer clown.",q:"“You'll float too.”",a:"It"},
 {g:"War, 2017",c:"Fionn Whitehead, Tom Hardy, Mark Rylance, Harry Styles",ch:"Tommy, Farrier, Mr. Dawson, Alex",s:"Allied soldiers are trapped on a French beach in 1940 as civilian boats race to rescue them.",q:"“What do you see?” “Home.”",a:"Dunkirk"},
 {g:"Adventure comedy, 2017",c:"Dwayne Johnson, Kevin Hart, Jack Black, Karen Gillan",ch:"Dr. Smolder Bravestone, Mouse Finbar, Professor Shelly Oberon, Ruby Roundhouse",s:"Four teens get sucked into an old video game and become their avatars.",q:"“Smoldering intensity.”",a:"Jumanji: Welcome to the Jungle"},
-{g:"Musical, 2017",c:"Hugh Jackman, Zac Efron, Zendaya, Michelle Williams",ch:"P.T. Barnum, Phillip Carlyle, Anne Wheeler, Lettie Lutz",s:"A dreamer builds a spectacle of oddities that becomes the modern circus.",q:"“The noblest art is that of making others happy.”",a:"The Greatest Showman"},
+{g:"Musical, 2017",c:"Hugh Jackman, Zac Efron, Zendaya, Michelle Williams",ch:"P.T. Barnum, Phillip Carlyle, Anne Wheeler, Lettie Lutz",s:"A dreamer builds a spectacle of oddities that becomes the modern circus.",q:"“Do these smiles seem fake? The joy is real.”",a:"The Greatest Showman"},
 {g:"Romantic comedy, 2018",c:"Constance Wu, Henry Golding, Michelle Yeoh, Awkwafina",ch:"Rachel Chu, Nick Young, Eleanor Young, Peik Lin",s:"An NYU professor discovers her boyfriend's family is among the richest in Singapore.",q:"“You will never be enough.”",a:"Crazy Rich Asians"},
 {g:"Biopic, 2018",c:"Rami Malek, Lucy Boynton, Gwilym Lee",ch:"Freddie Mercury, Mary Austin, Brian May",s:"The story of a legendary rock frontman, leading up to his Live Aid performance.",q:"“I decide who I am.”",a:"Bohemian Rhapsody"},
 {g:"Musical drama, 2018",c:"Lady Gaga, Bradley Cooper, Sam Elliott",ch:"Ally, Jackson Maine, Bobby",s:"A hard-drinking country rocker discovers a singer and helps make her famous.",q:"“I just wanted to take another look at you.”",a:"A Star Is Born"},
@@ -251,6 +258,29 @@ const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 
+
+const RATING={"Gladiator": "R", "Meet the Parents": "PG-13", "Shrek": "PG", "Harry Potter and the Sorcerer's Stone": "PG", "The Lord of the Rings: The Fellowship of the Ring": "PG-13", "Ocean's Eleven": "PG-13", "Spider-Man": "PG-13", "Finding Nemo": "G", "Pirates of the Caribbean: The Curse of the Black Pearl": "PG-13", "Elf": "PG", "Mean Girls": "PG-13", "Anchorman: The Legend of Ron Burgundy": "PG-13", "Napoleon Dynamite": "PG", "The Incredibles": "PG", "The Dark Knight": "PG-13", "Wedding Crashers": "R", "The 40-Year-Old Virgin": "R", "Casino Royale": "PG-13", "The Devil Wears Prada": "PG-13", "Borat": "R", "Superbad": "R", "Iron Man": "PG-13", "Taken": "PG-13", "The Hangover": "R", "Avatar": "PG-13", "Up": "PG", "Inception": "PG-13", "Toy Story 3": "G", "Bridesmaids": "R", "The Avengers": "PG-13", "The Hunger Games": "PG-13", "Django Unchained": "R", "Frozen": "PG", "The Wolf of Wall Street": "R", "Guardians of the Galaxy": "PG-13", "Interstellar": "PG-13", "Star Wars: The Force Awakens": "PG-13", "Mad Max: Fury Road": "R", "Deadpool": "R", "La La Land": "PG-13", "Get Out": "R", "Black Panther": "PG-13", "A Quiet Place": "PG-13", "Avengers: Endgame": "PG-13", "Joker": "R", "Knives Out": "PG-13", "Top Gun: Maverick": "PG-13", "Everything Everywhere All at Once": "R", "Barbie": "PG-13", "Oppenheimer": "R", "Cast Away": "PG-13", "Remember the Titans": "PG", "Miss Congeniality": "PG-13", "Legally Blonde": "PG-13", "The Fast and the Furious": "PG-13", "Zoolander": "PG-13", "Monsters, Inc.": "G", "Training Day": "R", "My Big Fat Greek Wedding": "PG", "The Bourne Identity": "PG-13", "Catch Me If You Can": "PG-13", "Signs": "PG-13", "School of Rock": "PG-13", "Bruce Almighty": "PG-13", "Old School": "R", "Love Actually": "R", "Kill Bill: Vol. 1": "R", "Saw": "R", "Dodgeball: A True Underdog Story": "PG-13", "The Notebook": "PG-13", "Shrek 2": "PG", "Madagascar": "PG", "Talladega Nights: The Ballad of Ricky Bobby": "PG-13", "Cars": "G", "Night at the Museum": "PG", "The Departed": "R", "300": "R", "Ratatouille": "G", "Transformers": "PG-13", "Juno": "PG-13", "No Country for Old Men": "R", "WALL-E": "G", "Kung Fu Panda": "PG", "Step Brothers": "R", "Tropic Thunder": "R", "Twilight": "PG-13", "Slumdog Millionaire": "R", "Inglourious Basterds": "R", "Zombieland": "R", "Star Trek": "PG-13", "Despicable Me": "PG", "The Social Network": "PG-13", "Tangled": "PG", "The Other Guys": "PG-13", "Shutter Island": "R", "Crazy, Stupid, Love": "PG-13", "The Help": "PG-13", "Rise of the Planet of the Apes": "PG-13", "Harry Potter and the Deathly Hallows – Part 2": "PG-13", "Ted": "R", "22 Jump Street": "R", "Pitch Perfect": "PG-13", "Skyfall": "PG-13", "Gravity": "PG-13", "The Conjuring": "R", "Now You See Me": "PG-13", "Gone Girl": "R", "The Lego Movie": "PG", "John Wick": "R", "Big Hero 6": "PG", "The Grand Budapest Hotel": "R", "Whiplash": "R", "Inside Out": "PG", "The Martian": "PG-13", "Straight Outta Compton": "R", "Creed": "PG-13", "Zootopia": "PG", "Moana": "PG", "Hidden Figures": "PG", "Coco": "PG", "Wonder Woman": "PG-13", "It": "R", "Dunkirk": "PG-13", "Jumanji: Welcome to the Jungle": "PG-13", "The Greatest Showman": "PG", "Crazy Rich Asians": "PG-13", "Bohemian Rhapsody": "PG-13", "A Star Is Born": "R", "Spider-Man: Into the Spider-Verse": "PG", "Parasite": "R", "Once Upon a Time in Hollywood": "R", "Ford v Ferrari": "PG-13", "Encanto": "PG", "Dune": "PG-13", "Free Guy": "PG-13", "The Batman": "PG-13", "Avatar: The Way of Water": "PG-13", "The Super Mario Bros. Movie": "PG", "Spider-Man: Across the Spider-Verse": "PG", "Dune: Part Two": "PG-13", "Wicked": "PG", "Twisters": "PG-13", "A Minecraft Movie": "PG", "Fifty Shades of Grey": "R", "Gran Torino": "R", "Avengers: Infinity War": "PG-13", "Thor: Ragnarok": "PG-13", "Hot Fuzz": "R", "Shaun of the Dead": "R", "Black Swan": "R"};
+const RORD={G:0,PG:1,'PG-13':2,R:3};
+const yearOf=d=>+((d.g.match(/(\d{4})/)||[0,2000])[1]);
+const decOf=d=>{const y=yearOf(d);return y<2010?'2000s':y<2020?'2010s':'2020s'};
+const DECADES=['2000s','2010s','2020s'];
+const GENRES=[['comedy','Comedy',/comed/i],['action','Action',/action|superhero|spy|heist|martial|\bwar\b|disaster|western/i],['animated','Animated',/animat/i],['drama','Drama & romance',/drama|romance|musical|biopic|sports/i],['scary','Horror & thriller',/horror|thriller|mystery|crime/i],['scifi','Sci-fi & fantasy',/sci-fi|fantasy|adventure|epic/i]];
+const RATES=[['all','All ratings'],['pg13','PG-13 & under'],['pg','PG & under']];
+let F=ls.get('ptp_filters',null)||{dec:DECADES.slice(),gen:GENRES.map(g=>g[0]),rate:'all'};
+let RET=ls.get('ptp_retired',[]),FLAGS=ls.get('ptp_flags',[]),STATS=ls.get('ptp_stats',null)||{players:{},solo:{runs:0,total:0}};
+let UNDO=[];
+function allowed(i){const d=DECK[i];if(RET.includes(d.a))return false;if(!F.dec.includes(decOf(d)))return false;if(!GENRES.some(g=>F.gen.includes(g[0])&&g[2].test(d.g)))return false;const r=RORD[RATING[d.a]||'R'];if(F.rate==='pg13'&&r>2)return false;if(F.rate==='pg'&&r>1)return false;return true}
+const mixPool=()=>DECK.map((d,i)=>i).filter(allowed);
+function drawFrom(used){const P0=mixPool(),base=P0.length?P0:DECK.map((d,i)=>i);let p=base.filter(i=>!seen.includes(DECK[i].a)&&!used.includes(i));if(!p.length){base.forEach(i=>{const k=seen.indexOf(DECK[i].a);if(k>-1)seen.splice(k,1)});p=base.filter(i=>!used.includes(i));if(!p.length){used.length=0;p=base.slice()}toast('You\'ve played every movie in your mix. Reshuffling.')}const i=p[Math.floor(Math.random()*p.length)];used.push(i);return i}
+function snap(){if(!S)return;UNDO.push(JSON.stringify({S,screen:UI.screen}));if(UNDO.length>30)UNDO.shift()}
+function saveMeta(){ls.set('ptp_filters',F);ls.set('ptp_retired',RET);ls.set('ptp_flags',FLAGS);ls.set('ptp_stats',STATS)}
+function tal(p){S.tally=S.tally||{};return S.tally[p.name]=S.tally[p.name]||{right:0,blocks:0,rounds:0}}
+function commitStats(){if(!S||!S.over||S.committed)return;S.players.forEach((p,i)=>{const t=tal(p),s=STATS.players[p.name]=STATS.players[p.name]||{games:0,wins:0,rounds:0,right:0,blocks:0};s.games++;s.rounds+=t.rounds;s.right+=t.right;s.blocks+=t.blocks;if(i===S.winner)s.wins++});S.committed=true;saveMeta()}
+function flagCard(a,why){if(!FLAGS.some(f=>f.a===a&&f.why===why))FLAGS.push({a,why});saveMeta();UI.cardMenu=false;sfx('tap');toast(`Flagged "${a}" (${why.toLowerCase()}). It'll get fixed next update.`);render()}
+function flagsText(){return 'Pass the Popcorn flagged cards:\n'+FLAGS.map(f=>`- ${f.a}: ${f.why}`).join('\n')}
+function cardMenuHTML(a,scope){if(!UI.cardMenu)return'';const f=scope==='solo'?'sAct':'act';return `<div class="confirm" style="margin-bottom:12px"><div class="q">What's up with this card?</div><div class="opts">${['Wrong info','Too easy','Too hard'].map(w=>`<button class="btn btn-ghost btn-sm" onclick="${f}('flag','${w}')">${w}</button>`).join('')}<button class="btn btn-ghost btn-sm" style="color:#C2185B" onclick="${f}('retire')">Retire this movie</button></div><p class="muted" style="font-size:13px;margin:0">A retired movie never comes up again. You can bring it back under Your deck.</p><button class="link" onclick="UI.cardMenu=false;render()">Cancel</button></div>`}
+function isGH(){return /github\.io$/.test(location.hostname)}
+function isStandalone(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
 let MUTED=ls.get('ptp_muted',false),AC=null;
 function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC}
 function tone(f,d,type,v,when,slide){const a=ac();if(!a)return;const t=a.currentTime+(when||0);const o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.12,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.03)}
@@ -270,25 +300,41 @@ const muteBtn=()=>`<button class="btn btn-ghost btn-sm" aria-label="${MUTED?'Tur
 let seen=ls.get('ptp_seen',[]);
 let S=ls.get('ptp_game',null);
 let UI={screen:'home',names:['','',''],mode:'std',err:'',confirm:null,hideAns:false,flipKey:null};
-function save(){if(S&&!S.over)ls.set('ptp_game',S);else ls.del('ptp_game');ls.set('ptp_seen',seen)}
+function save(){if(S&&!S.committed)ls.set('ptp_game',S);else ls.del('ptp_game');ls.set('ptp_seen',seen)}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
-function unseenCount(){return DECK.filter(d=>!seen.includes(d.a)).length}
-function drawCard(){let pool=DECK.map((d,i)=>i).filter(i=>!seen.includes(DECK[i].a)&&!S.used.includes(i));if(!pool.length){seen=[];pool=DECK.map((d,i)=>i).filter(i=>!S.used.includes(i));if(!pool.length){S.used=[];pool=DECK.map((d,i)=>i)}toast('You\'ve played every movie. Reshuffling the deck.')}const i=pool[Math.floor(Math.random()*pool.length)];S.used.push(i);return i}
+function unseenCount(){return mixPool().filter(i=>!seen.includes(DECK[i].a)).length}
+function drawCard(){return drawFrom(S.used)}
 const n=()=>S.players.length;
 function nextNR(i){let j=i;do{j=(j+1)%n()}while(j===S.reader);return j}
 function dealRound(){const need=S.players.reduce((a,p)=>a+p.count,0),per=Math.max(8,Math.ceil(need/4));const pool=shuffle(TYPES.flatMap(t=>Array(per).fill(t)));S.players.forEach(p=>{p.tiles=pool.splice(0,p.count).map(t=>({type:t,down:false}))})}
 function newMovie(){S.card=drawCard();S.read=['genre'];S.current='genre';S.guessed=[];S.chooser=nextNR(S.reader);S.phase='choose';S.movieNo++;UI.confirm=null;UI.hideAns=false}
 function act(a,x,y){
  const P=S&&S.players;
+ if(S&&['pick','swap2','guess','nextClue','nobody','tie','next','retire'].includes(a))snap();
  switch(a){
- case 'home':UI.screen='home';break;
+ case 'home':if(S&&S.over){commitStats();S=null;UNDO=[]}UI.screen='home';UI.cardMenu=false;break;
+ case 'undo':if(UNDO.length){const o=JSON.parse(UNDO.pop());S=o.S;UI.screen=S.screen=o.screen;UI.confirm=null;UI.cardMenu=false;sfx('tap');toast('Undone')}break;
+ case 'cardMenu':UI.cardMenu=!UI.cardMenu;break;
+ case 'flag':flagCard(DECK[S.card].a,x);return;
+ case 'retire':{const a=DECK[S.card].a;if(!RET.includes(a))RET.push(a);saveMeta();newMovie();S.movieNo--;UI.cardMenu=false;sfx('flip');toast(`Retired "${a}". New movie, same reader.`);break}
+ case 'go':UI.back=UI.screen;UI.screen=x;UI.q='';UI.tab=x==='deck'?(UI.tab||'all'):UI.tab;UI.confirmReset=false;break;
+ case 'back':UI.screen=UI.back&&UI.back!==UI.screen&&!['mix','deck','stats'].includes(UI.back)?UI.back:'home';break;
+ case 'fdec':F.dec=F.dec.includes(x)?F.dec.filter(v=>v!==x):F.dec.concat(x);saveMeta();break;
+ case 'fgen':F.gen=F.gen.includes(x)?F.gen.filter(v=>v!==x):F.gen.concat(x);saveMeta();break;
+ case 'frate':F.rate=x;saveMeta();break;
+ case 'fall':F={dec:DECADES.slice(),gen:GENRES.map(g=>g[0]),rate:'all'};saveMeta();break;
+ case 'tab':UI.tab=x;break;
+ case 'ret':{const a=DECK[x].a;RET=RET.includes(a)?RET.filter(v=>v!==a):RET.concat(a);saveMeta();sfx('tap');renderDeckList();return}
+ case 'unflag':FLAGS.splice(x,1);saveMeta();break;
+ case 'copyFlags':{const t=flagsText();try{navigator.clipboard.writeText(t).then(()=>toast('Copied. Paste it to Claude.'),()=>toast('Copy was blocked. Select the text below instead.'))}catch(e){toast('Copy was blocked. Select the text below instead.')}return}
+ case 'resetStats':if(!UI.confirmReset){UI.confirmReset=true}else{STATS={players:{},solo:{runs:0,total:0}};best=0;ls.set('ptp_best',0);saveMeta();UI.confirmReset=false;toast('Stats reset.')}break;
  case 'resume':UI.screen=S.screen||'pass';break;
- case 'setup':UI.screen='setup';UI.err='';if(S&&S.players)UI.names=S.players.map(p=>p.name);break;
+ case 'setup':UI.screen='setup';UI.err='';if(S&&S.players)UI.names=S.players.map(p=>p.name);else{const L=ls.get('ptp_last',null);if(L&&UI.names.every(v=>!v.trim())){UI.names=L.names.slice();UI.mode=L.mode||'std'}}break;
  case 'addName':if(UI.names.length<8)UI.names.push('');render();setTimeout(()=>{const ins=document.querySelectorAll('.inp');ins[ins.length-1].focus()},30);return;
  case 'delName':UI.names.splice(x,1);break;
  case 'mode':UI.mode=x;break;
- case 'start':{readNames();const names=UI.names.map(s=>s.trim()).filter(Boolean);if(names.length<2){UI.err='Add at least 2 players.';break}if(new Set(names.map(s=>s.toLowerCase())).size!==names.length){UI.err='Each player needs a different name.';break}const sc=UI.mode==='long'?3:2;S={players:names.map(nm=>({name:nm,count:sc,tiles:[]})),target:UI.mode==='long'?5:4,round:1,reader:0,used:[],movieNo:0,over:false};dealRound();newMovie();S.screen='pass';UI.screen='pass';break}
- case 'showCard':S.screen=UI.screen='reader';sfx('flip');break;
+ case 'start':{readNames();const names=UI.names.map(s=>s.trim()).filter(Boolean);if(names.length<2){UI.err='Add at least 2 players.';break}if(new Set(names.map(s=>s.toLowerCase())).size!==names.length){UI.err='Each player needs a different name.';break}const sc=UI.mode==='long'?3:2;ls.set('ptp_last',{names,mode:UI.mode});if(mixPool().length<12){UI.err='Your movie mix is under 12 movies. Widen it under Movie mix.';break}UNDO=[];S={players:names.map(nm=>({name:nm,count:sc,tiles:[]})),target:UI.mode==='long'?5:4,round:1,reader:0,used:[],movieNo:0,over:false,tally:{}};dealRound();newMovie();S.screen='pass';UI.screen='pass';break}
+ case 'showCard':S.screen=UI.screen='reader';UI.cardMenu=false;sfx('flip');break;
  case 'pick':sfx('flip');S.read.push(x);S.current=x;S.lastPicker=S.chooser;S.phase='guess';UI.confirm=null;break;
  case 'swap':S.phase='swap1';break;
  case 'swapCancel':S.phase='choose';S.swapFrom=null;break;
@@ -300,11 +346,11 @@ function act(a,x,y){
  case 'nextClue':S.chooser=nextNR(S.lastPicker);S.phase='choose';UI.confirm=null;break;
  case 'nobody':sfx('none');endMovie({kind:'none'});return;
  case 'tie':S.used=S.used;newMovie();S.movieNo--;toast('Tie! New movie, same reader.');break;
- case 'next':S.reader=(S.reader+1)%n();if(S.roundWon){S.roundWon=false;S.round++;dealRound()}newMovie();S.screen=UI.screen='pass';break;
+ case 'next':UI.cardMenu=false;S.reader=(S.reader+1)%n();if(S.roundWon){S.roundWon=false;S.round++;dealRound()}newMovie();S.screen=UI.screen='pass';break;
  case 'hideAns':UI.hideAns=!UI.hideAns;break;
  case 'quit':UI.screen='quit';break;
- case 'endGame':S=null;ls.del('ptp_game');UI.screen='home';break;
- case 'again':{const names=S.players.map(p=>p.name);UI.names=names;UI.mode=S.target===5?'long':'std';S=null;act('start');return}
+ case 'endGame':if(S&&S.over)commitStats();S=null;UNDO=[];ls.del('ptp_game');UI.screen='home';break;
+ case 'again':{commitStats();const names=S.players.map(p=>p.name);UI.names=names;UI.mode=S.target===5?'long':'std';S=null;act('start');return}
  case 'resetSeen':seen=[];toast(`Played list cleared. All ${DECK.length} movies are fresh.`);break;
  }
  save();render();
@@ -327,7 +373,8 @@ function guess(pi,right){
 function endMovie(r){
  const m=DECK[S.card];if(!seen.includes(m.a))seen.push(m.a);
  S.result=r;S.roundWon=false;
- if(r.kind==='got'){const p=S.players[r.p];if(p.tiles.every(t=>t.down)){if(p.count>=S.target){S.over=true;S.winner=r.p}else{p.count++;S.roundWon=true}}}
+ if(r.kind==='got'){const p=S.players[r.p];tal(p).right++;if(p.tiles.every(t=>t.down)){tal(p).rounds++;if(p.count>=S.target){S.over=true;S.winner=r.p}else{p.count++;S.roundWon=true}}}
+ if(r.kind==='blocked')tal(S.players[r.p]).blocks++;
  if(r.kind==='got')sfx(S.over?'win':S.roundWon?'round':'right');else if(r.kind==='blocked')sfx('penalty');
  S.screen=UI.screen='result';save();render();
 }
@@ -338,16 +385,18 @@ function screenHome(){
  const resume=S&&!S.over?`<button class="btn btn-teal" onclick="act('resume')">Resume game · Round ${S.round}</button>`:'';
  return `<div class="center"><div style="animation:cin .6s">${logo(110)}</div><div><h1 class="brand" style="font-size:clamp(44px,8vw,72px)">Pass the Popcorn</h1><p class="muted" style="font-size:18px;margin:8px 0 0">The movie guessing game · 2000 to now</p></div>
  <div class="stack" style="margin-top:10px">${resume}<button class="btn btn-pink" onclick="act('setup')">New group game</button><button class="btn btn-ghost" onclick="sAct('intro')">Solo · Box Office Run${best?` <span class="pill t-characters" style="font-size:12px">Best ${best}</span>`:''}</button></div>
- <p class="muted" style="font-size:14px;margin:6px 0 0">${DECK.length} movies · ${unseenCount()} not played yet</p><div style="display:flex;gap:10px;align-items:center">${muteBtn()}${seen.length?`<button class="link" onclick="act('resetSeen')">Reset played movies</button>`:''}</div></div>`}
+ <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">${chip(false,`Movie mix · ${mixPool().length}`,"act('go','mix')")}${chip(false,`Your deck${FLAGS.length?` · ${FLAGS.length} flagged`:''}`,"act('go','deck')")}${chip(false,'Stats',"act('go','stats')")}</div>
+ <p class="muted" style="font-size:14px;margin:6px 0 0">${mixPool().length} movies in your mix · ${unseenCount()} not played yet</p>${isGH()&&!isStandalone()?`<p class="muted" style="font-size:13px;margin:0;max-width:420px">Install it: tap Share, then Add to Home Screen. It works offline after that.</p>`:''}<div style="display:flex;gap:10px;align-items:center">${muteBtn()}${seen.length?`<button class="link" onclick="act('resetSeen')">Reset played movies</button>`:''}</div></div>`}
 function screenSetup(){
  return `<div class="top"><button class="btn btn-ghost btn-sm" onclick="act('home')">← Back</button><span class="brand">Pass the Popcorn</span><span style="width:70px"></span></div>
  <div class="stack" style="margin:0 auto"><h2 style="font-size:30px">Who's playing?</h2><p class="muted" style="margin:0 0 4px">Add names in seating order, going left around the table.</p>
  ${UI.names.map((nm,i)=>`<div style="display:flex;gap:8px"><input class="inp" maxlength="14" placeholder="Player ${i+1}" value="${esc(nm)}" oninput="UI.names[${i}]=this.value;UI.err=''">${UI.names.length>2?`<button class="btn btn-ghost btn-sm" aria-label="Remove player" onclick="readNames();act('delName',${i})">✕</button>`:''}</div>`).join('')}
  ${UI.names.length<8?`<button class="btn btn-ghost btn-sm" style="align-self:flex-start" onclick="readNames();act('addName')">+ Add player</button>`:''}
  <p style="margin:14px 0 2px;font-weight:600">Game length</p><div class="seg"><button class="${UI.mode==='std'?'on':''}" onclick="readNames();act('mode','std')">Standard · win at 4</button><button class="${UI.mode==='long'?'on':''}" onclick="readNames();act('mode','long')">Long · win at 5</button></div>
+ <p style="margin:14px 0 2px;font-weight:600">Movie mix</p><div style="display:flex;align-items:center;justify-content:space-between" class="card"><span style="padding:12px 16px">${mixPool().length} movies</span><button class="link" style="margin-right:10px" onclick="readNames();act('go','mix')">Change</button></div>
  <div class="err">${esc(UI.err)}</div><button class="btn btn-pink" onclick="act('start')">Deal the tiles</button></div>`}
 function screenPass(){const r=S.players[S.reader];
- return `<div class="center"><span class="pill t-genre">Round ${S.round} · Movie ${S.movieNo}</span><p class="muted" style="font-size:20px;margin:0">Pass the tablet to</p><div class="big">${esc(r.name)}</div><p class="muted" style="margin:0;font-size:16px">Only ${esc(r.name)} looks at the next screen. The answer is on it.</p><div class="stack" style="margin-top:12px"><button class="btn btn-teal" onclick="act('showCard')">I'm ${esc(r.name)}, show the card</button></div><button class="link" onclick="act('quit')">Menu</button></div>`}
+ return `<div class="center"><span class="pill t-genre">Round ${S.round} · Movie ${S.movieNo}</span><p class="muted" style="font-size:20px;margin:0">Pass the tablet to</p><div class="big">${esc(r.name)}</div><p class="muted" style="margin:0;font-size:16px">Only ${esc(r.name)} looks at the next screen. The answer is on it.</p><div class="stack" style="margin-top:12px"><button class="btn btn-teal" onclick="act('showCard')">I'm ${esc(r.name)}, show the card</button></div><div style="display:flex;gap:14px">${UNDO.length?`<button class="link" onclick="act('undo')">↶ Undo last move</button>`:''}<button class="link" onclick="act('quit')">Menu</button></div></div>`}
 function actionHTML(){
  const P=S.players,ch=P[S.chooser];
  if(UI.confirm!==null){const p=P[UI.confirm],t=S.current,legal=p.tiles.some(x=>x.type===t&&!x.down)&&!S.guessed.includes(UI.confirm);
@@ -362,8 +411,8 @@ function actionHTML(){
  <div class="row2">${left.length?`<button class="btn btn-teal btn-sm" onclick="act('nextClue')">No one yet · next clue</button>`:`<button class="btn btn-teal btn-sm" onclick="act('nobody')">No one got it</button>`}<button class="btn btn-ghost btn-sm" style="flex:0 0 auto" onclick="act('tie')">Tie</button></div>`}
 function screenReader(){const m=DECK[S.card],cur=S.current;
  const trail=S.read.filter(x=>x!==cur).map(x=>`<div class="row"><span class="pill t-${x}">${LABEL[x]}</span><span>${esc(m[KEY[x]])}</span></div>`).join('');
- return `<div class="top"><div style="display:flex;align-items:center;gap:8px">${logo(34)}<span class="brand">Pass the Popcorn</span></div><div style="display:flex;align-items:center;gap:10px"><span class="muted" style="font-size:14px">Round ${S.round} · ${esc(S.players[S.reader].name)} reads</span>${muteBtn()}<button class="btn btn-ghost btn-sm" onclick="act('quit')">Menu</button></div></div>
- <div class="grid"><div><div class="answer"><span>Answer · <b>${UI.hideAns?'••••••••':esc(m.a)}</b></span><button class="link" onclick="act('hideAns')">${UI.hideAns?'Show':'Hide'}</button></div>
+ return `<div class="top"><div style="display:flex;align-items:center;gap:8px">${logo(34)}<span class="brand">Pass the Popcorn</span></div><div style="display:flex;align-items:center;gap:10px"><span class="muted" style="font-size:14px">Round ${S.round} · ${esc(S.players[S.reader].name)} reads</span>${UNDO.length?`<button class="btn btn-ghost btn-sm" onclick="act('undo')">↶ Undo</button>`:''}${muteBtn()}<button class="btn btn-ghost btn-sm" onclick="act('quit')">Menu</button></div></div>
+ <div class="grid"><div><div class="answer"><span>Answer · <b>${UI.hideAns?'••••••••':esc(m.a)}</b> <span class="muted" style="font-size:12px">${RATING[m.a]||''}</span></span><span><button class="link" onclick="act('cardMenu')">Flag / retire</button><button class="link" onclick="act('hideAns')">${UI.hideAns?'Show':'Hide'}</button></span></div>${cardMenuHTML(m.a,'group')}
  <div class="clue" key="${cur}"><span class="pill">${LABEL[cur]}${cur==='genre'?'':' clue'}</span><div class="txt">${esc(m[KEY[cur]])}</div></div>
  ${trail?`<div class="trail">${trail}</div>`:''}
  <div class="card panel">${actionHTML()}</div></div>
@@ -373,10 +422,10 @@ function screenResult(){const m=DECK[S.card],r=S.result,P=S.players;let head,sub
  else if(r.kind==='blocked'){head=`${esc(P[r.p].name)} blocked it!`;sub=`Right answer, but rule #5 was broken. ${r.back?'A tile flips back up.':'No tile to flip back.'}`}
  else{head='Nobody got it';sub='Popcorn for no one this time.'}
  let extra='',btn=`<button class="btn btn-pink" onclick="act('next')">Next movie · pass to ${esc(P[(S.reader+1)%n()].name)}</button>`;
- if(S.over){const w=P[S.winner];head=`${esc(w.name)} wins the game!`;sub=`Won a round holding ${w.count} tiles. All hail the popcorn champion.`;btn=`<button class="btn btn-pink" onclick="act('again')">Play again, same players</button><button class="btn btn-ghost" onclick="act('endGame')">Back to home</button>`;ls.del('ptp_game')}
+ if(S.over){const w=P[S.winner];head=`${esc(w.name)} wins the game!`;sub=`Won a round holding ${w.count} tiles. All hail the popcorn champion.`;btn=`<button class="btn btn-pink" onclick="act('again')">Play again, same players</button><button class="btn btn-ghost" onclick="act('endGame')">Back to home</button>`}
  else if(S.roundWon){const w=P[r.p];extra=`<div class="card" style="padding:16px 20px;width:100%;max-width:440px"><div style="font-size:22px;font-weight:800;color:var(--pink)">${esc(w.name)} wins round ${S.round}!</div><div class="muted">Next round ${esc(w.name)} plays with ${w.count} tiles. Everyone else stays the same.</div></div>`;btn=`<button class="btn btn-pink" onclick="act('next')">Deal round ${S.round+1}</button>`}
  const burst=r.kind==='got'?`<div class="burst" style="position:relative;width:0;height:0">${Array.from({length:18},(_,i)=>{const a=i/18*6.283,d=120+Math.random()*80;return `<span style="background:${['#FF4F9A','#FFB443','#00B3A4','#fff'][i%4]};--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px"></span>`}).join('')}</div>`:'';
- return `<div class="center">${burst}${logo(80)}<div class="result-title" style="color:${r.kind==='none'?'var(--navy)':'var(--pink)'}">${head}</div><p class="muted" style="margin:0;font-size:18px">${sub}</p><div class="card" style="padding:18px 22px;width:100%;max-width:440px"><div class="muted" style="font-size:14px">The movie was</div><div class="movie">${esc(m.a)}</div><div class="muted" style="font-size:14px">${esc(m.g)}</div></div>${extra}<div class="stack">${btn}</div></div>`}
+ return `<div class="center">${burst}${logo(80)}<div class="result-title" style="color:${r.kind==='none'?'var(--navy)':'var(--pink)'}">${head}</div><p class="muted" style="margin:0;font-size:18px">${sub}</p><div class="card" style="padding:18px 22px;width:100%;max-width:440px"><div class="muted" style="font-size:14px">The movie was</div><div class="movie">${esc(m.a)}</div><div class="muted" style="font-size:14px">${esc(m.g)}</div></div>${extra}<div class="stack">${btn}</div>${UNDO.length?`<button class="link" onclick="act('undo')">↶ Undo, that was a mis-tap</button>`:''}</div>`}
 function screenQuit(){return `<div class="center"><h2 style="font-size:30px">Game menu</h2><div class="stack"><button class="btn btn-teal" onclick="act('resume')">Back to the game</button><button class="btn btn-ghost" onclick="act('endGame')">End this game</button></div></div>`}
 
 /* solo */
@@ -386,13 +435,13 @@ const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').re
 function lev(a,b){const m=a.length,n2=b.length;if(!m)return n2;if(!n2)return m;let prev=Array.from({length:n2+1},(_,j)=>j);for(let i=1;i<=m;i++){const cur=[i];for(let j=1;j<=n2;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur}return prev[n2]}
 function matches(guess,title){const g=norm(guess);if(g.length<2)return false;const opts=[title,title.split(':')[0],...(ALIAS[title]||[])].map(norm);return opts.some(o=>g===o||lev(g,o)<=(o.length<=4?0:Math.max(1,Math.floor(o.length/4))))}
 const PTS=r=>6-r.length;
-function soloDraw(){let pool=DECK.map((d,i)=>i).filter(i=>!seen.includes(DECK[i].a)&&!SO.used.includes(i));if(!pool.length)pool=DECK.map((d,i)=>i).filter(i=>!SO.used.includes(i));if(!pool.length){SO.used=[];pool=DECK.map((d,i)=>i)}const i=pool[Math.floor(Math.random()*pool.length)];SO.used.push(i);return i}
+function soloDraw(){return drawFrom(SO.used)}
 function soloNew(){SO.card=soloDraw();SO.rev=['genre'];SO.done=null;SO.wrong=0;UI.guess=''}
 function soloSave(){if(SO&&!SO.over)ls.set('ptp_solo',SO);else ls.del('ptp_solo');ls.set('ptp_seen',seen);ls.set('ptp_best',best)}
 function sAct(a,x){
  switch(a){
  case 'intro':UI.screen='soloIntro';break;
- case 'start':SO={n:1,score:0,skips:3,used:[],log:[],over:false};soloNew();UI.screen='solo';break;
+ case 'start':if(mixPool().length<12){toast('Your movie mix is under 12 movies. Widen it under Movie mix.');return}UI.cardMenu=false;SO={n:1,score:0,skips:3,used:[],log:[],over:false};soloNew();UI.screen='solo';break;
  case 'resume':UI.screen='solo';break;
  case 'reveal':if(!SO.done&&!SO.rev.includes(x)){SO.rev.push(x);sfx('flip')}break;
  case 'guess':{const el=document.getElementById('sg');const g=(el?el.value:'').trim();UI.guess=g;if(!g){toast('Type a movie title first.');return}
@@ -402,9 +451,12 @@ function sAct(a,x){
    if(left.length){const t=left[0];SO.rev.push(t);toast(`Not it! ${LABEL[t]} clue revealed. Now worth ${PTS(SO.rev)}.`);UI.guess=''}
    else{SO.done={ok:false,pts:0};SO.log.push({a:m.a,pts:0})}}
   break}
+ case 'cardMenu':UI.cardMenu=!UI.cardMenu;break;
+ case 'flag':flagCard(DECK[SO.card].a,x);return;
+ case 'retire':if(!SO.done){const a=DECK[SO.card].a;if(!RET.includes(a))RET.push(a);saveMeta();soloNew();UI.cardMenu=false;sfx('flip');toast(`Retired "${a}". Here's a new movie (no skip used).`)}break;
  case 'giveup':{sfx('none');const m=DECK[SO.card];SO.done={ok:false,pts:0};SO.log.push({a:m.a,pts:0});break}
  case 'skip':if(SO.skips>0&&!SO.done){const m=DECK[SO.card];SO.skips--;if(!seen.includes(m.a))seen.push(m.a);sfx('flip');soloNew();toast(`Popcorn passed! ${SO.skips} skip${SO.skips===1?'':'s'} left.`)}break;
- case 'next':{const m=DECK[SO.card];if(!seen.includes(m.a))seen.push(m.a);if(SO.n>=10){SO.over=true;SO.newBest=SO.score>best;if(SO.newBest)best=SO.score;UI.screen='soloEnd';sfx(SO.newBest?'win':'round')}else{SO.n++;soloNew()}break}
+ case 'next':{const m=DECK[SO.card];if(!seen.includes(m.a))seen.push(m.a);if(SO.n>=10){SO.over=true;SO.newBest=SO.score>best;if(SO.newBest)best=SO.score;STATS.solo.runs++;STATS.solo.total+=SO.score;saveMeta();UI.screen='soloEnd';sfx(SO.newBest?'win':'round')}else{SO.n++;soloNew()}break}
  case 'quit':SO=null;ls.del('ptp_solo');UI.screen='home';break;
  }
  soloSave();render();
@@ -435,22 +487,52 @@ function soloScreen(){const m=DECK[SO.card],cur=SO.rev[SO.rev.length-1],left=TYP
  else{panel=`<div class="q">Guess now for <b>${pts} point${pts===1?'':'s'}</b></div><div style="display:flex;gap:8px">${meter}</div>
   <form onsubmit="event.preventDefault();sAct('guess')" style="display:flex;gap:8px"><input id="sg" class="inp" autocomplete="off" autocapitalize="words" placeholder="Type the movie title" value="${esc(UI.guess||'')}"><button class="btn btn-pink btn-sm" style="flex:0 0 auto;padding:0 22px">Guess</button></form>
   ${left.length?`<div style="font-weight:600;margin-top:4px">Or reveal a clue <span class="muted" style="font-weight:500">(−1 point)</span></div><div class="opts">${left.map(t=>`<button class="opt t-${t}" onclick="sAct('reveal','${t}')">${LABEL[t]}</button>`).join('')}</div>`:''}
-  <div class="row2">${SO.skips?`<button class="btn btn-ghost btn-sm" onclick="sAct('skip')">🍿 Skip movie</button>`:''}<button class="btn btn-ghost btn-sm" onclick="sAct('giveup')">Give up</button></div>`}
+  <div class="row2">${SO.skips?`<button class="btn btn-ghost btn-sm" onclick="sAct('skip')">🍿 Skip movie</button>`:''}<button class="btn btn-ghost btn-sm" onclick="sAct('giveup')">Give up</button></div><button class="link" style="align-self:flex-start" onclick="sAct('cardMenu')">Flag / retire this movie</button>`}
  return `<div class="top"><div style="display:flex;align-items:center;gap:8px">${logo(34)}<span class="brand">Box Office Run</span></div><div style="display:flex;align-items:center;gap:14px"><span style="display:flex;gap:4px" title="Skips left">${dots}</span><span class="pill t-genre">Movie ${SO.n}/10</span><span class="pill t-cast">${SO.score} pts</span>${muteBtn()}<button class="btn btn-ghost btn-sm" onclick="act('home')">Menu</button></div></div>
  <div style="max-width:720px;margin:0 auto"><div class="clue" key="${cur}"><span class="pill">${LABEL[cur]}${cur==='genre'?'':' clue'}</span><div class="txt">${esc(m[KEY[cur]])}</div></div>
- ${trail?`<div class="trail">${trail}</div>`:''}<div class="card panel">${panel}</div></div>`}
+ ${trail?`<div class="trail">${trail}</div>`:''}<div class="card panel">${SO.done?'':cardMenuHTML(m.a,'solo')}${panel}</div></div>`}
 function soloEnd(){const[r,t]=rankFor(SO.score);
  return `<div class="center"><div class="burst" style="position:relative;width:0;height:0">${Array.from({length:22},(_,i)=>{const a=i/22*6.283,d=140+Math.random()*90;return `<span style="background:${['#FF4F9A','#FFB443','#00B3A4','#1B2A4A'][i%4]};--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px"></span>`}).join('')}</div>${logo(80)}
  <span class="pill t-characters">${SO.newBest?'New best score!':'Run complete'}</span><div class="big">${SO.score}<span style="font-size:.4em;color:var(--navy2)"> / 50</span></div><div class="result-title" style="font-size:32px">${r}</div><p class="muted" style="margin:0;font-size:17px">${t}</p>
  <div class="card" style="width:100%;max-width:440px;padding:6px 18px;text-align:left">${SO.log.map(l=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)"><span>${esc(l.a)}</span><b style="color:${l.pts?'var(--pink)':'var(--navy2)'}">${l.pts?'+'+l.pts:'0'}</b></div>`).join('')}</div>
  <p class="muted" style="margin:0">Best: ${best} / 50</p><div class="stack"><button class="btn btn-pink" onclick="sAct('start')">Play another run</button><button class="btn btn-ghost" onclick="SO=null;ls.del('ptp_solo');act('home')">Home</button></div></div>`}
+
+function topBack(title){return `<div class="top"><button class="btn btn-ghost btn-sm" onclick="act('back')">← Back</button><span class="brand">${title}</span><span style="width:70px"></span></div>`}
+function chip(on,label,onclick){return `<button class="pill" style="cursor:pointer;padding:9px 14px;font-size:14px;${on?'background:var(--teal);color:#fff;border:1.5px solid var(--teal)':'background:#fff;color:var(--navy2);border:1.5px solid var(--line)'}" onclick="${onclick}">${on?'✓ ':''}${label}</button>`}
+function screenMix(){const n=mixPool().length;
+ return `${topBack('Movie mix')}<div class="stack" style="margin:0 auto;max-width:560px">
+ <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:30px;font-weight:800;color:${n<12?'#C2185B':'var(--pink)'}">${n}</div><div class="muted" style="font-size:14px">movies in your mix</div></div><button class="link" onclick="act('fall')">Reset to everything</button></div>
+ ${n<12?`<div class="err">Pick a wider mix. Games need at least 12 movies.</div>`:''}
+ <p style="margin:10px 0 0;font-weight:600">Decades</p><div style="display:flex;gap:8px;flex-wrap:wrap">${DECADES.map(d=>chip(F.dec.includes(d),d,`act('fdec','${d}')`)).join('')}</div>
+ <p style="margin:10px 0 0;font-weight:600">Genres</p><div style="display:flex;gap:8px;flex-wrap:wrap">${GENRES.map(g=>chip(F.gen.includes(g[0]),g[1],`act('fgen','${g[0]}')`)).join('')}</div>
+ <p style="margin:10px 0 0;font-weight:600">Ratings</p><div class="seg">${RATES.map(r=>`<button class="${F.rate===r[0]?'on':''}" onclick="act('frate','${r[0]}')">${r[1]}</button>`).join('')}</div>
+ <p class="muted" style="font-size:13px;margin:4px 0 0">The mix applies to group games and Box Office Run. Retired movies are always left out.</p>
+ <button class="btn btn-pink" style="margin-top:10px" onclick="act('back')">Done</button></div>`}
+function deckRows(){const q=norm(UI.q||'');const tab=UI.tab||'all';
+ return DECK.map((d,i)=>({d,i})).filter(({d})=>{if(tab==='retired'&&!RET.includes(d.a))return false;if(q&&!norm(d.a).includes(q))return false;return true}).sort((x,y)=>x.d.a.localeCompare(y.d.a)).map(({d,i})=>{const r=RET.includes(d.a),fl=FLAGS.filter(f=>f.a===d.a).map(f=>f.why).join(', ');return `<div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)${r?';opacity:.55':''}"><div style="flex:1;min-width:0"><div style="font-weight:600;${r?'text-decoration:line-through':''}">${esc(d.a)}</div><div class="muted" style="font-size:13px">${yearOf(d)} · ${RATING[d.a]||'?'}${fl?` · <span style="color:#C2185B">Flagged: ${esc(fl)}</span>`:''}</div></div><button class="btn btn-ghost btn-sm" onclick="act('ret',${i})">${r?'Restore':'Retire'}</button></div>`}).join('')||'<p class="muted">No movies match.</p>'}
+function renderDeckList(){const el=document.getElementById('decklist');if(el)el.innerHTML=deckRows();const c=document.getElementById('retcount');if(c)c.textContent=RET.length;}
+function screenDeck(){const tab=UI.tab||'all';
+ const flags=tab==='flagged'?`<div class="card" style="padding:14px 18px">${FLAGS.length?FLAGS.map((f,k)=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)"><div style="flex:1"><b>${esc(f.a)}</b> <span class="muted">· ${esc(f.why)}</span></div><button class="link" onclick="act('unflag',${k})">Clear</button></div>`).join('')+`<button class="btn btn-teal btn-sm" style="margin-top:12px" onclick="act('copyFlags')">Copy list to send to Claude</button><textarea readonly class="inp" style="margin-top:10px;height:110px;font-size:14px">${esc(flagsText())}</textarea>`:'<p class="muted" style="margin:6px 0">Nothing flagged. While playing, tap "Flag / retire" on any card that has wrong info or is too easy or too hard.</p>'}</div>`:'';
+ return `${topBack('Your deck')}<div class="stack" style="margin:0 auto;max-width:640px">
+ <div class="seg"><button class="${tab==='all'?'on':''}" onclick="act('tab','all')">All ${DECK.length}</button><button class="${tab==='retired'?'on':''}" onclick="act('tab','retired')">Retired <span id="retcount">${RET.length}</span></button><button class="${tab==='flagged'?'on':''}" onclick="act('tab','flagged')">Flagged ${FLAGS.length}</button></div>
+ ${tab==='flagged'?flags:`<input class="inp" placeholder="Search movies" value="${esc(UI.q||'')}" oninput="UI.q=this.value;renderDeckList()"><div class="card" style="padding:4px 18px" id="decklist">${deckRows()}</div><p class="muted" style="font-size:13px">A retired movie never comes up in either mode. Tap Restore to bring it back.</p>`}</div>`}
+function screenStats(){const rows=Object.entries(STATS.players).sort((a,b)=>b[1].wins-a[1].wins||b[1].rounds-a[1].rounds);const so=STATS.solo;
+ const th='style="text-align:right;padding:8px 6px;font-size:13px;color:var(--navy2);font-weight:600"',td='style="text-align:right;padding:10px 6px"';
+ return `${topBack('Stats')}<div class="stack" style="margin:0 auto;max-width:640px">
+ <h3 style="font-size:20px">Group games</h3>
+ <div class="card" style="padding:6px 14px;overflow-x:auto">${rows.length?`<table style="width:100%;border-collapse:collapse;font-size:16px"><tr><th style="text-align:left;padding:8px 6px;font-size:13px;color:var(--navy2);font-weight:600">Player</th><th ${th}>Games</th><th ${th}>Wins</th><th ${th}>Rounds</th><th ${th}>Correct</th><th ${th}>Blocks</th></tr>${rows.map(([nm,s],k)=>`<tr style="border-top:1px solid var(--line)"><td style="padding:10px 6px;font-weight:600">${k===0&&s.wins?'🏆 ':''}${esc(nm)}</td><td ${td}>${s.games}</td><td ${td}><b style="color:var(--pink)">${s.wins}</b></td><td ${td}>${s.rounds}</td><td ${td}>${s.right}</td><td ${td}>${s.blocks}</td></tr>`).join('')}</table>`:'<p class="muted">Finish a group game and the scoreboard starts here.</p>'}</div>
+ <h3 style="font-size:20px;margin-top:8px">Box Office Run</h3>
+ <div class="opts"><div class="card" style="padding:14px 18px"><div class="muted" style="font-size:13px">Best score</div><div style="font-size:28px;font-weight:800;color:var(--pink)">${best||0}<span class="muted" style="font-size:14px"> / 50</span></div></div><div class="card" style="padding:14px 18px"><div class="muted" style="font-size:13px">Runs · average</div><div style="font-size:28px;font-weight:800">${so.runs}<span class="muted" style="font-size:14px"> · ${so.runs?Math.round(so.total/so.runs):0} avg</span></div></div></div>
+ <p class="muted" style="font-size:13px">Stats are kept on this device. Players are matched by name.</p>
+ <button class="btn btn-ghost btn-sm" style="align-self:flex-start;${UI.confirmReset?'color:#C2185B;border-color:#C2185B':''}" onclick="act('resetStats')">${UI.confirmReset?'Tap again to erase all stats':'Reset stats'}</button></div>`}
 function render(){
- const s=UI.screen;const map={soloIntro:soloIntro,solo:soloScreen,soloEnd:soloEnd,home:screenHome,setup:screenSetup,pass:screenPass,reader:screenReader,result:screenResult,quit:screenQuit};
+ const s=UI.screen;const map={mix:screenMix,deck:screenDeck,stats:screenStats,soloIntro:soloIntro,solo:soloScreen,soloEnd:soloEnd,home:screenHome,setup:screenSetup,pass:screenPass,reader:screenReader,result:screenResult,quit:screenQuit};
  if(['pass','reader','result','quit'].includes(s)&&!S){UI.screen='home'}if(['solo','soloEnd'].includes(s)&&!SO){UI.screen='home'}
  document.getElementById('app').innerHTML=(map[UI.screen]||screenHome)();
  UI.flipKey=null;
 }
 render();
+try{if('serviceWorker' in navigator&&isGH())navigator.serviceWorker.register('sw.js')}catch(e){}
 </script>
 </body>
 </html>
