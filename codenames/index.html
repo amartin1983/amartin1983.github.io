@@ -178,7 +178,7 @@ h3{font-size:15.5px;margin:0;font-weight:700}
 /* key */
 .keycard{--kb:var(--red);padding:10px;border-radius:14px;background:var(--panel2);border:8px solid var(--kb);box-shadow:0 0 22px -6px var(--kb),inset 0 0 0 1px rgba(0,0,0,.25);transition:filter .15s}
 .keycard.blue{--kb:var(--blue)} .keycard.duet{--kb:var(--green)}
-.keycard.hide{filter:blur(13px) saturate(.6)}
+.keycard{position:relative}.keycard.hide .kgrid{visibility:hidden}.keycard.hide::after{content:"Hidden";position:absolute;inset:0;display:grid;place-items:center;font:700 15px var(--f-type);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);background:repeating-linear-gradient(135deg,var(--panel2) 0 10px,var(--panel) 10px 20px);border-radius:6px}
 .kgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
 .kc{aspect-ratio:1.3;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;padding:3px;background:var(--kcol);color:#fff;font-family:var(--f-word);font-weight:600;text-transform:uppercase;line-height:1;overflow:hidden;position:relative}
 .kc.tan{color:var(--card-ink)}
@@ -526,6 +526,7 @@ html.ed-movie body{background-image:radial-gradient(ellipse at 50% -10%,rgba(255
   <symbol id="i-deal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="3" width="10" height="14" rx="1.8" transform="rotate(12 14 10)"/><rect x="5" y="6" width="10" height="14" rx="1.8" transform="rotate(-8 10 13)"/></g></symbol>
   <symbol id="i-look" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/><path d="M3 7V5h6"/></g></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></g></symbol>
   <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 11l18-7-7 18-2.5-8z"/></symbol>
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -708,7 +709,7 @@ function deal(mode, code){
     const r = rng(hash(mode+":"+code+":ed:"+edition));
     const pool = shuffle(live(ED_WORDS[edition]||[]), r);
     const k = makeKey(mode, code);
-    return {mode, code, ed:edition, grid:pool.slice(0,25), order:pool.slice(25), nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
+    return {mode, code, ed:edition, grid:pool.slice(0,25), order:pool.slice(25), nextIdx:0, covers:{}, by:{}, clues:[], cg:null, over:null, turnsLeft:9,
       keyA:k.keyA, keyB:k.keyB, first:k.first, turn:k.first, giver:"A", rev:0, at:0};
   }
   const packKeys=[...packsOn].sort();
@@ -719,7 +720,7 @@ function deal(mode, code){
   const chosen = [...pk.slice(0,nPack), ...base.slice(0,25-nPack)];
   const rest = packMix==="only" ? [...pk.slice(nPack), ...base.slice(25-nPack)] : shuffle([...pk.slice(nPack), ...base.slice(25-nPack)], r);
   const k = makeKey(mode, code);
-  return {mode, code, ed:"classic", grid:shuffle(chosen,r), order:rest, nextIdx:0, covers:{}, by:{}, clues:[], over:null, turnsLeft:9,
+  return {mode, code, ed:"classic", grid:shuffle(chosen,r), order:rest, nextIdx:0, covers:{}, by:{}, clues:[], cg:null, over:null, turnsLeft:9,
     keyA:k.keyA, keyB:k.keyB, first:k.first, turn:k.first, giver:"A", rev:0, at:0};
 }
 function fingerprint(g){ const h=hash(g.grid.join("|")+"#"+g.keyA.join("")+g.keyB.join("")); return ALPH[h%24]+ALPH[(h>>>5)%24]+ALPH[(h>>>10)%24]; }
@@ -882,8 +883,9 @@ function checkWin(){
     else if(c.blue>=t.blue){ G.over={kind:"blue", why:ED().why.all(TEAM.blue)}; }
   } else if(c.green>=15){ G.over={kind:"green", why:ED().why.duetWin}; }
 }
+function autoResult(i){ return (G.mode==="duet"&&G.giver==="B"?G.keyB:G.keyA)[i]; }
 function cover(i, choice){
-  const prev=G.covers[i], wasOver=!!G.over;
+  const prev=G.covers[i], wasOver=!!G.over; let autoEnd=false;
   if(choice===null){ delete G.covers[i]; delete G.by[i]; }
   else if(G.mode==="duet" && choice==="tan"){
     const b = G.by[i] = {...(G.by[i]||{})}; const fresh=!b[G.giver]; b[G.giver]=1;
@@ -895,22 +897,32 @@ function cover(i, choice){
     G.covers[i]=choice; flipIdx.add(i);
     const isNew = !prev;
     if(choice==="black"){ sfx("assassin"); if(isNew && !G.over) G.over = G.mode==="classic" ? {kind:other(G.turn), why:ED().why.assassin(TEAM[G.turn])} : {kind:"black", why:ED().why.duetLose}; }
-    else if(choice==="tan"){ sfx("bystander"); if(isNew && !G.over){ G.turn=other(G.turn); toast(`${ROLE_NAME.tan}. ${TEAM[G.turn]}'s turn.`); } }
+    else if(choice==="tan"){ sfx("bystander"); if(isNew && !G.over){ G.turn=other(G.turn); G.cg=null; toast(`${ROLE_NAME.tan}. ${TEAM[G.turn]}'s turn.`); } }
     else {
       sfx("agent",choice);
-      if(G.mode==="classic" && isNew && !G.over && choice!==G.turn){ G.turn=other(G.turn); toast(`Wrong team. ${TEAM[G.turn]}'s turn.`); }
+      if(G.mode==="classic" && isNew && !G.over && choice!==G.turn){ G.turn=other(G.turn); G.cg=null; toast(`Wrong team. ${TEAM[G.turn]}'s turn.`); }
+      else if(isNew && G.cg && (G.mode==="duet"||choice===G.turn)){ G.cg.used++; if(G.cg.lim && G.cg.used>=G.cg.lim) autoEnd=true; }
     }
   }
   checkWin();
   if(G.over && !wasOver){ dismissed=false; if(G.over.kind!=="black") setTimeout(()=>sfx("win"),350); }
-  changed();
+  if(autoEnd && !G.over) endTurn(false, "No guesses left. "); else changed();
 }
-function endTurn(auto){
+let hist=[];
+function snap(){ try{ hist.push(JSON.stringify(G)); if(hist.length>40) hist.shift(); }catch(e){} }
+function undo(){
+  if(!hist.length) return;
+  const r=G.rev||0, ed=G.ed; G=JSON.parse(hist.pop()); G.rev=r; G.ed=ed||G.ed; flipIdx.clear(); sheetFor=null;
+  if(!G.over) dismissed=false;
+  sfx("turn"); toast("Undone."); changed();
+}
+function endTurn(auto, why){
   if(G.over) return;
-  if(G.mode==="classic"){ G.turn=other(G.turn); toast(`${TEAM[G.turn]}'s turn.`); }
+  G.cg=null; why=why||"";
+  if(G.mode==="classic"){ G.turn=other(G.turn); toast(`${why}${TEAM[G.turn]}'s turn.`); }
   else {
     G.turnsLeft=Math.max(0,G.turnsLeft-1); G.giver = G.giver==="A"?"B":"A";
-    toast(G.turnsLeft? `${auto?ROLE_NAME.tan+". ":""}Turn over. Side ${G.giver} gives the next clue. ${G.turnsLeft} left.` : `${auto?ROLE_NAME.tan+". ":""}Out of turns. Sudden death.`);
+    toast(G.turnsLeft? `${why}${auto?ROLE_NAME.tan+". ":""}Turn over. Side ${G.giver} gives the next clue. ${G.turnsLeft} left.` : `${auto?ROLE_NAME.tan+". ":""}Out of turns. Sudden death.`);
   }
   sfx("turn");
   changed();
@@ -978,6 +990,7 @@ function clueBlock(){
   const who = G.mode==="classic" ? TEAM[G.turn]+" spymaster's" : "Side "+G.giver+"'s";
   return `<div class="sec">
     ${last?`<div class="clue" style="--cc:${col(last)}"><span class="eyebrow">${esc(last.label)}</span><span class="clue-word grow">${esc(last.word)}</span><span class="clue-n">${esc(last.n)}</span></div>`:""}
+    ${G.cg&&!G.over?`<p class="small muted" style="margin:-4px 0 0">${G.cg.lim?`Guesses left: <b style="color:var(--fg)">${G.cg.lim-G.cg.used}</b> of ${G.cg.lim} (${esc(G.cg.n)} + 1 bonus)`:"Unlimited guesses"} · tap End turn to pass</p>`:""}
     <form class="cluein" id="clueform" autocomplete="off">
       <input id="clueword" maxlength="24" placeholder="${who} clue" aria-label="Clue word" ${G.over?"disabled":""}>
       <select id="cluen" aria-label="Number">${["1","2","3","4","5","6","7","8","9","0","∞"].map(n=>`<option>${n}</option>`).join("")}</select>
@@ -1010,11 +1023,12 @@ function boardTab(){
   ${scoreboard()}
   ${clueBlock()}
   <div class="board ${tint?"tint":""} ${picking?"picking":""}" id="board">${cards}</div>
-  <p class="hint">${picking?"Tap the words you want gone, then tap Replace again. The key stays the same.":G.mode==="duet"?"Tap a card to mark it. A bystander only counts for the side that gave the clue; the card stays in play for the other side.":"Tap a card to cover it with the agent the spymaster's key shows."}</p>
+  <p class="hint">${picking?"Tap the words you want gone, then tap Replace again. The key stays the same.":G.mode==="duet"?"Tap a card to mark it. A bystander only counts for the side that gave the clue; the card stays in play for the other side.":"Tap a card, then confirm. It flips to whatever the key says."}</p>
   <div class="boardbar">
     <button class="btn ${picking?"on":""}" data-act="replace">${rb}</button>
     ${picking?`<button class="btn ghost" data-act="cancelrep">Cancel</button>`:""}
     <span class="sp"></span>
+    <button class="btn" data-act="undo" ${hist.length?"":"disabled"}>${ico("i-undo")}Undo</button>
     <button class="btn ghost" data-act="clear">Clear covers</button>
   </div>
   ${noticeText?`<p class="notice">${esc(noticeText)}</p>`:""}`;
@@ -1131,13 +1145,12 @@ function overlays(){
   let h="";
   if(sheetFor!=null){
     const i=sheetFor, cur=G.covers[i], b=G.by[i]||{};
-    const opts = G.mode==="classic" ? ["red","blue","tan","black"] : ["green","tan","black"];
-    const label = o => G.mode==="duet"&&o==="tan" ? `Bystander<small>For Side ${G.giver}'s clue</small>` : ROLE_NAME[o]+(o==="black"?"<small>Ends the game</small>":"");
-    const isCur = o => G.mode==="duet"&&o==="tan" ? !!b[G.giver] : cur===o;
+    const done = cur || (G.mode==="duet" && b[G.giver]);
+    const whose = G.mode==="duet" ? `Guess on Side ${G.giver}'s clue` : `${esc(TEAM[G.turn])} team's guess`;
     h+=`<div class="sheet-bg" data-act="closesheet"></div><div class="sheet" role="dialog" aria-label="Cover ${esc(G.grid[i])}">
-      <div class="sheet-head"><div><div class="eyebrow">${G.mode==="duet"?`Guess on Side ${G.giver}'s clue`:"Cover this card"}</div><div class="sheet-word">${esc(G.grid[i])}</div></div><button class="btn ghost" data-act="closesheet">Close</button></div>
-      <div class="picks" style="--n:${opts.length}">${opts.map(o=>`<button class="pk ${o} ${isCur(o)?"cur":""}" data-act="pick" data-v="${o}"><span class="pk-art">${ico(ROLE_ICO[o])}</span>${label(o)}</button>`).join("")}</div>
-      ${cur||b.A||b.B?`<button class="btn" data-act="pick" data-v="none">Clear this card</button>`:""}
+      <div class="sheet-head"><div><div class="eyebrow">${done?"Already covered":whose}</div><div class="sheet-word">${esc(G.grid[i])}</div></div><button class="btn ghost" data-act="closesheet">Cancel</button></div>
+      ${done?`<p class="small muted" style="margin:0">This card is covered${cur?" by "+esc(ROLE_NAME[cur]):` as a ${esc(ROLE_NAME.tan)} for Side ${G.giver}`}. To take back a move, use Undo on the board.</p>`
+        :`<button class="btn primary" data-act="confirmcover" style="padding:15px;font-size:16px">Cover ${esc(G.grid[i])}</button><p class="hint" style="text-align:center">It flips to whatever the key says.</p>`}
     </div>`;
   }
   if(settingsOpen) h+=settingsModal();
@@ -1248,7 +1261,7 @@ let roomNs=null, room=null, roomName="", myPeer=null, mismatch=null, peerUnsub=n
 function compact(){
   return {v:2, ed:edition, m:G.mode, c:G.code, g:G.grid, ka:G.keyA.map(x=>x[0]).join(""), kb:G.keyB.map(x=>x[0]).join(""), f:G.first, t:G.turn,
     cv:G.grid.map((_,i)=>(G.covers[i]||"-")[0]).join(""), by:G.grid.map((_,i)=>{const b=G.by[i]||{}; return (b.A?1:0)+(b.B?2:0);}).join(""),
-    gv:G.giver, tl:G.turnsLeft, o:G.over, cl:G.clues.slice(-6), ni:G.nextIdx, rev:G.rev, at:G.at};
+    gv:G.giver, tl:G.turnsLeft, o:G.over, cl:G.clues.slice(-6), cg:G.cg||null, ni:G.nextIdx, rev:G.rev, at:G.at};
 }
 const LET={r:"red",b:"blue",g:"green",t:"tan",k:"black"};
 function keyFrom(s){ return String(s||"").split("").map(ch=>({r:"red",b:"blue",g:"green",t:"tan",k:"black"})[ch]||"tan"); }
@@ -1264,7 +1277,8 @@ function adopt(st){
   G.by={}; String(st.by||"").split("").forEach((ch,i)=>{ const n=+ch; if(n) G.by[i]={...(n&1?{A:1}:{}),...(n&2?{B:1}:{})}; });
   G.giver=st.gv==="B"?"B":"A"; G.turnsLeft=Math.max(0,Math.min(9,+st.tl||0)); G.clues=Array.isArray(st.cl)?st.cl.slice(-20).map(c=>({word:String(c.word||"").slice(0,24),n:String(c.n||""),team:String(c.team||""),label:String(c.label||"")})):[];
   const wasOver=!!G.over; G.over = st.o&&st.o.kind ? {kind:String(st.o.kind), why:String(st.o.why||"")} : null; if(G.over&&!wasOver) dismissed=false;
-  G.nextIdx=+st.ni||G.nextIdx; G.rev=+st.rev||0; G.at=+st.at||0;
+  G.cg = st.cg&&typeof st.cg==="object" ? {lim:Math.max(0,+st.cg.lim||0), used:Math.max(0,+st.cg.used||0), n:String(st.cg.n||"").slice(0,3)} : null;
+  G.nextIdx=+st.ni||G.nextIdx; G.rev=+st.rev||0; G.at=+st.at||0; hist=[];
   Object.keys(G.covers).forEach(i=>{ if(!old[i]) flipIdx.add(+i); });
   if(flipIdx.size) sfx("flip");
   mismatch=null; saveGame(); render();
@@ -1312,7 +1326,7 @@ async function leaveRoom(){ try{ peerUnsub&&peerUnsub(); }catch(e){} peerUnsub=n
 /* ---------- events ---------- */
 function newGame(mode, code, opts={}){
   const prevRoom = room;
-  G=deal(mode, code||newCode()); dismissed=false; picking=false; selected=new Set(); sheetFor=null; noticeText=""; side="A";
+  G=deal(mode, code||newCode()); hist=[]; dismissed=false; picking=false; selected=new Set(); sheetFor=null; noticeText=""; side="A";
   G.rev = opts.quiet ? 0 : 1; G.at=Date.now(); saveGame(); render();
   (async()=>{
     if(prevRoom && syncOn && !opts.quiet){ try{ await prevRoom.emit("next",{m:G.mode,c:G.code,ed:edition}); }catch(e){} }
@@ -1333,13 +1347,15 @@ document.addEventListener("click",e=>{
   if(a==="mode"){ if(G.mode!==v) newGame(v, G.code); }
   else if(a==="deal"){ newGame(G.mode); }
   else if(a==="dealpacks"){ tab="board"; ls.set("cn-tab",tab); newGame(G.mode); window.scrollTo(0,0); }
-  else if(a==="endturn"){ endTurn(false); }
+  else if(a==="endturn"){ if(!G.over){ snap(); endTurn(false); } }
   else if(a==="giver"){ G.giver=G.giver==="A"?"B":"A"; changed(); }
   else if(a==="replace"){ doReplace(); }
   else if(a==="cancelrep"){ picking=false; selected=new Set(); render(); }
-  else if(a==="clear"){ G.covers={}; G.by={}; G.clues=[]; G.over=null; dismissed=false; G.turn=G.first; G.turnsLeft=9; G.giver="A"; changed(); }
+  else if(a==="clear"){ snap(); G.cg=null; G.covers={}; G.by={}; G.clues=[]; G.over=null; dismissed=false; G.turn=G.first; G.turnsLeft=9; G.giver="A"; changed(); }
   else if(a==="closesheet"){ sheetFor=null; render(); }
-  else if(a==="pick"){ const i=sheetFor; sheetFor=null; cover(i, v==="none"?null:v); }
+  else if(a==="pick"){ const i=sheetFor; sheetFor=null; snap(); cover(i, v==="none"?null:v); }
+  else if(a==="confirmcover"){ const i=sheetFor; sheetFor=null; if(i!=null){ snap(); cover(i, autoResult(i)); } }
+  else if(a==="undo"){ undo(); }
   else if(a==="settings"){ settingsOpen=true; render(); }
   else if(a==="closesettings"){ settingsOpen=false; render(); }
   else if(a==="edition"){ if(edition!==v){ edition=v; ls.set("cn-ed",edition); settingsOpen=false; newGame(G.mode); sfx("win"); } }
@@ -1362,7 +1378,9 @@ document.addEventListener("submit",e=>{
   const prob=clueProblem(raw); if(prob){ toast(prob); return; }
   const w=raw.toUpperCase().slice(0,24);
   const label = G.mode==="classic" ? TEAM[G.turn] : "Side "+G.giver;
+  snap();
   G.clues.push({word:w, n, team:G.mode==="classic"?G.turn:"green", label});
+  { const nn=parseInt(n,10); G.cg={lim:(isNaN(nn)||nn===0)?0:nn+1, used:0, n:String(n)}; }
   sfx("clue"); changed();
 });
 document.addEventListener("input",e=>{
